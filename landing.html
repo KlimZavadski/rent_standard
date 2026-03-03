@@ -1,1632 +1,1196 @@
-1772573438146_telegram-cloud-photo-size-4-5850218930511744445-y.jpg
-Create a single-page landing page designed to maximize lead capture based on the provided description. It should feature
-a strong primary visual focal point (an “eye magnet”) and a data collection form placed below it.
-Minimalist, clean design
-Single-page layout, preferably without scrolling, with a logical grid structure
-No decorative overload
-No bright, alarming colors
-Emphasis on a sense of protection, calmness, and control Core associations — protection, transparency, order.
-Background: very light cool gray-blue (
-#F4F7FA)
-Primary text: graphite (
-#2B2F33)
-Secondary text: neutral gray (
-#6B7280)
-Accent (buttons, protection icons): soft blue (
-#3A7BD5) or deep blue (
-#1E4F8A)
-Light section backgrounds: white (
-#FFFFFF)
-Icons: monochrome, thin-line style Prohibited:
-Red
-Aggressive oranges
-Harsh, high-contrast color combinations Typography
-Modern grotesque sans-serif (e.g., Inter / SF Pro / similar)
-Headings — semi-bold
-Body text — regular
-Clear H1 / H2 / H3 hierarchy The form should appear as a card with a soft shadow at the bottom of the landing page for
-data collection. Fields:
-Name (input)
-Email (required)
-Phone (optional)
-City (input)
-Dropdown (required) Question above the dropdown: “What is the primary issue you want to resolve?” Dropdown options:
-Property damage
-Late payments
-Legal risks and eviction
-Difficulty evicting under a standard lease
-Illegal subletting
-Weak contract
-Registration issues
-Constant tenant requests
-Conflicts and complaints
-Other Button: [ Join the Pilot Program ] Below the form — small text: “We do not share your data with third parties.”
-Landlord Risk Protection Service for Residential Rentals Six Levels of Protection Level 1. Expert Protective Lease
-Agreement A professionally drafted lease agreement with carefully refined clauses validated by court practice. Prepared
-by a lawyer with 11 years of experience in real estate litigation. Reduces and mitigates risks in simplified mediation
-or streamlined court proceedings related to late payments, property damage, and tenant eviction. Level 2. Verification
-and Electronic Execution of a Secure Lease Agreement We verify that both parties sign our legally protected version of
-the lease agreement. We simplify the signing process while ensuring the agreement has full legal force and
-enforceability for the parties’ contractual obligations. Level 3. Legal Validation via Qualified Electronic Signatures
-Confirmation of the agreement’s legal validity through the parties’ qualified electronic signatures. Level 4. Dispute
-Resolution and Mediation Our mediators resolve disputes and conflicts out of court, at rates below market standards,
-ensuring fast and efficient settlements. Level 5. Legal Support Our partner law firms, specializing in rental disputes,
-initiate and conduct enforcement or court proceedings within the shortest possible timeframe. Level 6. Insurance
-Protection In cooperation with PZU, we provide coverage against key risks, including property damage, fire, destruction,
-and other major incidents.
-Example of possible visualization in attachments.
-
-Show more
-22:34
-
-Viewed a file, created a file, read a file
-Viewed a file, created a file, read a file
-The landing page is ready. Here's what was built:
-
-Layout — a tight two-column grid: hero + visual on the left, form panel on the right, with all 6 protection levels in a
-full-width row at the bottom. Designed to fit without scrolling on a standard desktop.
-
-Eye magnet — an interactive circular diagram mirroring the reference image, with 6 color-coded segments (blue, gold,
-brown, deep navy, teal, slate), a shield icon at center, and labeled legend with hover tooltips.
-
-Form — clean card with all required fields: name, email, phone (with auto-mask), city, dropdown with all 9 issue
-options, CTA button with success/error state feedback, and the privacy notice below.
-
-Tone — calm, controlled, institutional. No reds, no harsh contrasts. Soft blue-gray palette throughout with the accent
-gradient reserved only for the CTA button and logo.
-
-Secure lease landing
-Code · HTML
-Оставь лишь 4 позиции в диаграмме.
-Переименуй проект в RentStandard
-Не выноси пункты из диаграммы в столбец, а оставь прямо на диаграмме как в примере
-22:39
-
-Reading current landing page
-Reading current landing page
-Now I'll rebuild the diagram section completely — 4 segments with labels rendered directly on the SVG (like the
-reference image), using <text> and <foreignObject> elements positioned around each quadrant.
-
-
-    Created 2 files, ran a command, read a file
-    Created 2 files, ran a command, read a file
-    Все три правки внесены:
-
-    4 сегмента — равные четверти кольца (синий, золотой, коричневый, тёмно-синий).
-    RentStandard — новое название в заголовке и теге <title>.
-      Подписи прямо на диаграмме — каждый уровень оформлен как карточка с номером-бейджем и короткой линией-коннектором
-      от дуги сегмента, как в референсе. Внешнего столбца с легендой больше нет.
-      Secure lease landing
-      Code · HTML
-      Отправь дизайн в мой фигма файл
-      https://www.figma.com/design/6HBHMoIpeUUbItePkbTbG7/Untitled?node-id=0-1&p=f&t=fzaxmPeFx0EEgnDk-0
-
-      22:45
-
-      Searched available tools
-      Searched available tools
-      К сожалению, я не могу отправить дизайн напрямую в Figma. Мой Figma-коннектор поддерживает только чтение файлов и
-      работу с Code Connect — создавать или импортировать фреймы/слои в файл через API у меня нет возможности.
-
-      Вот что можно сделать для переноса дизайна в Figma:
-
-      Вариант 1 — Figma HTML Import (плагин) Используйте плагин html.to.design или Figify: вставьте HTML-код лендинга, и
-      плагин автоматически преобразует его в слои Figma.
-
-      Вариант 2 — Screenshot + Frame Откройте лендинг в браузере → сделайте скриншот → вставьте в Figма как основу для
-      дальнейшей доработки.
-
-      Вариант 3 — Figma Plugin API вручную Если у вас есть доступ к Figma Dev Mode, можно вставить код через плагин
-      Figma to Code или Builder.io.
-
-      Хотите, я подготовлю файл в формате, удобном для конкретного плагина?
-
-      Необходима чтобы этот лендинг был максимально продающим. Давай сделаем диаграмму с уровнями защиты более сочной,
-      современной и интересной, цепляющей взгляд. сейчас тут применяются простые цвета, а надо чтобы пользователю
-      хотелось туда смотреть.
-
-      22:50
-
-      Reading frontend design skill for inspiration
-      Reading frontend design skill for inspiration
-      Отличная задача. Сделаю диаграмму с градиентными сегментами, свечением, анимацией появления и пульсирующими
-      иконками — так чтобы взгляд притягивало сразу.
-
-
-      Ran a command, created a file, read a file
-      Ran a command, created a file, read a file
-      Вот что изменилось в диаграмме:
-
-      Градиенты — каждый сегмент теперь двухцветный: синий переходит от светло-голубого к насыщенному кобальту, золотой
-      — от лимонного к янтарному, стальной — от небесного к глубокому сланцу, темно-синий — от electric-blue к почти
-      чёрному.
-
-      Свечение — при наведении на сегмент включается bloom-эффект: мягкое цветное свечение за дугой (feGaussianBlur +
-      flood-color), цвет соответствует сегменту.
-
-      Анимация появления — каждый сегмент рисуется по кругу с задержкой, один за другим (stroke-dashoffset draw-in).
-
-      Карточки — вертикальная цветная полоса-акцент, пилюля с номером на градиенте, тонкая пунктирная линия-коннектор.
-
-      Связь диаграмма ↔ карточки уровней — при наведении на сегмент подсвечивается соответствующая карточка внизу.
-
-      Secure lease landing
-      Code · HTML
-      исправь координаты в анимации:
-      1. верхние пункты (таблички 1 и 4) при наведении должны съезжать вверх как это сейчас происходит с блоком номер 4.
-      2. нижние таблички должны так же съезжать но вниз.
-      3. если указатель наводится на табличку, а не на диаграмму, то блок начинает дергаться - это надо устранить
-
-      22:56
-
-      Viewed 4 files
-      Viewed 4 files
-      Понял все три проблемы. Решение:
-
-      Убираю CSS-hover на .label-card — вместо этого управляю трансформами только через JS
-      Верхние карточки (1, 4) — translateY(-8px), нижние (2, 3) — translateY(+8px)
-      Дёрганье устраняю добавив pointer-events: none на .label-card — ховер ловит только дуга, не карточка
-
-      Edited 2 files, read a file
-      Edited 2 files, read a file
-      Три исправления применены:
-
-      Верхние таблички (1 и 4) — при наведении съезжают вверх на 8px
-      Нижние таблички (2 и 3) — съезжают вниз на 8px
-      Дёрганье устранено — у .label-card теперь pointer-events: none, поэтому курсор «не замечает» карточку как
-      отдельный элемент, и ховер стабильно держится на дуге сегмента
-      Secure lease landing
-      Code · HTML
-      давай сделаем по высоте сайт чтобы вписывался в классический монитор мака без вертикального скрола. то есть надо
-      чуть меньше сделать по высоте форму и диаграмму
-
-      23:02
-
-      Viewed 3 files
-      Viewed 3 files
-      Хорошо, вижу всю картину. Нужно использовать 100vh для всей страницы и зафиксировать пропорции через
-      grid-template-rows. Подтяну все отступы и размеры под экран MacBook (900px высота viewport после строки браузера).
-
-
-      Edited 2 files, ran a command, viewed a file
-      Edited 2 files, ran a command, viewed a file
-      Now fix header height, hero/form padding, diagram max-width, and levels section to match the new fixed rows:
-
-
-      Edited 10 files, read a file
-      Edited 10 files, read a file
-      Готово. Что изменилось:
-
-      Страница теперь height: 100vh; overflow: hidden — жёстко вписывается в экран без скролла
-      Грид-строки зафиксированы: 60px хедер + 1fr для основного контента + 160px для нижней секции уровней
-      Диаграмма уменьшена до 340px max-width
-      Форма — поля похудели до 35px, отступы срезаны, кнопка 40px
-      Нижние карточки — компактнее: меньше паддинг, иконки 28px, шрифты подтянуты
-      Заточено под Mac с разрешением 1440×900 (стандартный MacBook Pro 14/15").
-
-      Secure lease landing
-      Code · HTML
-      убери пустое пространство между хедером и диаграммой, а так же сделай меньше пространства между диаграммой и
-      описанием карточек внизу
-
-      23:04
-
-      Check hero section and eyebrow/h1/sub sizing
-      Check hero section and eyebrow/h1/sub sizing
-      Проблема в justify-content: center — он центрирует содержимое вертикально, создавая пустые зоны сверху и снизу.
-      Нужно сменить на flex-start и убрать верхний паддинг, плюс уменьшить нижний паддинг hero чтобы диаграмма прижалась
-      к карточкам.
-
-
-      Edited 3 files, ran a command, viewed a file
-      Edited 3 files, ran a command, viewed a file
-      Now reduce the levels section top padding so cards sit closer to the diagram:
-
-
-      Edited a file, read a file
-      Edited a file, read a file
-      Готово. Убрал justify-content: center у hero и form-панели — контент теперь прижат к верху без воздушных зазоров.
-      Верхний паддинг сокращён до 10px, нижний у hero до 6px. Секция уровней тоже подтянута вверх — меньше отступа от
-      диаграммы до карточек.
-
-      Secure lease landing
-      Code · HTML
-      убери пространство между диаграммой и Четыре уровня защиты — от договора до страховки
-
-      23:05
-      Проблема в том, что SVG диаграммы имеет overflow: visible и большой viewBox с метками, которые выходят за пределы
-      — это создаёт невидимое пространство. Нужно обрезать снизу через margin-bottom отрицательным значением.
-
-
-      Check diagram-outer and svg styles
-      Check diagram-outer and svg styles
-      SVG viewBox — 560×560, нижние label-карточки расположены на y=394–466, то есть нижний край меток примерно на y=466
-      из 560. Значит снизу есть ~94px пустого пространства в SVG. Обрежу через margin-bottom с отрицательным значением,
-      пропорциональным размеру отображаемого SVG.
-
-
-      Edited a file, read a file
-      Edited a file, read a file
-      Добавил margin-bottom: -17% на .diagram-outer — это компенсирует ~94px пустого пространства в нижней части
-      SVG-viewBox (нижние метки заканчиваются на y≈466 из 560, остаток «воздуха» теперь срезан). Если нужно подогнать
-      точнее — скажите, подкручу значение.
-
-      Secure lease landing
-      Code · HTML
-      верни обратно пространство между хедером и диаграммой, только чуть меньше чем было
-
-      23:07
-
-      Edited 2 files, read a file
-      Edited 2 files, read a file
-      Верхний отступ вернул до 20px — чуть меньше прежних 28px, но пространство между хедером и контентом снова есть.
-
-      Secure lease landing
-      Code · HTML
-      теперь давай уберем пустое пространство под формой ввода данных
-
-      23:11
-
-      Check form panel and its children for bottom spacing
-      Check form panel and its children for bottom spacing
-      Форма прижата к верху (flex-start), но содержимое не заполняет всю высоту — пустота скапливается снизу. Нужно
-      вернуть justify-content: center чтобы форма была по центру, или убрать лишний нижний паддинг и добавить
-      justify-content: space-between. Проще всего — вернуть center.
-
-
-      Edited a file, read a file
-      Edited a file, read a file
-      Вернул justify-content: center на форму — теперь пустое пространство равномерно распределяется сверху и снизу, а
-      не скапливается внизу.
-
-      Secure lease landing
-      Code · HTML
-      как открыть sidebar где рендерился сайт?
-
-      23:14
-      В интерфейсе claude.ai превью HTML-файлов открывается автоматически когда я отправляю файл через кнопку выше (там
-      где показывается карточка файла).
-
-      Если превью не открылось — попробуйте:
-
-      Кликнуть на карточку файла secure-lease-landing которая появляется в моих ответах — она должна открыть превью
-      справа
-      Скачать файл и открыть в браузере локально — просто дважды кликнуть на .html файл
-      Если вы видите карточку файла но сайдбар не появляется, возможно это особенность вашего браузера или размера окна.
-      Попробуйте развернуть окно на полный экран и кликнуть на карточку ещё раз.
-
-      проблемы для устранения:
-      1. диаграмма должна быть по центру колонки в которой находится
-      2. форма должна иметь ограничения по ширине, чтобы не растягиваться на широких экранах, скажем до 700px. так же
-      выровнена по центру
-      3. сайт не скролится по вертикали если не влазит в экран
-
-      23:17
-
-      Edited 3 files, viewed a file
-      Edited 3 files, viewed a file
-      Now fix the form panel — max-width + centered, no overflow hidden:
-
-
-      Add max-width and center form content, allow scroll
-      Add max-width and center form content, allow scroll
-      Now wrap the form contents in .form-inner div in the HTML:
-
-
-      Viewed 2 files, edited a file
-      Viewed 2 files, edited a file
-      Now also remove overflow: hidden from levels section so it can scroll if needed:
-
-
-      Edited a file, read a file
-      Edited a file, read a file
-      Три проблемы исправлены:
-
-      Диаграмма по центру — align-self: center на .diagram-outer
-      Форма с ограничением ширины — обёрнута в .form-inner с max-width: 480px и margin: auto, форма центрирована внутри
-      колонки
-      Вертикальный скролл — убраны все overflow: hidden, страница теперь min-height: 100vh вместо height: 100vh
-      Secure lease landing
-      Code · HTML
-      Теперь давай займемся адоптацией под планшет и телефон. При изменении ширины ниже пороговойпереставь блоки в
-      колонку: диаграмма, форма, плитки. Плитки можно оставить в горизонтальном скроле
-
-      23:22
-
-      Viewed 3 files, edited a file, read a file
-      Viewed 3 files, edited a file, read a file
-      Готово. Что сделано:
-
-      ≤ 900px (планшет) — грид перестраивается в одну колонку: хедер → диаграмма → форма → плитки. Диаграмма и заголовок
-      центрируются. Форма теряет левую границу, получает верхнюю. Плитки переходят в горизонтальный скролл с тонким
-      скроллбаром.
-
-      ≤ 480px (телефон) — дополнительно уменьшаются шрифты, отступы и диаграмма. Бейдж в хедере прячет текст, оставляя
-      только зелёную точку.
-
-      Secure lease landing
-      Code · HTML
-      исправь:
-      1. при режиме планшета диаграмма обрезается формой, нужно опустить форму вниз
-      2. диаграмма уходит за край экрана на телефоне, такое ощущение что ее размеры жестко зафиксированы и не зависят от
-      размеров экрана.
-
-      23:26
-      Проблема в том, что у SVG overflow: visible — он рисует метки за пределами своего контейнера, но overflow: hidden
-      у родителя их обрезает. Плюс margin-bottom: -17% скрывает нижнюю часть. На мобайле нужно дать SVG обтекать экран
-      корректно.
-
-
-      Check diagram and hero overflow settings
-      Check diagram and hero overflow settings
-      Корень проблемы: SVG viewBox=560×560 но реальный контент с метками выходит за края (метки сидят на x=10..164 и
-      x=396..546, то есть почти в границах, но overflow: visible рисует их поверх соседей). На мобайле нужно расширить
-      viewBox чтобы метки были внутри, и убрать отрицательный margin.
-
-
-      Viewed 2 files
-      Viewed 2 files
-      Вижу картину полностью. Решение:
-
-      Расширю viewBox до 0 0 720 720 со смещением центра, чтобы метки влезали внутрь — это самый чистый способ
-      Либо проще: оставлю viewBox, но уберу overflow: visible и заменю на overflow: hidden с правильным viewBox padding
-      Самый надёжный способ — расширить viewBox чтобы все label-карточки (сейчас они на x=10..164 и x=396..546,
-      y=94..466) были внутри, с отступом. Текущий viewBox 560×560 уже почти покрывает — проблема в margin-bottom: -17%
-      который скрывает нижние метки и создаёт обрезку. На мобайле нужно это убрать и дать диаграмме полный размер.
-
-
-      Fix diagram: remove negative margin on mobile, fix overflow so labels don't get clipped by form
-      Fix diagram: remove negative margin on mobile, fix overflow so labels don't get clipped by form
-      Now update the responsive section to fix both issues:
-
-
-      Edited a file, read a file
-      Edited a file, read a file
-      Два исправления:
-
-      1. Форма перекрывала диаграмму — убрал margin-bottom: -17% у диаграммы в мобильном режиме (на десктопе он остаётся
-      для срезки пустого пространства), добавил padding-bottom: 32px у hero чтобы между диаграммой и формой был чёткий
-      зазор.
-
-      2. Диаграмма уходила за край — заменил фиксированный max-width на width: calc(100vw - 32px) на мобайле — теперь
-      диаграмма всегда вписывается в экран с отступом 16px с каждой стороны, и масштабируется вместе с ним.
-
-      Secure lease landing
-      Code · HTML
-      Screenshot 2026-03-03 at 23.29.26.png
-      вот как сайт выглядит на мобилке, исправь чтобы он рендерился нормально
-
-      23:29
-      Вижу проблему — диаграмма обрезается справа и не центрируется. Это потому что SVG с метками выходит за пределы
-      viewBox вправо. Нужно пересчитать viewBox чтобы всё содержимое включая метки влезало, и добавить горизонтальный
-      overflow на hero.
-
-
-      Check full SVG viewBox and label card positions
-      Check full SVG viewBox and label card positions
-      Теперь всё ясно. Label-карточки справа заканчиваются на x=398+152=550, слева на x=10+148=158. ViewBox 560×560 их
-      едва вмещает, но overflow: visible позволяет им выходить — браузер не обрезает SVG, но контейнер не знает о
-      реальном размере и сдвигает.
-
-      Решение: расширю viewBox до 0 0 700 600 со сдвигом всего содержимого на x+70, чтобы левые метки не обрезались, и
-      добавлю паддинг снизу. Плюс уберу overflow: visible — всё будет внутри viewBox.
-
-
-      Ran 2 commands, viewed 2 files, edited a file
-      Ran 2 commands, viewed 2 files, edited a file
-      Now I have the full picture. I'll do a targeted replacement — just change the viewBox and wrap everything in a
-      translate group:
-
-
-      Expand viewBox to 730x530 and wrap all SVG content in translate(85,0) group
-      Expand viewBox to 730x530 and wrap all SVG content in translate(85,0) group
-      Now find the first element after </defs> and wrap with <g transform="translate(85,0)">:
-
-
-        Ran a command, viewed a file, edited a file
-        Ran a command, viewed a file, edited a file
-        Now fix the left label positions (they were at x=10, now need to be at x=-242+85 offset = effectively x=-157 in
-        group space, but actually they were translate(10,394) and translate(10,94) — with the group shift +85 the left
-        cards will now appear at screen x=10+85=95 which is correct). Wait — the left cards were at translate(10,...)
-        meaning x starts at 10 in old 560 viewBox. Now with the group translate(85,0), they'll be at absolute x=95.
-        That's fine. But I need to close the group before </svg>:
-
-
-        Close the translate group before closing SVG tag
-        Close the translate group before closing SVG tag
-        Now update CSS — remove the negative margin-bottom on mobile and fix diagram max-width:
-
-
-        Fix diagram CSS - remove overflow visible trick, use proper sizing
-        Fix diagram CSS - remove overflow visible trick, use proper sizing
-        Now fix the responsive CSS for mobile diagram:
-
-
-        Edited 2 files, read a file
-        Edited 2 files, read a file
-        Корень проблемы устранён. Вот что сделано:
-
-        Причина — SVG viewBox 560×560 не включал левые метки (они стартовали на x=10, то есть почти вне видимой
-        области), а overflow: visible рисовал их поверх соседних блоков. Браузер на мобайле не расширяет контейнер под
-        overflow: visible — поэтому диаграмма казалась обрезанной.
-
-        Решение — расширил viewBox до 730×530, всё содержимое сдвинул через <g transform="translate(85,0)"> — теперь
-          левые метки (x≈95) и правые (x≈550+85=635) полностью внутри viewBox. SVG масштабируется как обычная картинка —
-          корректно на любом экране.
-
-          Secure lease landing
-          Code · HTML
-
-
-          Screenshot 2026-03-03 at 23.29.26.png
-
-          вот как сайт выглядит на мобилке, исправь чтобы он рендерился нормально
-
-          Claude is AI and can make mistakes. Please double-check responses.
-          Secure lease landing · HTML
-          Copy
-
-          <!DOCTYPE html>
-          <html lang="ru">
-
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>RentStandard — Защита арендодателя</title>
-            <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
-              rel="stylesheet">
-            <style>
-              *,
-              *::before,
-              *::after {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-              }
-
-              :root {
-                --bg: #F2F6FB;
-                --white: #FFFFFF;
-                --text: #1C2333;
-                --muted: #6B7280;
-                --accent: #3A7BD5;
-                --deep: #1E4F8A;
-                --border: #DDE5F0;
-
-                /* segment gradient stops */
-                --s1a: #3A7BD5;
-                --s1b: #5EB3F7;
-                --s2a: #D4940A;
-                --s2b: #F5C842;
-                --s3a: #6B8FA8;
-                --s3b: #A8C8E0;
-                --s4a: #1E4F8A;
-                --s4b: #3A7BD5;
-              }
-
-              html,
-              body {
-                height: 100%;
-                font-family: 'Manrope', sans-serif;
-                background: var(--bg);
-                color: var(--text);
-                font-size: 15px;
-                line-height: 1.6;
-                overflow-x: hidden;
-              }
-
-              .page {
-                min-height: 100vh;
-                overflow: visible;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                grid-template-rows: 60px 1fr 160px;
-                grid-template-areas:
-                  "header header"
-                  "hero   form"
-                  "levels levels";
-              }
-
-              /* ── HEADER ── */
-              header {
-                grid-area: header;
-                background: var(--white);
-                border-bottom: 1px solid var(--border);
-                padding: 0 48px;
-                height: 60px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-              }
-
-              .logo {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                font-weight: 800;
-                font-size: 17px;
-                color: var(--deep);
-                letter-spacing: -0.5px;
-              }
-
-              .logo-icon {
-                width: 34px;
-                height: 34px;
-                background: linear-gradient(135deg, #3A7BD5, #1E4F8A);
-                border-radius: 9px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                box-shadow: 0 4px 12px rgba(30, 79, 138, 0.28);
-              }
-
-              .logo-icon svg {
-                width: 18px;
-                height: 18px;
-              }
-
-              .header-badge {
-                font-size: 12px;
-                color: var(--muted);
-                display: flex;
-                align-items: center;
-                gap: 7px;
-                background: #F0F7FF;
-                border: 1px solid #C9DEFF;
-                border-radius: 20px;
-                padding: 5px 14px;
-              }
-
-              .badge-dot {
-                width: 7px;
-                height: 7px;
-                background: #22C55E;
-                border-radius: 50%;
-                box-shadow: 0 0 6px #22C55E;
-                animation: pulse 2s infinite;
-              }
-
-              @keyframes pulse {
-
-                0%,
-                100% {
-                  opacity: 1;
-                  box-shadow: 0 0 6px #22C55E;
-                }
-
-                50% {
-                  opacity: 0.5;
-                  box-shadow: 0 0 2px #22C55E;
-                }
-              }
-
-              /* ── HERO ── */
-              .hero {
-                grid-area: hero;
-                padding: 20px 24px 6px 44px;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: flex-start;
-                gap: 10px;
-              }
-
-              .eyebrow {
-                font-size: 11px;
-                font-weight: 700;
-                letter-spacing: 2px;
-                text-transform: uppercase;
-                color: var(--accent);
-                display: flex;
-                align-items: center;
-                gap: 8px;
-              }
-
-              .eyebrow::before {
-                content: '';
-                display: block;
-                width: 24px;
-                height: 2px;
-                background: var(--accent);
-                border-radius: 2px;
-              }
-
-              h1 {
-                font-size: 27px;
-                font-weight: 800;
-                line-height: 1.15;
-                letter-spacing: -1px;
-                color: var(--text);
-                max-width: 440px;
-              }
-
-              h1 em {
-                font-style: normal;
-                background: linear-gradient(90deg, #3A7BD5, #1E4F8A);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-              }
-
-              .hero-sub {
-                font-size: 14px;
-                color: var(--muted);
-                max-width: 380px;
-                line-height: 1.75;
-              }
-
-              /* ══════════════════════════════════════════════
-   PREMIUM DIAGRAM
+<!DOCTYPE html>
+<html lang="ru">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentStandard — Защита арендодателя</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet">
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #F2F6FB;
+        --white: #FFFFFF;
+        --text: #1C2333;
+        --muted: #6B7280;
+        --accent: #3A7BD5;
+        --deep: #1E4F8A;
+        --border: #DDE5F0;
+
+        /* segment gradient stops */
+        --s1a: #3A7BD5;
+        --s1b: #5EB3F7;
+        --s2a: #D4940A;
+        --s2b: #F5C842;
+        --s3a: #6B8FA8;
+        --s3b: #A8C8E0;
+        --s4a: #1E4F8A;
+        --s4b: #3A7BD5;
+      }
+
+      html,
+      body {
+        height: 100%;
+        font-family: 'Manrope', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        font-size: 15px;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      .page {
+        min-height: 100vh;
+        overflow-x: hidden;
+        overflow-y: visible;
+        display: grid;
+        max-width: 100%;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 60px 1fr 160px;
+        grid-template-areas:
+          "header header"
+          "hero   form"
+          "levels levels";
+      }
+
+      /* ── HEADER ── */
+      header {
+        grid-area: header;
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        padding: 0 48px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        font-size: 17px;
+        color: var(--deep);
+        letter-spacing: -0.5px;
+      }
+
+      .logo-icon {
+        width: 34px;
+        height: 34px;
+        background: linear-gradient(135deg, #3A7BD5, #1E4F8A);
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(30, 79, 138, 0.28);
+      }
+
+      .logo-icon svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .header-badge {
+        font-size: 12px;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        background: #F0F7FF;
+        border: 1px solid #C9DEFF;
+        border-radius: 20px;
+        padding: 5px 14px;
+      }
+
+      .badge-dot {
+        width: 7px;
+        height: 7px;
+        background: #22C55E;
+        border-radius: 50%;
+        box-shadow: 0 0 6px #22C55E;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+
+        0%,
+        100% {
+          opacity: 1;
+          box-shadow: 0 0 6px #22C55E;
+        }
+
+        50% {
+          opacity: 0.5;
+          box-shadow: 0 0 2px #22C55E;
+        }
+      }
+
+      /* ── HERO ── */
+      .hero {
+        grid-area: hero;
+        padding: 20px 24px 6px 44px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 10px;
+      }
+
+      .eyebrow {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .eyebrow::before {
+        content: '';
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--accent);
+        border-radius: 2px;
+      }
+
+      h1 {
+        font-size: 27px;
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -1px;
+        color: var(--text);
+        max-width: 440px;
+      }
+
+      h1 em {
+        font-style: normal;
+        background: linear-gradient(90deg, #3A7BD5, #1E4F8A);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-sub {
+        font-size: 14px;
+        color: var(--muted);
+        max-width: 380px;
+        line-height: 1.75;
+      }
+
+      /* ══════════════════════════════════════════════
+PREMIUM DIAGRAM
 ══════════════════════════════════════════════ */
-              .diagram-outer {
-                position: relative;
-                width: 100%;
-                max-width: 420px;
-                align-self: center;
-              }
+      .diagram-outer {
+        position: relative;
+        width: 100%;
+        max-width: 420px;
+        align-self: center;
+      }
 
-              .diagram-outer svg {
-                width: 100%;
-                height: auto;
-                display: block;
-                overflow: visible;
-              }
+      .diagram-outer svg {
+        width: 100%;
+        height: auto;
+        display: block;
+        overflow: visible;
+      }
 
-              /* animated ring draw-in */
-              @keyframes drawSeg {
-                from {
-                  stroke-dashoffset: 879.6;
-                }
-              }
+      /* animated ring draw-in */
+      @keyframes drawSeg {
+        from {
+          stroke-dashoffset: 879.6;
+        }
+      }
 
-              .seg-animated {
-                animation: drawSeg 1.1s cubic-bezier(0.4, 0, 0.2, 1) both;
-              }
+      .seg-animated {
+        animation: drawSeg 1.1s cubic-bezier(0.4, 0, 0.2, 1) both;
+      }
 
-              .s1 {
-                animation-delay: 0.1s;
-              }
+      .s1 {
+        animation-delay: 0.1s;
+      }
 
-              .s2 {
-                animation-delay: 0.28s;
-              }
+      .s2 {
+        animation-delay: 0.28s;
+      }
 
-              .s3 {
-                animation-delay: 0.46s;
-              }
+      .s3 {
+        animation-delay: 0.46s;
+      }
 
-              .s4 {
-                animation-delay: 0.64s;
-              }
+      .s4 {
+        animation-delay: 0.64s;
+      }
 
-              /* segment hover glow */
-              .seg-group {
-                cursor: pointer;
-              }
+      /* segment hover glow */
+      .seg-group {
+        cursor: pointer;
+      }
 
-              .seg-group .seg-hit {
-                fill: none;
-                stroke: transparent;
-                stroke-width: 70;
-              }
+      .seg-group .seg-hit {
+        fill: none;
+        stroke: transparent;
+        stroke-width: 70;
+      }
 
-              .seg-group:hover .glow-ring {
-                opacity: 1;
-              }
+      .seg-group:hover .glow-ring {
+        opacity: 1;
+      }
 
-              .glow-ring {
-                fill: none;
-                stroke-width: 62;
-                opacity: 0;
-                transition: opacity 0.3s;
-                stroke-linecap: butt;
-                filter: blur(8px);
-              }
+      .glow-ring {
+        fill: none;
+        stroke-width: 62;
+        opacity: 0;
+        transition: opacity 0.3s;
+        stroke-linecap: butt;
+        filter: blur(8px);
+      }
 
-              /* label card — transitions driven by JS only, pointer-events off to prevent jitter */
-              .label-card {
-                transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.28s;
-                pointer-events: none;
-              }
+      /* label card — transitions driven by JS only, pointer-events off to prevent jitter */
+      .label-card {
+        transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.28s;
+        pointer-events: none;
+      }
 
-              /* ── FORM ── */
-              .form-panel {
-                grid-area: form;
-                background: var(--white);
-                border-left: 1px solid var(--border);
-                padding: 20px 0 20px 0;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-              }
+      /* ── FORM ── */
+      .form-panel {
+        grid-area: form;
+        background: var(--white);
+        border-left: 1px solid var(--border);
+        padding: 20px 0 20px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
 
-              .form-inner {
-                width: 100%;
-                max-width: 480px;
-                padding: 0 40px;
-              }
+      .form-inner {
+        width: 100%;
+        max-width: 480px;
+        padding: 0 40px;
+      }
 
-              .form-heading h2 {
-                font-size: 18px;
-                font-weight: 800;
-                color: var(--text);
-                letter-spacing: -0.5px;
-                line-height: 1.25;
-                margin-bottom: 3px;
-              }
+      .form-heading h2 {
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--text);
+        letter-spacing: -0.5px;
+        line-height: 1.25;
+        margin-bottom: 3px;
+      }
 
-              .form-sub {
-                font-size: 12.5px;
-                color: var(--muted);
-                margin-bottom: 10px;
-                line-height: 1.5;
-              }
+      .form-sub {
+        font-size: 12.5px;
+        color: var(--muted);
+        margin-bottom: 10px;
+        line-height: 1.5;
+      }
 
-              .form-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 7px;
-              }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+      }
 
-              .form-group {
-                display: flex;
-                flex-direction: column;
-                gap: 3px;
-              }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
 
-              .form-group.full {
-                grid-column: 1 / -1;
-              }
+      .form-group.full {
+        grid-column: 1 / -1;
+      }
 
-              label {
-                font-size: 10px;
-                font-weight: 700;
-                color: var(--text);
-                letter-spacing: 0.2px;
-                text-transform: uppercase;
-              }
+      label {
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: 0.2px;
+        text-transform: uppercase;
+      }
 
-              label .req {
-                color: var(--accent);
-                margin-left: 2px;
-              }
+      label .req {
+        color: var(--accent);
+        margin-left: 2px;
+      }
 
-              label .opt {
-                color: var(--muted);
-                font-weight: 400;
-                text-transform: none;
-                font-size: 10px;
-              }
+      label .opt {
+        color: var(--muted);
+        font-weight: 400;
+        text-transform: none;
+        font-size: 10px;
+      }
 
-              input,
-              select {
-                height: 35px;
-                padding: 0 11px;
-                border: 1.5px solid var(--border);
-                border-radius: 8px;
-                font-family: 'Manrope', sans-serif;
-                font-size: 13px;
-                color: var(--text);
-                background: #FAFBFD;
-                transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
-                outline: none;
-                -webkit-appearance: none;
-                appearance: none;
-              }
+      input,
+      select {
+        height: 35px;
+        padding: 0 11px;
+        border: 1.5px solid var(--border);
+        border-radius: 8px;
+        font-family: 'Manrope', sans-serif;
+        font-size: 13px;
+        color: var(--text);
+        background: #FAFBFD;
+        transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+        outline: none;
+        -webkit-appearance: none;
+        appearance: none;
+      }
 
-              select {
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-                background-repeat: no-repeat;
-                background-position: right 12px center;
-                padding-right: 36px;
-              }
+      select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 36px;
+      }
 
-              input:focus,
-              select:focus {
-                border-color: var(--accent);
-                box-shadow: 0 0 0 3px rgba(58, 123, 213, 0.13);
-                background: white;
-              }
+      input:focus,
+      select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(58, 123, 213, 0.13);
+        background: white;
+      }
 
-              input::placeholder {
-                color: #C0C8D4;
-              }
+      input::placeholder {
+        color: #C0C8D4;
+      }
 
-              .btn-primary {
-                margin-top: 9px;
-                height: 40px;
-                background: linear-gradient(135deg, #3A7BD5 0%, #1E4F8A 100%);
-                color: white;
-                border: none;
-                border-radius: 10px;
-                font-family: 'Manrope', sans-serif;
-                font-size: 13.5px;
-                font-weight: 800;
-                letter-spacing: 0.3px;
-                cursor: pointer;
-                width: 100%;
-                transition: transform 0.18s, box-shadow 0.2s;
-                box-shadow: 0 5px 16px rgba(30, 79, 138, 0.28);
-                position: relative;
-                overflow: hidden;
-              }
+      .btn-primary {
+        margin-top: 9px;
+        height: 40px;
+        background: linear-gradient(135deg, #3A7BD5 0%, #1E4F8A 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-family: 'Manrope', sans-serif;
+        font-size: 13.5px;
+        font-weight: 800;
+        letter-spacing: 0.3px;
+        cursor: pointer;
+        width: 100%;
+        transition: transform 0.18s, box-shadow 0.2s;
+        box-shadow: 0 5px 16px rgba(30, 79, 138, 0.28);
+        position: relative;
+        overflow: hidden;
+      }
 
-              .btn-primary::after {
-                content: '';
-                position: absolute;
-                inset: 0;
-                background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent);
-                pointer-events: none;
-              }
+      .btn-primary::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent);
+        pointer-events: none;
+      }
 
-              .btn-primary:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 10px 28px rgba(30, 79, 138, 0.34);
-              }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(30, 79, 138, 0.34);
+      }
 
-              .btn-primary:active {
-                transform: translateY(0);
-              }
+      .btn-primary:active {
+        transform: translateY(0);
+      }
 
-              .privacy {
-                margin-top: 5px;
-                font-size: 11px;
-                color: var(--muted);
-                text-align: center;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 5px;
-              }
+      .privacy {
+        margin-top: 5px;
+        font-size: 11px;
+        color: var(--muted);
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+      }
 
-              /* ── LEVELS ── */
-              .levels {
-                grid-area: levels;
-                background: var(--white);
-                border-top: 1px solid var(--border);
-                padding: 10px 48px 14px;
-              }
+      /* ── LEVELS ── */
+      .levels {
+        grid-area: levels;
+        background: var(--white);
+        border-top: 1px solid var(--border);
+        padding: 10px 48px 14px;
+      }
 
-              .levels-head {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 8px;
-              }
+      .levels-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      }
 
-              .levels-head h3 {
-                font-size: 13.5px;
-                font-weight: 700;
-                color: var(--text);
-                letter-spacing: -0.2px;
-              }
+      .levels-head h3 {
+        font-size: 13.5px;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: -0.2px;
+      }
 
-              .levels-grid {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 9px;
-              }
+      .levels-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 9px;
+      }
 
-              .level-card {
-                background: var(--bg);
-                border: 1.5px solid var(--border);
-                border-radius: 11px;
-                padding: 9px 11px;
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-                transition: border-color 0.2s, box-shadow 0.2s, transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-              }
+      .level-card {
+        background: var(--bg);
+        border: 1.5px solid var(--border);
+        border-radius: 11px;
+        padding: 9px 11px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        transition: border-color 0.2s, box-shadow 0.2s, transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
 
-              .level-card:hover {
-                border-color: var(--accent);
-                box-shadow: 0 6px 20px rgba(58, 123, 213, 0.11);
-              }
+      .level-card:hover {
+        border-color: var(--accent);
+        box-shadow: 0 6px 20px rgba(58, 123, 213, 0.11);
+      }
 
-              .level-num {
-                font-size: 9.5px;
-                font-weight: 800;
-                letter-spacing: 1.2px;
-                text-transform: uppercase;
-              }
+      .level-num {
+        font-size: 9.5px;
+        font-weight: 800;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+      }
 
-              .level-icon {
-                width: 28px;
-                height: 28px;
-                border-radius: 7px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              }
+      .level-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-              .level-icon svg {
-                width: 15px;
-                height: 15px;
-              }
+      .level-icon svg {
+        width: 15px;
+        height: 15px;
+      }
 
-              .level-title {
-                font-size: 11.5px;
-                font-weight: 700;
-                color: var(--text);
-                line-height: 1.35;
-              }
+      .level-title {
+        font-size: 11.5px;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.35;
+      }
 
-              .level-desc {
-                font-size: 10.5px;
-                color: var(--muted);
-                line-height: 1.5;
-              }
+      .level-desc {
+        font-size: 10.5px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
 
-              /* animations */
-              @keyframes fadeUp {
-                from {
-                  opacity: 0;
-                  transform: translateY(20px);
-                }
+      /* animations */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
 
-                to {
-                  opacity: 1;
-                  transform: translateY(0);
-                }
-              }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-              .hero>* {
-                animation: fadeUp 0.55s ease both;
-              }
+      .hero>* {
+        animation: fadeUp 0.55s ease both;
+      }
 
-              .hero>*:nth-child(1) {
-                animation-delay: 0.05s;
-              }
+      .hero>*:nth-child(1) {
+        animation-delay: 0.05s;
+      }
 
-              .hero>*:nth-child(2) {
-                animation-delay: 0.13s;
-              }
+      .hero>*:nth-child(2) {
+        animation-delay: 0.13s;
+      }
 
-              .hero>*:nth-child(3) {
-                animation-delay: 0.2s;
-              }
+      .hero>*:nth-child(3) {
+        animation-delay: 0.2s;
+      }
 
-              .hero>*:nth-child(4) {
-                animation-delay: 0.28s;
-              }
+      .hero>*:nth-child(4) {
+        animation-delay: 0.28s;
+      }
 
-              .form-panel {
-                animation: fadeUp 0.55s 0.12s ease both;
-              }
+      .form-panel {
+        animation: fadeUp 0.55s 0.12s ease both;
+      }
 
-              .level-card {
-                animation: fadeUp 0.45s ease both;
-              }
+      .level-card {
+        animation: fadeUp 0.45s ease both;
+      }
 
-              .level-card:nth-child(1) {
-                animation-delay: 0.35s;
-              }
+      .level-card:nth-child(1) {
+        animation-delay: 0.35s;
+      }
 
-              .level-card:nth-child(2) {
-                animation-delay: 0.42s;
-              }
+      .level-card:nth-child(2) {
+        animation-delay: 0.42s;
+      }
 
-              .level-card:nth-child(3) {
-                animation-delay: 0.49s;
-              }
+      .level-card:nth-child(3) {
+        animation-delay: 0.49s;
+      }
 
-              .level-card:nth-child(4) {
-                animation-delay: 0.56s;
-              }
+      .level-card:nth-child(4) {
+        animation-delay: 0.56s;
+      }
 
-              /* ══════════════════════════════════════════════
-   RESPONSIVE — tablet & mobile (≤ 900px)
+      /* ══════════════════════════════════════════════
+RESPONSIVE — tablet & mobile (≤ 900px)
 ══════════════════════════════════════════════ */
-              @media (max-width: 900px) {
+      @media (max-width: 900px) {
 
-                .page {
-                  grid-template-columns: 1fr;
-                  grid-template-rows: 60px auto auto auto;
-                  grid-template-areas:
-                    "header"
-                    "hero"
-                    "form"
-                    "levels";
-                }
+        .page {
+          grid-template-columns: 1fr;
+          grid-template-rows: 60px minmax(0, auto) auto auto;
+          grid-template-areas:
+            "header"
+            "hero"
+            "form"
+            "levels";
+        }
 
-                /* Hero: center everything */
-                .hero {
-                  padding: 28px 24px 32px;
-                  align-items: center;
-                  text-align: center;
-                }
+        /* Hero: center everything, extra bottom padding so form doesn't overlap diagram */
+        .hero {
+          padding: 28px 24px 56px;
+          align-items: center;
+          text-align: center;
+        }
 
-                .eyebrow {
-                  justify-content: center;
-                }
+        .eyebrow {
+          justify-content: center;
+        }
 
-                h1 {
-                  font-size: 28px;
-                  max-width: 100%;
-                }
+        h1 {
+          font-size: 28px;
+          max-width: 100%;
+        }
 
-                .hero-sub {
-                  max-width: 520px;
-                }
+        .hero-sub {
+          max-width: 520px;
+        }
 
-                /* Diagram: full width within safe padding */
-                .diagram-outer {
-                  max-width: 480px;
-                  width: calc(100% - 32px);
-                  margin-left: auto;
-                  margin-right: auto;
-                }
+        /* Diagram: full width within safe padding, no fixed min so it scales */
+        .diagram-outer {
+          max-width: min(480px, calc(100vw - 32px));
+          width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+        }
 
-                /* Form: full width, centered, no left border */
-                .form-panel {
-                  border-left: none;
-                  border-top: 1px solid var(--border);
-                  padding: 28px 24px;
-                  align-items: center;
-                }
+        /* No diagram interaction on touch/narrow viewports */
+        .diagram-outer .seg-group {
+          pointer-events: none;
+          cursor: default;
+        }
+        .diagram-outer .seg-group:hover .glow-ring {
+          opacity: 0;
+        }
 
-                .form-inner {
-                  width: 100%;
-                  max-width: 560px;
-                  padding: 0;
-                }
+        /* Form: full width, centered, no left border */
+        .form-panel {
+          border-left: none;
+          border-top: 1px solid var(--border);
+          padding: 28px 24px;
+          align-items: center;
+        }
 
-                /* Levels: horizontal scroll */
-                .levels {
-                  padding: 16px 24px 20px;
-                  border-top: 1px solid var(--border);
-                }
+        .form-inner {
+          width: 100%;
+          max-width: 560px;
+          padding: 0;
+        }
 
-                .levels-grid {
-                  display: flex;
-                  flex-wrap: nowrap;
-                  overflow-x: auto;
-                  gap: 10px;
-                  padding-bottom: 8px;
-                  scrollbar-width: thin;
-                  scrollbar-color: var(--border) transparent;
-                  -webkit-overflow-scrolling: touch;
-                }
+        /* Levels: horizontal scroll */
+        .levels {
+          padding: 16px 24px 20px;
+          border-top: 1px solid var(--border);
+        }
 
-                .levels-grid::-webkit-scrollbar {
-                  height: 4px;
-                }
+        .levels-grid {
+          display: flex;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          gap: 10px;
+          padding-bottom: 8px;
+          scrollbar-width: thin;
+          scrollbar-color: var(--border) transparent;
+          -webkit-overflow-scrolling: touch;
+        }
 
-                .levels-grid::-webkit-scrollbar-track {
-                  background: transparent;
-                }
+        .levels-grid::-webkit-scrollbar {
+          height: 4px;
+        }
 
-                .levels-grid::-webkit-scrollbar-thumb {
-                  background: var(--border);
-                  border-radius: 4px;
-                }
+        .levels-grid::-webkit-scrollbar-track {
+          background: transparent;
+        }
 
-                .level-card {
-                  flex: 0 0 200px;
-                  min-width: 200px;
-                }
-              }
+        .levels-grid::-webkit-scrollbar-thumb {
+          background: var(--border);
+          border-radius: 4px;
+        }
 
-              /* ── mobile only (≤ 480px) ── */
-              @media (max-width: 480px) {
-                header {
-                  padding: 0 20px;
-                }
+        .level-card {
+          flex: 0 0 200px;
+          min-width: 200px;
+        }
+      }
 
-                .logo {
-                  font-size: 15px;
-                }
+      /* ── mobile only (≤ 480px) ── */
+      @media (max-width: 480px) {
+        .page {
+          min-width: 0;
+        }
 
-                .header-badge span {
-                  display: none;
-                }
+        .page > * {
+          min-width: 0;
+        }
 
-                .hero {
-                  padding: 20px 16px 24px;
-                }
+        header {
+          padding: 0 16px;
+        }
 
-                h1 {
-                  font-size: 22px;
-                }
+        .logo {
+          font-size: 15px;
+        }
 
-                .hero-sub {
-                  font-size: 13px;
-                }
+        .header-badge span {
+          display: none;
+        }
 
-                .diagram-outer {
-                  width: calc(100% - 16px);
-                  max-width: 100%;
-                }
+        .hero {
+          padding: 20px 16px 24px;
+          min-width: 0;
+        }
 
-                .form-panel {
-                  padding: 22px 16px;
-                }
+        h1 {
+          font-size: 22px;
+          max-width: 100%;
+          overflow-wrap: break-word;
+        }
 
-                .levels {
-                  padding: 14px 16px 18px;
-                }
+        .hero-sub {
+          font-size: 13px;
+          max-width: 100%;
+        }
 
-                .level-card {
-                  flex: 0 0 175px;
-                  min-width: 175px;
-                }
-              }
-            </style>
-          </head>
+        .diagram-outer {
+          width: 100%;
+          max-width: 100%;
+          min-width: 0;
+          margin-left: auto;
+          margin-right: auto;
+        }
 
-          <body>
-            <div class="page">
+        .diagram-outer svg {
+          max-width: 100%;
+          width: 100%;
+          height: auto;
+        }
 
-              <!-- HEADER -->
-              <header>
-                <div class="logo">
-                  <div class="logo-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3">
-                      <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2z" />
-                      <path d="M9 12l2 2 4-4" />
-                    </svg>
-                  </div>
-                  RentStandard
-                </div>
-                <div class="header-badge">
-                  <div class="badge-dot"></div>
-                  Пилотная программа открыта
-                </div>
-              </header>
+        .form-panel {
+          padding: 22px 16px;
+          min-width: 0;
+        }
 
-              <!-- HERO -->
-              <section class="hero">
-                <div class="eyebrow">Защита арендодателя · 4 уровня</div>
-                <h1>Безопасный договор найма —<br><em>от рисков к порядку</em></h1>
-                <p class="hero-sub">Комплексная юридическая и страховая защита для собственников жилья. Профессиональный
-                  договор, верификация, медиация и страховое покрытие PZU.</p>
+        .form-inner {
+          max-width: 100%;
+          padding: 0 16px;
+        }
 
-                <!--
-    SVG viewBox="-10 74 580 412"
-    Centre of ring: 280,280  r=140  stroke-width=54
-    All label cards fit within x=10..550, y=94..466
-    viewBox adds 20px padding on each side
-  -->
-                <div class="diagram-outer">
-                  <svg viewBox="-10 74 580 412" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-                    <defs>
-                      <!-- Segment gradient 1: blue spark -->
-                      <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#5EB3F7" />
-                        <stop offset="100%" stop-color="#1A5FC4" />
-                      </linearGradient>
-                      <!-- Segment gradient 2: golden -->
-                      <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#F5C842" />
-                        <stop offset="100%" stop-color="#B8770A" />
-                      </linearGradient>
-                      <!-- Segment gradient 3: slate-steel -->
-                      <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#7DB5D4" />
-                        <stop offset="100%" stop-color="#3A607A" />
-                      </linearGradient>
-                      <!-- Segment gradient 4: deep navy -->
-                      <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#3A7BD5" />
-                        <stop offset="100%" stop-color="#0E2E5C" />
-                      </linearGradient>
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
 
-                      <!-- Glow filters per segment -->
-                      <filter id="glow1" x="-40%" y="-40%" width="180%" height="180%">
-                        <feGaussianBlur stdDeviation="7" result="blur" />
-                        <feFlood flood-color="#5EB3F7" flood-opacity="0.55" result="col" />
-                        <feComposite in="col" in2="blur" operator="in" result="glow" />
-                        <feMerge>
-                          <feMergeNode in="glow" />
-                          <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                      </filter>
-                      <filter id="glow2" x="-40%" y="-40%" width="180%" height="180%">
-                        <feGaussianBlur stdDeviation="7" result="blur" />
-                        <feFlood flood-color="#F5C842" flood-opacity="0.55" result="col" />
-                        <feComposite in="col" in2="blur" operator="in" result="glow" />
-                        <feMerge>
-                          <feMergeNode in="glow" />
-                          <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                      </filter>
-                      <filter id="glow3" x="-40%" y="-40%" width="180%" height="180%">
-                        <feGaussianBlur stdDeviation="7" result="blur" />
-                        <feFlood flood-color="#7DB5D4" flood-opacity="0.55" result="col" />
-                        <feComposite in="col" in2="blur" operator="in" result="glow" />
-                        <feMerge>
-                          <feMergeNode in="glow" />
-                          <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                      </filter>
-                      <filter id="glow4" x="-40%" y="-40%" width="180%" height="180%">
-                        <feGaussianBlur stdDeviation="7" result="blur" />
-                        <feFlood flood-color="#3A7BD5" flood-opacity="0.55" result="col" />
-                        <feComposite in="col" in2="blur" operator="in" result="glow" />
-                        <feMerge>
-                          <feMergeNode in="glow" />
-                          <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                      </filter>
+        .form-grid input,
+        .form-grid select,
+        .form-grid .btn-primary {
+          width: 100%;
+          max-width: 100%;
+          min-width: 0;
+        }
 
-                      <!-- Center shadow -->
-                      <filter id="cshadow">
-                        <feDropShadow dx="0" dy="4" stdDeviation="14" flood-color="#1E4F8A" flood-opacity="0.15" />
-                      </filter>
+        .levels {
+          padding: 14px 16px 18px;
+          min-width: 0;
+        }
 
-                      <!-- Card shadow -->
-                      <filter id="cardf" x="-25%" y="-25%" width="150%" height="150%">
-                        <feDropShadow dx="0" dy="3" stdDeviation="8" flood-color="#0A1A3A" flood-opacity="0.13" />
-                      </filter>
+        .level-card {
+          flex: 0 0 175px;
+          min-width: 175px;
+        }
+      }
+    </style>
+    </head>
 
-                      <!-- Subtle outer ring glow -->
-                      <filter id="ringglow" x="-10%" y="-10%" width="120%" height="120%">
-                        <feGaussianBlur stdDeviation="3" result="blur" />
-                        <feMerge>
-                          <feMergeNode in="blur" />
-                          <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                      </filter>
-                    </defs>
+  <body>
+    <div class="page">
 
+      <!-- HEADER -->
+      <header>
+        <div class="logo">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3">
+              <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2z" />
+              <path d="M9 12l2 2 4-4" />
+            </svg>
+          </div>
+          RentStandard
+        </div>
+        <div class="header-badge">
+          <div class="badge-dot"></div>
+          Пилотная программа открыта
+        </div>
+      </header>
 
-                    <!-- ── TRACK ── -->
-                    <circle cx="280" cy="280" r="140" fill="none" stroke="#E0EAF5" stroke-width="58" />
+      <!-- HERO -->
+      <section class="hero">
+        <div class="eyebrow">Защита арендодателя · 4 уровня</div>
+        <h1>Безопасный договор найма —<br><em>от рисков к порядку</em></h1>
+        <p class="hero-sub">Комплексная юридическая и страховая защита для собственников жилья. Профессиональный
+          договор, верификация, медиация и страховое покрытие PZU.</p>
 
-                    <!-- ══ SEGMENT 1 — top-right — blue ══ -->
-                    <g class="seg-group" id="sg1">
-                      <!-- glow bloom behind -->
-                      <circle class="glow-ring" cx="280" cy="280" r="140" stroke="url(#g1)"
-                        stroke-dasharray="213.9 879.6" stroke-dashoffset="0" transform="rotate(-90 280 280)"
-                        filter="url(#glow1)" />
-                      <!-- main arc -->
-                      <circle class="seg-animated s1" cx="280" cy="280" r="140" fill="none" stroke="url(#g1)"
-                        stroke-width="54" stroke-linecap="butt" stroke-dasharray="213.9 879.6" stroke-dashoffset="0"
-                        transform="rotate(-90 280 280)" />
-                      <!-- invisible wide hit area -->
-                      <circle class="seg-hit" cx="280" cy="280" r="140" stroke-dasharray="213.9 879.6"
-                        stroke-dashoffset="0" transform="rotate(-90 280 280)" />
+        <!--
+        SVG viewBox="-10 74 580 412"
+        Centre of ring: 280,280  r=140  stroke-width=54
+        All label cards fit within x=10..550, y=94..466
+        viewBox adds 20px padding on each side
+        -->
+        <div class="diagram-outer">
+          <svg viewBox="-10 74 580 412" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <!-- Segment gradient 1: blue spark -->
+              <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#5EB3F7" />
+                <stop offset="100%" stop-color="#1A5FC4" />
+              </linearGradient>
+              <!-- Segment gradient 2: golden -->
+              <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#F5C842" />
+                <stop offset="100%" stop-color="#B8770A" />
+              </linearGradient>
+              <!-- Segment gradient 3: slate-steel -->
+              <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#7DB5D4" />
+                <stop offset="100%" stop-color="#3A607A" />
+              </linearGradient>
+              <!-- Segment gradient 4: deep navy -->
+              <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3A7BD5" />
+                <stop offset="100%" stop-color="#0E2E5C" />
+              </linearGradient>
 
-                      <!-- connector -->
-                      <line x1="372" y1="188" x2="400" y2="158" stroke="#5EB3F7" stroke-width="1.5" opacity="0.7"
-                        stroke-dasharray="3,3" />
+              <!-- Glow filters per segment -->
+              <filter id="glow1" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="7" result="blur" />
+                <feFlood flood-color="#5EB3F7" flood-opacity="0.55" result="col" />
+                <feComposite in="col" in2="blur" operator="in" result="glow" />
+                <feMerge>
+                  <feMergeNode in="glow" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <filter id="glow2" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="7" result="blur" />
+                <feFlood flood-color="#F5C842" flood-opacity="0.55" result="col" />
+                <feComposite in="col" in2="blur" operator="in" result="glow" />
+                <feMerge>
+                  <feMergeNode in="glow" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <filter id="glow3" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="7" result="blur" />
+                <feFlood flood-color="#7DB5D4" flood-opacity="0.55" result="col" />
+                <feComposite in="col" in2="blur" operator="in" result="glow" />
+                <feMerge>
+                  <feMergeNode in="glow" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <filter id="glow4" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="7" result="blur" />
+                <feFlood flood-color="#3A7BD5" flood-opacity="0.55" result="col" />
+                <feComposite in="col" in2="blur" operator="in" result="glow" />
+                <feMerge>
+                  <feMergeNode in="glow" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
 
-                      <!-- label card -->
-                      <g class="label-card" transform="translate(398,94)">
-                        <rect width="152" height="72" rx="11" fill="white" stroke="#BDD8F8" stroke-width="1.3"
-                          filter="url(#cardf)" />
-                        <!-- accent bar -->
-                        <rect width="4" height="52" x="0" y="10" rx="2" fill="url(#g1)" />
-                        <!-- number pill -->
-                        <rect x="12" y="11" width="38" height="18" rx="9" fill="url(#g1)" />
-                        <text x="31" y="23.5" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800"
-                          font-size="11" fill="white">1</text>
-                        <!-- label text -->
-                        <text x="58" y="23" font-family="Manrope,sans-serif" font-weight="700" font-size="10.5"
-                          fill="#3A7BD5" letter-spacing="0.3">УРОВЕНЬ</text>
-                        <text x="12" y="43" font-family="Manrope,sans-serif" font-weight="700" font-size="12"
-                          fill="#1C2333">Верификация</text>
-                        <text x="12" y="58" font-family="Manrope,sans-serif" font-size="11" fill="#6B7280">и эл.
-                          подписание</text>
-                      </g>
-                    </g>
+              <!-- Center shadow -->
+              <filter id="cshadow">
+                <feDropShadow dx="0" dy="4" stdDeviation="14" flood-color="#1E4F8A" flood-opacity="0.15" />
+              </filter>
 
-                    <!-- ══ SEGMENT 2 — bottom-right — gold ══ -->
-                    <g class="seg-group" id="sg2">
-                      <circle class="glow-ring" cx="280" cy="280" r="140" stroke="url(#g2)"
-                        stroke-dasharray="213.9 879.6" stroke-dashoffset="-219.9" transform="rotate(-90 280 280)"
-                        filter="url(#glow2)" />
-                      <circle class="seg-animated s2" cx="280" cy="280" r="140" fill="none" stroke="url(#g2)"
-                        stroke-width="54" stroke-linecap="butt" stroke-dasharray="213.9 879.6"
-                        stroke-dashoffset="-219.9" transform="rotate(-90 280 280)" />
-                      <circle class="seg-hit" cx="280" cy="280" r="140" stroke-dasharray="213.9 879.6"
-                        stroke-dashoffset="-219.9" transform="rotate(-90 280 280)" />
+              <!-- Card shadow -->
+              <filter id="cardf" x="-25%" y="-25%" width="150%" height="150%">
+                <feDropShadow dx="0" dy="3" stdDeviation="8" flood-color="#0A1A3A" flood-opacity="0.13" />
+              </filter>
 
-                      <line x1="372" y1="372" x2="400" y2="402" stroke="#F5C842" stroke-width="1.5" opacity="0.7"
-                        stroke-dasharray="3,3" />
-
-                      <g class="label-card" transform="translate(398,394)">
-                        <rect width="152" height="72" rx="11" fill="white" stroke="#F0D87A" stroke-width="1.3"
-                          filter="url(#cardf)" />
-                        <rect width="4" height="52" x="0" y="10" rx="2" fill="url(#g2)" />
-                        <rect x="12" y="11" width="38" height="18" rx="9" fill="url(#g2)" />
-                        <text x="31" y="23.5" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800"
-                          font-size="11" fill="white">2</text>
-                        <text x="58" y="23" font-family="Manrope,sans-serif" font-weight="700" font-size="10.5"
-                          fill="#B8770A" letter-spacing="0.3">УРОВЕНЬ</text>
-                        <text x="12" y="43" font-family="Manrope,sans-serif" font-weight="700" font-size="12"
-                          fill="#1C2333">Медиация</text>
-                        <text x="12" y="58" font-family="Manrope,sans-serif" font-size="11" fill="#6B7280">при
-                          спорах</text>
-                      </g>
-                    </g>
-
-                    <!-- ══ SEGMENT 3 — bottom-left — slate ══ -->
-                    <g class="seg-group" id="sg3">
-                      <circle class="glow-ring" cx="280" cy="280" r="140" stroke="url(#g3)"
-                        stroke-dasharray="213.9 879.6" stroke-dashoffset="-439.8" transform="rotate(-90 280 280)"
-                        filter="url(#glow3)" />
-                      <circle class="seg-animated s3" cx="280" cy="280" r="140" fill="none" stroke="url(#g3)"
-                        stroke-width="54" stroke-linecap="butt" stroke-dasharray="213.9 879.6"
-                        stroke-dashoffset="-439.8" transform="rotate(-90 280 280)" />
-                      <circle class="seg-hit" cx="280" cy="280" r="140" stroke-dasharray="213.9 879.6"
-                        stroke-dashoffset="-439.8" transform="rotate(-90 280 280)" />
-
-                      <line x1="188" y1="372" x2="160" y2="402" stroke="#7DB5D4" stroke-width="1.5" opacity="0.7"
-                        stroke-dasharray="3,3" />
-
-                      <g class="label-card" transform="translate(10,394)">
-                        <rect width="152" height="72" rx="11" fill="white" stroke="#B6D4E8" stroke-width="1.3"
-                          filter="url(#cardf)" />
-                        <rect width="4" height="52" x="0" y="10" rx="2" fill="url(#g3)" />
-                        <rect x="12" y="11" width="38" height="18" rx="9" fill="url(#g3)" />
-                        <text x="31" y="23.5" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800"
-                          font-size="11" fill="white">3</text>
-                        <text x="58" y="23" font-family="Manrope,sans-serif" font-weight="700" font-size="10.5"
-                          fill="#3A607A" letter-spacing="0.3">УРОВЕНЬ</text>
-                        <text x="12" y="43" font-family="Manrope,sans-serif" font-weight="700" font-size="12"
-                          fill="#1C2333">Юридическая</text>
-                        <text x="12" y="58" font-family="Manrope,sans-serif" font-size="11"
-                          fill="#6B7280">поддержка</text>
-                      </g>
-                    </g>
-
-                    <!-- ══ SEGMENT 4 — top-left — navy ══ -->
-                    <g class="seg-group" id="sg4">
-                      <circle class="glow-ring" cx="280" cy="280" r="140" stroke="url(#g4)"
-                        stroke-dasharray="213.9 879.6" stroke-dashoffset="-659.7" transform="rotate(-90 280 280)"
-                        filter="url(#glow4)" />
-                      <circle class="seg-animated s4" cx="280" cy="280" r="140" fill="none" stroke="url(#g4)"
-                        stroke-width="54" stroke-linecap="butt" stroke-dasharray="213.9 879.6"
-                        stroke-dashoffset="-659.7" transform="rotate(-90 280 280)" />
-                      <circle class="seg-hit" cx="280" cy="280" r="140" stroke-dasharray="213.9 879.6"
-                        stroke-dashoffset="-659.7" transform="rotate(-90 280 280)" />
-
-                      <line x1="188" y1="188" x2="160" y2="158" stroke="#3A7BD5" stroke-width="1.5" opacity="0.7"
-                        stroke-dasharray="3,3" />
-
-                      <g class="label-card" transform="translate(10,94)">
-                        <rect width="152" height="72" rx="11" fill="white" stroke="#B0C8E8" stroke-width="1.3"
-                          filter="url(#cardf)" />
-                        <rect width="4" height="52" x="0" y="10" rx="2" fill="url(#g4)" />
-                        <rect x="12" y="11" width="38" height="18" rx="9" fill="url(#g4)" />
-                        <text x="31" y="23.5" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800"
-                          font-size="11" fill="white">4</text>
-                        <text x="58" y="23" font-family="Manrope,sans-serif" font-weight="700" font-size="10.5"
-                          fill="#1E4F8A" letter-spacing="0.3">УРОВЕНЬ</text>
-                        <text x="12" y="43" font-family="Manrope,sans-serif" font-weight="700" font-size="12"
-                          fill="#1C2333">Страхование</text>
-                        <text x="12" y="58" font-family="Manrope,sans-serif" font-size="11" fill="#6B7280">рисков с
-                          PZU</text>
-                      </g>
-                    </g>
-
-                    <!-- ── CENTER CIRCLE ── -->
-                    <circle cx="280" cy="280" r="100" fill="white" filter="url(#cshadow)" />
-                    <!-- subtle ring inside -->
-                    <circle cx="280" cy="280" r="86" fill="none" stroke="#EAF1FB" stroke-width="1.5" />
-
-                    <!-- shield icon -->
-                    <g transform="translate(254,244) scale(1.1)">
-                      <defs>
-                        <linearGradient id="shieldg" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stop-color="#5EB3F7" />
-                          <stop offset="100%" stop-color="#0E2E5C" />
-                        </linearGradient>
-                      </defs>
-                      <path d="M24 2L4 10v10c0 12 9 22.6 20 25.3C34.8 42.6 44 32 44 20V10L24 2z" fill="url(#shieldg)"
-                        opacity="0.15" />
-                      <path d="M24 2L4 10v10c0 12 9 22.6 20 25.3C34.8 42.6 44 32 44 20V10L24 2z" fill="none"
-                        stroke="url(#shieldg)" stroke-width="2" stroke-linejoin="round" />
-                      <path d="M16 25l6 6 11-13" stroke="url(#shieldg)" stroke-width="2.5" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                    </g>
-
-                    <text x="280" y="326" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800"
-                      font-size="13" fill="#1E4F8A" letter-spacing="-0.3">Безопасный</text>
-                    <text x="280" y="343" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="700"
-                      font-size="12" fill="#4B6A9B" letter-spacing="-0.2">договор найма</text>
+              <!-- Subtle outer ring glow -->
+              <filter id="ringglow" x="-10%" y="-10%" width="120%" height="120%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              </defs>
 
 
-                  </svg>
-                </div>
-              </section>
+            <!-- ── TRACK ── -->
+            <circle cx="280" cy="280" r="140" fill="none" stroke="#E0EAF5" stroke-width="58" />
 
-              <!-- FORM PANEL -->
-              <aside class="form-panel">
-                <div class="form-inner">
-                  <div class="form-heading">
-                    <h2>Войдите в пилотную<br>программу</h2>
-                  </div>
-                  <p class="form-sub">Оставьте заявку — мы свяжемся, чтобы подобрать подходящий уровень защиты.</p>
+            <!-- ══ SEGMENT 1 — top-right — blue ══ -->
+            <g class="seg-group" id="sg1">
+              <!-- glow bloom behind -->
+              <circle class="glow-ring" cx="280" cy="280" r="140" stroke="url(#g1)" stroke-dasharray="213.9 879.6"
+                stroke-dashoffset="0" transform="rotate(-90 280 280)" filter="url(#glow1)" />
+              <!-- main arc -->
+              <circle class="seg-animated s1" cx="280" cy="280" r="140" fill="none" stroke="url(#g1)" stroke-width="54"
+                stroke-linecap="butt" stroke-dasharray="213.9 879.6" stroke-dashoffset="0" transform="rotate(-90 280 280)" />
+              <!-- invisible wide hit area -->
+              <circle class="seg-hit" cx="280" cy="280" r="140" stroke-dasharray="213.9 879.6" stroke-dashoffset="0"
+                transform="rotate(-90 280 280)" />
 
-                  <div class="form-grid">
-                    <div class="form-group">
-                      <label>Имя <span class="req">*</span></label>
-                      <input type="text" placeholder="Иван Петров">
-                    </div>
-                    <div class="form-group">
-                      <label>Email <span class="req">*</span></label>
-                      <input type="email" placeholder="ivan@mail.ru">
-                    </div>
-                    <div class="form-group">
-                      <label>Телефон <span class="opt">(необязательно)</span></label>
-                      <input type="tel" placeholder="+7 (___) ___-__-__">
-                    </div>
-                    <div class="form-group">
-                      <label>Город <span class="req">*</span></label>
-                      <input type="text" placeholder="Москва">
-                    </div>
-                    <div class="form-group full">
-                      <label>Основная проблема <span class="req">*</span></label>
-                      <select>
-                        <option value="" disabled selected>Выберите из списка</option>
-                        <option>Порча имущества</option>
-                        <option>Задержка платежей</option>
-                        <option>Юридические риски и выселение</option>
-                        <option>Сложность выселения по стандартному договору</option>
-                        <option>Незаконная субаренда</option>
-                        <option>Слабый договор</option>
-                        <option>Проблемы с пропиской / регистрацией</option>
-                        <option>Постоянные требования арендатора</option>
-                        <option>Конфликты и жалобы</option>
-                        <option>Другое</option>
-                      </select>
-                    </div>
-                  </div>
+              <!-- connector -->
+              <line x1="372" y1="188" x2="400" y2="158" stroke="#5EB3F7" stroke-width="1.5" opacity="0.7" stroke-dasharray="3,3" />
 
-                  <button class="btn-primary">Войти в пилотную программу →</button>
+              <!-- label card -->
+              <g class="label-card" transform="translate(398,94)">
+                <rect width="152" height="72" rx="11" fill="white" stroke="#BDD8F8" stroke-width="1.3" filter="url(#cardf)" />
+                <!-- accent bar -->
+                <rect width="4" height="52" x="0" y="10" rx="2" fill="url(#g1)" />
+                <!-- number pill -->
+                <rect x="12" y="11" width="38" height="18" rx="9" fill="url(#g1)" />
+                <text x="31" y="23.5" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800" font-size="11"
+                  fill="white">1</text>
+                <!-- label text -->
+                <text x="58" y="23" font-family="Manrope,sans-serif" font-weight="700" font-size="10.5" fill="#3A7BD5"
+                  letter-spacing="0.3">УРОВЕНЬ</text>
+                <text x="12" y="43" font-family="Manrope,sans-serif" font-weight="700" font-size="12"
+                  fill="#1C2333">Верификация</text>
+                <text x="12" y="58" font-family="Manrope,sans-serif" font-size="11" fill="#6B7280">и эл.
+                  подписание</text>
+              </g>
+              </g>
 
-                  <p class="privacy">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2">
-                      <rect x="3" y="11" width="18" height="11" rx="2" />
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
-                    Мы не передаём ваши данные третьим лицам.
-                  </p>
-                </div>
-              </aside>
+            <!-- ══ SEGMENT 2 — bottom-right — gold ══ -->
+            <g class="seg-group" id="sg2">
+              <circle class="glow-ring" cx="280" cy="280" r="140" stroke="url(#g2)" stroke-dasharray="213.9 879.6"
+                stroke-dashoffset="-219.9" transform="rotate(-90 280 280)" filter="url(#glow2)" />
+              <circle class="seg-animated s2" cx="280" cy="280" r="140" fill="none" stroke="url(#g2)" stroke-width="54"
+                stroke-linecap="butt" stroke-dasharray="213.9 879.6" stroke-dashoffset="-219.9" transform="rotate(-90 280 280)" />
+              <circle class="seg-hit" cx="280" cy="280" r="140" stroke-dasharray="213.9 879.6" stroke-dashoffset="-219.9"
+                transform="rotate(-90 280 280)" />
 
-              <!-- LEVELS BAR -->
-              <section class="levels">
-                <div class="levels-head">
-                  <h3>Четыре уровня защиты — от договора до страховки</h3>
-                  <div style="font-size:12px;color:var(--muted)">Наведите на карточку</div>
-                </div>
-                <div class="levels-grid">
+              <line x1="372" y1="372" x2="400" y2="402" stroke="#F5C842" stroke-width="1.5" opacity="0.7" stroke-dasharray="3,3" />
 
-                  <div class="level-card" style="border-top:3px solid #3A7BD5">
-                    <div class="level-num" style="color:#3A7BD5">Уровень 1</div>
-                    <div class="level-icon" style="background:linear-gradient(135deg,#EBF4FF,#D0E8FF)">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#3A7BD5" stroke-width="1.8">
-                        <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2z" />
-                        <path d="M9 12l2 2 4-4" />
-                      </svg>
-                    </div>
-                    <div class="level-title">Верификация и электронное подписание</div>
-                    <div class="level-desc">Проверяем обе стороны и обеспечиваем подписание защищённой версии с полной
-                      юридической силой.</div>
-                  </div>
+              <g class="label-card" transform="translate(398,394)">
+                <rect width="152" height="72" rx="11" fill="white" stroke="#F0D87A" stroke-width="1.3" filter="url(#cardf)" />
+                <rect width="4" height="52" x="0" y="10" rx="2" fill="url(#g2)" />
+                <rect x="12" y="11" width="38" height="18" rx="9" fill="url(#g2)" />
+                <text x="31" y="23.5" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800" font-size="11"
+                  fill="white">2</text>
+                <text x="58" y="23" font-family="Manrope,sans-serif" font-weight="700" font-size="10.5" fill="#B8770A"
+                  letter-spacing="0.3">УРОВЕНЬ</text>
+                <text x="12" y="43" font-family="Manrope,sans-serif" font-weight="700" font-size="12" fill="#1C2333">Медиация</text>
+                <text x="12" y="58" font-family="Manrope,sans-serif" font-size="11" fill="#6B7280">при
+                  спорах</text>
+              </g>
+              </g>
 
-                  <div class="level-card" style="border-top:3px solid #C8971F">
-                    <div class="level-num" style="color:#C8971F">Уровень 2</div>
-                    <div class="level-icon" style="background:linear-gradient(135deg,#FDF8E1,#FAE88A)">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#B8770A" stroke-width="1.8">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                        <circle cx="9" cy="7" r="4" />
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                      </svg>
-                    </div>
-                    <div class="level-title">Медиация при спорах и конфликтах</div>
-                    <div class="level-desc">Медиаторы урегулируют конфликты вне суда по ставкам ниже рыночных — быстро и
-                      без суда.</div>
-                  </div>
+            <!-- ══ SEGMENT 3 — bottom-left — slate ══ -->
+            <g class="seg-group" id="sg3">
+              <circle class="glow-ring" cx="280" cy="280" r="140" stroke="url(#g3)" stroke-dasharray="213.9 879.6"
+                stroke-dashoffset="-439.8" transform="rotate(-90 280 280)" filter="url(#glow3)" />
+              <circle class="seg-animated s3" cx="280" cy="280" r="140" fill="none" stroke="url(#g3)" stroke-width="54"
+                stroke-linecap="butt" stroke-dasharray="213.9 879.6" stroke-dashoffset="-439.8" transform="rotate(-90 280 280)" />
+              <circle class="seg-hit" cx="280" cy="280" r="140" stroke-dasharray="213.9 879.6" stroke-dashoffset="-439.8"
+                transform="rotate(-90 280 280)" />
 
-                  <div class="level-card" style="border-top:3px solid #5A8FA8">
-                    <div class="level-num" style="color:#5A8FA8">Уровень 3</div>
-                    <div class="level-icon" style="background:linear-gradient(135deg,#EAF4FA,#C4DDED)">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#3A607A" stroke-width="1.8">
-                        <circle cx="12" cy="12" r="10" />
-                        <line x1="12" y1="8" x2="12" y2="12" />
-                        <line x1="12" y1="16" x2="12.01" y2="16" />
-                      </svg>
-                    </div>
-                    <div class="level-title">Юридическая поддержка</div>
-                    <div class="level-desc">Партнёрские юрфирмы ведут исполнительное производство и судебные дела в
-                      кратчайшие сроки.</div>
-                  </div>
+              <line x1="188" y1="372" x2="160" y2="402" stroke="#7DB5D4" stroke-width="1.5" opacity="0.7" stroke-dasharray="3,3" />
 
-                  <div class="level-card" style="border-top:3px solid #1E4F8A">
-                    <div class="level-num" style="color:#1E4F8A">Уровень 4</div>
-                    <div class="level-icon" style="background:linear-gradient(135deg,#E8F0FA,#C0D4F0)">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#1E4F8A" stroke-width="1.8">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                      </svg>
-                    </div>
-                    <div class="level-title">Страхование рисков с PZU</div>
-                    <div class="level-desc">Покрытие ущерба имуществу, пожара, уничтожения и других ключевых рисков
-                      совместно с PZU.</div>
-                  </div>
+              <g class="label-card" transform="translate(10,394)">
+                <rect width="152" height="72" rx="11" fill="white" stroke="#B6D4E8" stroke-width="1.3" filter="url(#cardf)" />
+                <rect width="4" height="52" x="0" y="10" rx="2" fill="url(#g3)" />
+                <rect x="12" y="11" width="38" height="18" rx="9" fill="url(#g3)" />
+                <text x="31" y="23.5" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800" font-size="11"
+                  fill="white">3</text>
+                <text x="58" y="23" font-family="Manrope,sans-serif" font-weight="700" font-size="10.5" fill="#3A607A"
+                  letter-spacing="0.3">УРОВЕНЬ</text>
+                <text x="12" y="43" font-family="Manrope,sans-serif" font-weight="700" font-size="12"
+                  fill="#1C2333">Юридическая</text>
+                <text x="12" y="58" font-family="Manrope,sans-serif" font-size="11" fill="#6B7280">поддержка</text>
+              </g>
+              </g>
 
-                </div>
-              </section>
+            <!-- ══ SEGMENT 4 — top-left — navy ══ -->
+            <g class="seg-group" id="sg4">
+              <circle class="glow-ring" cx="280" cy="280" r="140" stroke="url(#g4)" stroke-dasharray="213.9 879.6"
+                stroke-dashoffset="-659.7" transform="rotate(-90 280 280)" filter="url(#glow4)" />
+              <circle class="seg-animated s4" cx="280" cy="280" r="140" fill="none" stroke="url(#g4)" stroke-width="54"
+                stroke-linecap="butt" stroke-dasharray="213.9 879.6" stroke-dashoffset="-659.7" transform="rotate(-90 280 280)" />
+              <circle class="seg-hit" cx="280" cy="280" r="140" stroke-dasharray="213.9 879.6" stroke-dashoffset="-659.7"
+                transform="rotate(-90 280 280)" />
 
+              <line x1="188" y1="188" x2="160" y2="158" stroke="#3A7BD5" stroke-width="1.5" opacity="0.7" stroke-dasharray="3,3" />
+
+              <g class="label-card" transform="translate(10,94)">
+                <rect width="152" height="72" rx="11" fill="white" stroke="#B0C8E8" stroke-width="1.3" filter="url(#cardf)" />
+                <rect width="4" height="52" x="0" y="10" rx="2" fill="url(#g4)" />
+                <rect x="12" y="11" width="38" height="18" rx="9" fill="url(#g4)" />
+                <text x="31" y="23.5" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800" font-size="11"
+                  fill="white">4</text>
+                <text x="58" y="23" font-family="Manrope,sans-serif" font-weight="700" font-size="10.5" fill="#1E4F8A"
+                  letter-spacing="0.3">УРОВЕНЬ</text>
+                <text x="12" y="43" font-family="Manrope,sans-serif" font-weight="700" font-size="12"
+                  fill="#1C2333">Страхование</text>
+                <text x="12" y="58" font-family="Manrope,sans-serif" font-size="11" fill="#6B7280">рисков с
+                  PZU</text>
+              </g>
+              </g>
+
+            <!-- ── CENTER CIRCLE ── -->
+            <circle cx="280" cy="280" r="100" fill="white" filter="url(#cshadow)" />
+            <!-- subtle ring inside -->
+            <circle cx="280" cy="280" r="86" fill="none" stroke="#EAF1FB" stroke-width="1.5" />
+
+            <!-- shield icon -->
+            <g transform="translate(254,244) scale(1.1)">
+              <defs>
+                <linearGradient id="shieldg" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#5EB3F7" />
+                  <stop offset="100%" stop-color="#0E2E5C" />
+                </linearGradient>
+              </defs>
+              <path d="M24 2L4 10v10c0 12 9 22.6 20 25.3C34.8 42.6 44 32 44 20V10L24 2z" fill="url(#shieldg)" opacity="0.15" />
+              <path d="M24 2L4 10v10c0 12 9 22.6 20 25.3C34.8 42.6 44 32 44 20V10L24 2z" fill="none" stroke="url(#shieldg)"
+                stroke-width="2" stroke-linejoin="round" />
+              <path d="M16 25l6 6 11-13" stroke="url(#shieldg)" stroke-width="2.5" fill="none" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </g>
+
+            <text x="280" y="326" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800" font-size="13"
+              fill="#1E4F8A" letter-spacing="-0.3">Безопасный</text>
+            <text x="280" y="343" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="700" font-size="12"
+              fill="#4B6A9B" letter-spacing="-0.2">договор найма</text>
+
+
+          </svg>
+          </div>
+          </section>
+
+      <!-- FORM PANEL -->
+      <aside class="form-panel">
+        <div class="form-inner">
+          <div class="form-heading">
+            <h2>Войдите в пилотную<br>программу</h2>
+          </div>
+          <p class="form-sub">Оставьте заявку — мы свяжемся, чтобы подобрать подходящий уровень защиты.</p>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Имя <span class="req">*</span></label>
+              <input type="text" placeholder="Иван Петров">
             </div>
+            <div class="form-group">
+              <label>Email <span class="req">*</span></label>
+              <input type="email" placeholder="ivan@mail.ru">
+            </div>
+            <div class="form-group">
+              <label>Телефон <span class="opt">(необязательно)</span></label>
+              <input type="tel" placeholder="+7 (___) ___-__-__">
+            </div>
+            <div class="form-group">
+              <label>Город <span class="req">*</span></label>
+              <input type="text" placeholder="Москва">
+            </div>
+            <div class="form-group full">
+              <label>Основная проблема <span class="req">*</span></label>
+              <select>
+                <option value="" disabled selected>Выберите из списка</option>
+                <option>Порча имущества</option>
+                <option>Задержка платежей</option>
+                <option>Юридические риски и выселение</option>
+                <option>Сложность выселения по стандартному договору</option>
+                <option>Незаконная субаренда</option>
+                <option>Слабый договор</option>
+                <option>Проблемы с пропиской / регистрацией</option>
+                <option>Постоянные требования арендатора</option>
+                <option>Конфликты и жалобы</option>
+                <option>Другое</option>
+              </select>
+            </div>
+          </div>
 
-            <script>
-              // Phone mask
-              const ph = document.querySelector('input[type="tel"]');
-              ph.addEventListener('input', e => {
-                let v = e.target.value.replace(/\D/g, '');
-                if (v.length > 11) v = v.slice(0, 11);
-                let f = '';
-                if (v.length > 0) f = '+7';
-                if (v.length > 1) f += ' (' + v.slice(1, 4);
-                if (v.length >= 4) f += ')';
-                if (v.length > 4) f += ' ' + v.slice(4, 7);
-                if (v.length > 7) f += '-' + v.slice(7, 9);
-                if (v.length > 9) f += '-' + v.slice(9, 11);
-                e.target.value = f;
-              });
+          <button class="btn-primary">Войти в пилотную программу →</button>
 
-              // Segment interactivity
-              // sg1=top-right, sg2=bottom-right, sg3=bottom-left, sg4=top-left
-              // top cards slide UP, bottom cards slide DOWN
-              const segConfig = {
-                sg1: { cardIdx: 0, cardDir: -8, svgDir: -8 },
-                sg2: { cardIdx: 1, cardDir: 8, svgDir: 8 },
-                sg3: { cardIdx: 2, cardDir: 8, svgDir: 8 },
-                sg4: { cardIdx: 3, cardDir: -8, svgDir: -8 },
-              };
-              const cards = document.querySelectorAll('.level-card');
+          <p class="privacy">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            Мы не передаём ваши данные третьим лицам.
+          </p>
+          </div>
+          </aside>
 
-              document.querySelectorAll('.seg-group').forEach(g => {
-                const cfg = segConfig[g.id];
-                const labelCard = g.querySelector('.label-card');
+      <!-- LEVELS BAR -->
+      <section class="levels">
+        <div class="levels-head">
+          <h3>Четыре уровня защиты — от договора до страховки</h3>
+          <div style="font-size:12px;color:var(--muted)">Наведите на карточку</div>
+        </div>
+        <div class="levels-grid">
 
-                g.addEventListener('mouseenter', () => {
-                  // SVG label card
-                  if (labelCard) {
-                    labelCard.style.transform = `translateY(${cfg.svgDir}px)`;
-                    labelCard.style.filter = 'drop-shadow(0 8px 18px rgba(0,0,0,0.18))';
-                  }
-                  // bottom level card
-                  cards[cfg.cardIdx].style.transform = `translateY(${cfg.cardDir}px)`;
-                  cards[cfg.cardIdx].style.boxShadow = '0 8px 24px rgba(58,123,213,0.18)';
-                });
+          <div class="level-card" style="border-top:3px solid #3A7BD5">
+            <div class="level-num" style="color:#3A7BD5">Уровень 1</div>
+            <div class="level-icon" style="background:linear-gradient(135deg,#EBF4FF,#D0E8FF)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#3A7BD5" stroke-width="1.8">
+                <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2z" />
+                <path d="M9 12l2 2 4-4" />
+              </svg>
+            </div>
+            <div class="level-title">Верификация и электронное подписание</div>
+            <div class="level-desc">Проверяем обе стороны и обеспечиваем подписание защищённой версии с полной
+              юридической силой.</div>
+          </div>
 
-                g.addEventListener('mouseleave', () => {
-                  if (labelCard) {
-                    labelCard.style.transform = '';
-                    labelCard.style.filter = '';
-                  }
-                  cards[cfg.cardIdx].style.transform = '';
-                  cards[cfg.cardIdx].style.boxShadow = '';
-                });
-              });
+          <div class="level-card" style="border-top:3px solid #C8971F">
+            <div class="level-num" style="color:#C8971F">Уровень 2</div>
+            <div class="level-icon" style="background:linear-gradient(135deg,#FDF8E1,#FAE88A)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#B8770A" stroke-width="1.8">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </div>
+            <div class="level-title">Медиация при спорах и конфликтах</div>
+            <div class="level-desc">Медиаторы урегулируют конфликты вне суда по ставкам ниже рыночных — быстро и
+              без суда.</div>
+          </div>
 
-              // Form
-              document.querySelector('.btn-primary').addEventListener('click', function () {
-                const email = document.querySelector('input[type="email"]').value;
-                const name = document.querySelector('input[type="text"]').value;
-                const city = document.querySelectorAll('input[type="text"]')[1].value;
-                const issue = document.querySelector('select').value;
-                if (!email || !name || !city || !issue) {
-                  this.style.background = 'linear-gradient(135deg,#c0392b,#922b21)';
-                  this.textContent = 'Заполните обязательные поля';
-                  setTimeout(() => {
-                    this.style.background = '';
-                    this.textContent = 'Войти в пилотную программу →';
-                  }, 2200);
-                  return;
-                }
-                this.textContent = '✓ Заявка отправлена!';
-                this.style.background = 'linear-gradient(135deg,#22C55E,#15803D)';
-                this.disabled = true;
-              });
-            </script>
-          </body>
+          <div class="level-card" style="border-top:3px solid #5A8FA8">
+            <div class="level-num" style="color:#5A8FA8">Уровень 3</div>
+            <div class="level-icon" style="background:linear-gradient(135deg,#EAF4FA,#C4DDED)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#3A607A" stroke-width="1.8">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+            </div>
+            <div class="level-title">Юридическая поддержка</div>
+            <div class="level-desc">Партнёрские юрфирмы ведут исполнительное производство и судебные дела в
+              кратчайшие сроки.</div>
+          </div>
 
-          </html>
+          <div class="level-card" style="border-top:3px solid #1E4F8A">
+            <div class="level-num" style="color:#1E4F8A">Уровень 4</div>
+            <div class="level-icon" style="background:linear-gradient(135deg,#E8F0FA,#C0D4F0)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1E4F8A" stroke-width="1.8">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <div class="level-title">Страхование рисков с PZU</div>
+            <div class="level-desc">Покрытие ущерба имуществу, пожара, уничтожения и других ключевых рисков
+              совместно с PZU.</div>
+          </div>
+
+        </div>
+        </section>
+
+    </div>
+
+    <script>
+      // Phone mask
+      const ph = document.querySelector('input[type="tel"]');
+      ph.addEventListener('input', e => {
+        let v = e.target.value.replace(/\D/g, '');
+        if (v.length > 11) v = v.slice(0, 11);
+        let f = '';
+        if (v.length > 0) f = '+7';
+        if (v.length > 1) f += ' (' + v.slice(1, 4);
+        if (v.length >= 4) f += ')';
+        if (v.length > 4) f += ' ' + v.slice(4, 7);
+        if (v.length > 7) f += '-' + v.slice(7, 9);
+        if (v.length > 9) f += '-' + v.slice(9, 11);
+        e.target.value = f;
+      });
+
+        // Segment interactivity
+        // sg1=top-right, sg2=bottom-right, sg3=bottom-left, sg4=top-left
+        // top cards slide UP, bottom cards slide DOWN
+        const segConfig = {
+          sg1: { cardIdx: 0, cardDir: -8, svgDir: -8 },
+          sg2: { cardIdx: 1, cardDir: 8, svgDir: 8 },
+          sg3: { cardIdx: 2, cardDir: 8, svgDir: 8 },
+          sg4: { cardIdx: 3, cardDir: -8, svgDir: -8 },
+        };
+        const cards = document.querySelectorAll('.level-card');
+
+        document.querySelectorAll('.seg-group').forEach(g => {
+          const cfg = segConfig[g.id];
+          const labelCard = g.querySelector('.label-card');
+
+        g.addEventListener('mouseenter', () => {
+          // SVG label card
+          if (labelCard) {
+            labelCard.style.transform = `translateY(${cfg.svgDir}px)`;
+            labelCard.style.filter = 'drop-shadow(0 8px 18px rgba(0,0,0,0.18))';
+          }
+          // bottom level card
+          cards[cfg.cardIdx].style.transform = `translateY(${cfg.cardDir}px)`;
+          cards[cfg.cardIdx].style.boxShadow = '0 8px 24px rgba(58,123,213,0.18)';
+        });
+
+        g.addEventListener('mouseleave', () => {
+          if (labelCard) {
+            labelCard.style.transform = '';
+            labelCard.style.filter = '';
+          }
+          cards[cfg.cardIdx].style.transform = '';
+          cards[cfg.cardIdx].style.boxShadow = '';
+        });
+      });
+
+        // Form
+        document.querySelector('.btn-primary').addEventListener('click', function () {
+          const email = document.querySelector('input[type="email"]').value;
+          const name = document.querySelector('input[type="text"]').value;
+          const city = document.querySelectorAll('input[type="text"]')[1].value;
+          const issue = document.querySelector('select').value;
+          if (!email || !name || !city || !issue) {
+            this.style.background = 'linear-gradient(135deg,#c0392b,#922b21)';
+            this.textContent = 'Заполните обязательные поля';
+            setTimeout(() => {
+              this.style.background = '';
+              this.textContent = 'Войти в пилотную программу →';
+            }, 2200);
+            return;
+          }
+          this.textContent = '✓ Заявка отправлена!';
+          this.style.background = 'linear-gradient(135deg,#22C55E,#15803D)';
+          this.disabled = true;
+        });
+      </script>
+    </body>
+
+  </html>
