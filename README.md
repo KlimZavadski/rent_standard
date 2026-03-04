@@ -2,6 +2,5 @@
 
 ## Publish to GitHub Pages
 
-1. **One-time setup:** In the repo on GitHub go to **Settings → Pages**. Under "Build and deployment", set **Source** to **GitHub Actions**.
-2. **Deploy:** Push to `main` or run the workflow manually: **Actions → Deploy to GitHub Pages → Run workflow**.
-3. **URL:** `https://<your-username>.github.io/rent_standard/` (or your repo name).
+**Required once:** Repo must be **public**. Then [Settings → Pages](https://github.com/KlimZavadski/rent_standard/settings/pages) → **Source** = **GitHub Actions**. Push to `main` or run the workflow.
+URL: **https://klimzavadski.github.io/rent_standard/**
