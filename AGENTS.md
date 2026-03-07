@@ -13,6 +13,7 @@ The main section is a grid of cards with the following information:
 ## Project structure
 - **`src/`** — React app: `main.jsx` (entry, mounts app), `App.jsx` (landing page component).
 - **`index.html`** — Vite entry; script points to `/src/main.jsx`.
+- **`schemes/`** — Feature schemes in Mermaid: when planning a feature, the agent adds a scheme file here and draws the diagram using Mermaid.
 - **`tests/`** — Playwright smoke tests.
 - **`automation/`** — Shell scripts for build and local run.
 
@@ -40,5 +41,7 @@ Run from repo root: `./automation/build.sh`, `./automation/run-local.sh`.
 - **GitHub Pages**: workflow `.github/workflows/deploy-pages.yml` builds the project and deploys the `dist/` output to GitHub Pages (typically on push to the default branch or on release).
 
 ## Instructions
+- **AGENTS.md is always written in English.** Keep all content and any new sections in English.
 - Use Playwright MCP to launch and check the landing page when needed.
 - After implementing a feature or making changes to the landing/UI: run the Playwright smoke test locally (e.g. `./automation/build.sh`, then `npx serve dist -l 4173 &`, then `npx wait-on http://localhost:4173 && npx playwright test`) and fix any failures before considering the task done.
+- **Feature planning:** When planning a feature or creating a plan, the agent must add the feature scheme to the **`schemes/`** folder and draw it using **Mermaid** (a `.md` file with a fenced `mermaid` code block). Name the file after the feature, e.g. `schemes/contact-form-flow.md`.
