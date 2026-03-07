@@ -3,4 +3,5 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-npm run build
+[ -x ./node_modules/.bin/vite ] || npm install
+./node_modules/.bin/vite build
