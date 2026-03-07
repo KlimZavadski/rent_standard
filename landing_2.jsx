@@ -1,0 +1,628 @@
+import { useState, useEffect, useRef, createContext, useContext } from "react";
+import {
+  Shield, FileText, Zap, CheckCircle, XCircle, ArrowRight,
+  Star, Lock, Clock, TrendingUp, Users, AlertTriangle,
+  Phone, Mail, User, Award, Building2,
+  BadgeCheck, Scale, Handshake, ChevronRight, Sun, Moon
+} from "lucide-react";
+
+const DARK = {
+  bg: "#0B1F2E", cta: "#0E7C66", ctaHover: "#0B6653", ctaGlow: "rgba(14,124,102,0.35)", ctaDim: "rgba(14,124,102,0.08)", ctaBorder: "rgba(14,124,102,0.22)",
+  info: "#7EB8D4", infoBg: "rgba(126,184,212,0.07)", infoBorder: "rgba(126,184,212,0.18)",
+  warn: "#E05555", warnBg: "rgba(224,85,85,0.08)", warnBorder: "rgba(224,85,85,0.2)",
+  textPrimary: "#FFFFFF", textSecondary: "rgba(255,255,255,0.55)", textMuted: "rgba(255,255,255,0.3)",
+  cardBg: "rgba(255,255,255,0.10)", cardBorder: "rgba(255,255,255,0.14)", cardShadow: "0 24px 64px rgba(0,0,0,0.4)",
+  cardIconBg: "rgba(255,255,255,0.07)", cardLineColor: "rgba(255,255,255,0.4)", cardLineHi: "rgba(255,255,255,0.85)", cardLine: "rgba(255,255,255,0.06)",
+  sigRgbGreen: "14,124,102", sigRgbBlue: "77,163,255", cardInfoColor: "#7EB8D4",
+  navBg: "rgba(11,31,46,0.94)", surfBorder: "rgba(255,255,255,0.07)",
+  bentoCtaBg: "linear-gradient(140deg,rgba(14,124,102,0.06),rgba(14,124,102,0.01))", bentoCtaBorder: "rgba(14,124,102,0.18)",
+  bentoInfoBg: "rgba(255,255,255,0.025)", bentoInfoBorder: "rgba(255,255,255,0.08)",
+  bentoNoneBg: "rgba(255,255,255,0.02)", bentoNoneBorder: "rgba(255,255,255,0.06)", bentoGlow: "rgba(14,124,102,0.08)",
+  factRowBg: "rgba(255,255,255,0.025)", factRowBorder: "rgba(255,255,255,0.05)",
+  tableOuterBg: "rgba(255,255,255,0.025)", tableOuterBorder: "rgba(255,255,255,0.08)",
+  tableHeadBg: "rgba(255,255,255,0.04)", tableHeadBorder: "rgba(255,255,255,0.07)",
+  tableRowAlt: "rgba(255,255,255,0.015)", tableRowBorder: "rgba(255,255,255,0.05)",
+  tableAspect: "rgba(255,255,255,0.65)", tableBadBg: "rgba(255,255,255,0.03)", tableBadColor: "rgba(255,255,255,0.55)", tableBadIcon: "rgba(255,255,255,0.45)",
+  formCardBg: "linear-gradient(135deg,rgba(14,124,102,0.04),rgba(126,184,212,0.05))", formCardBorder: "rgba(14,124,102,0.22)", formCardShadow: "0 32px 80px rgba(0,0,0,0.35)",
+  formIconBg: "rgba(126,184,212,0.07)", formIconBorder: "rgba(126,184,212,0.18)", formPrivacy: "rgba(255,255,255,0.25)",
+  inputBg: "rgba(255,255,255,0.05)", inputBorder: "rgba(255,255,255,0.1)", inputFocusBg: "rgba(126,184,212,0.05)", inputColor: "#fff", inputPlaceholder: "rgba(255,255,255,0.25)",
+  checkboxBorder: "rgba(255,255,255,0.18)", consentText: "rgba(255,255,255,0.4)",
+  partnerBg: "rgba(255,255,255,0.015)", partnerBorder: "rgba(255,255,255,0.06)", partnerLabel: "rgba(255,255,255,0.25)", partnerSub: "rgba(255,255,255,0.3)",
+  meshGreen: "rgba(14,124,102,0.05)", meshBlue: "rgba(126,184,212,0.06)", meshGreenMid: "rgba(14,124,102,0.03)",
+  footerBorder: "rgba(255,255,255,0.05)", footerText: "rgba(255,255,255,0.2)", footerLink: "rgba(255,255,255,0.3)",
+  secBtnColor: "rgba(255,255,255,0.65)", secBtnBorder: "rgba(255,255,255,0.18)",
+  badgesColor: "rgba(255,255,255,0.4)", tagInfoColor: "rgba(255,255,255,0.5)", tagInfoBg: "rgba(255,255,255,0.04)", tagInfoBorder: "rgba(255,255,255,0.12)",
+  statLabelColor: "rgba(255,255,255,0.4)", reviewQuote: "rgba(255,255,255,0.68)", reviewSubRole: "rgba(255,255,255,0.35)",
+  barBg: "rgba(255,255,255,0.07)", barBadBg: "linear-gradient(90deg,#334155,#475569)", statNote: "rgba(255,255,255,0.35)",
+  pillarDesc: "rgba(255,255,255,0.5)", pillarFeat: "rgba(255,255,255,0.6)", finalSubtext: "rgba(255,255,255,0.45)",
+  scrollbarTrack: "#0B1F2E", scrollbarThumb: "rgba(14,124,102,0.4)",
+  toggleBg: "rgba(255,255,255,0.07)", toggleBorder: "rgba(255,255,255,0.14)",
+  cardOuterBorder: "rgba(255,255,255,0.06)", cardOuterBg: "rgba(255,255,255,0.02)",
+};
+
+// Legal Trust Color Scheme — light
+const LIGHT = {
+  bg: "#F8FAFC", cta: "#0E7C66", ctaHover: "#0B6653", ctaGlow: "rgba(14,124,102,0.3)", ctaDim: "rgba(14,124,102,0.08)", ctaBorder: "rgba(14,124,102,0.3)",
+  info: "#153688", infoBg: "rgba(21,54,136,0.06)", infoBorder: "rgba(21,54,136,0.2)",
+  warn: "#DC2626", warnBg: "rgba(220,38,38,0.06)", warnBorder: "rgba(220,38,38,0.18)",
+  textPrimary: "#0F172A", textSecondary: "#475569", textMuted: "#94A3B8",
+  cardBg: "rgb(54,78,150)", cardBorder: "rgba(255,255,255,0.12)", cardShadow: "0 24px 64px rgba(21,54,136,0.35)",
+  cardIconBg: "rgba(255,255,255,0.12)", cardLineColor: "rgba(255,255,255,0.55)", cardLineHi: "#FFFFFF", cardLine: "rgba(255,255,255,0.1)",
+  sigRgbGreen: "14,124,102", sigRgbBlue: "126,184,212", cardInfoColor: "#A8D4E6",
+  navBg: "rgba(248,250,252,0.95)", surfBorder: "rgba(21,54,136,0.1)",
+  bentoCtaBg: "linear-gradient(140deg,rgba(14,124,102,0.07),rgba(14,124,102,0.02))", bentoCtaBorder: "rgba(14,124,102,0.25)",
+  bentoInfoBg: "rgba(21,54,136,0.03)", bentoInfoBorder: "rgba(21,54,136,0.12)",
+  bentoNoneBg: "#FFFFFF", bentoNoneBorder: "rgba(21,54,136,0.1)", bentoGlow: "rgba(14,124,102,0.12)",
+  factRowBg: "rgba(21,54,136,0.03)", factRowBorder: "rgba(21,54,136,0.08)",
+  tableOuterBg: "#FFFFFF", tableOuterBorder: "rgba(21,54,136,0.12)",
+  tableHeadBg: "rgba(21,54,136,0.04)", tableHeadBorder: "rgba(21,54,136,0.1)",
+  tableRowAlt: "rgba(21,54,136,0.02)", tableRowBorder: "rgba(21,54,136,0.06)",
+  tableAspect: "#334155", tableBadBg: "rgba(100,116,139,0.06)", tableBadColor: "#64748B", tableBadIcon: "#94A3B8",
+  formCardBg: "linear-gradient(135deg,rgba(14,124,102,0.06),rgba(21,54,136,0.04))", formCardBorder: "rgba(14,124,102,0.3)", formCardShadow: "0 32px 80px rgba(21,54,136,0.1)",
+  formIconBg: "rgba(21,54,136,0.06)", formIconBorder: "rgba(21,54,136,0.18)", formPrivacy: "#94A3B8",
+  inputBg: "#FFFFFF", inputBorder: "rgba(21,54,136,0.18)", inputFocusBg: "rgba(21,54,136,0.02)", inputColor: "#0F172A", inputPlaceholder: "#94A3B8",
+  checkboxBorder: "rgba(21,54,136,0.25)", consentText: "#64748B",
+  partnerBg: "rgba(21,54,136,0.02)", partnerBorder: "rgba(21,54,136,0.1)", partnerLabel: "#94A3B8", partnerSub: "#94A3B8",
+  meshGreen: "rgba(14,124,102,0.06)", meshBlue: "rgba(21,54,136,0.04)", meshGreenMid: "rgba(14,124,102,0.03)",
+  footerBorder: "rgba(21,54,136,0.1)", footerText: "#94A3B8", footerLink: "#64748B",
+  secBtnColor: "#153688", secBtnBorder: "rgba(21,54,136,0.25)",
+  badgesColor: "#64748B", tagInfoColor: "#153688", tagInfoBg: "rgba(21,54,136,0.05)", tagInfoBorder: "rgba(21,54,136,0.18)",
+  statLabelColor: "#64748B", reviewQuote: "#334155", reviewSubRole: "#94A3B8",
+  barBg: "rgba(21,54,136,0.08)", barBadBg: "linear-gradient(90deg,#94A3B8,#CBD5E1)", statNote: "#94A3B8",
+  pillarDesc: "#475569", pillarFeat: "#334155", finalSubtext: "#64748B",
+  scrollbarTrack: "#F8FAFC", scrollbarThumb: "rgba(14,124,102,0.3)",
+  toggleBg: "rgba(21,54,136,0.08)", toggleBorder: "rgba(21,54,136,0.18)",
+  cardOuterBorder: "rgb(29,59,136)", cardOuterBg: "rgb(31,58,137)",
+};
+
+const ThemeCtx = createContext(DARK);
+const useT = () => useContext(ThemeCtx);
+
+function useInView(threshold = 0.15) {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true); }, { threshold });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+  return [ref, inView];
+}
+
+function ContractCard() {
+  const T = useT();
+  return (
+    <div style={{ position: "relative", width: "100%", maxWidth: 420, margin: "0 auto", border: `2px solid ${T.cardOuterBorder}`, borderRadius: 24, padding: 10, background: T.cardOuterBg }}>
+      <div style={{ position: "absolute", top: -30, right: -30, width: 260, height: 260, background: `radial-gradient(ellipse,${T.meshGreen} 0%,transparent 70%)`, borderRadius: "50%", filter: "blur(10px)", zIndex: 0 }} />
+      <div style={{ position: "absolute", bottom: -20, left: -20, width: 200, height: 200, background: `radial-gradient(ellipse,${T.meshBlue} 0%,transparent 70%)`, borderRadius: "50%", filter: "blur(10px)", zIndex: 0 }} />
+      <div style={{ background: T.cardBg, border: `1px solid ${T.cardBorder}`, borderRadius: 20, padding: 28, backdropFilter: "blur(16px)", boxShadow: T.cardShadow, position: "relative", zIndex: 1, minWidth: 0, overflow: "hidden" }}>
+        <div style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 20 }}>
+          <div style={{ background: T.cardIconBg, borderRadius: 10, padding: 8, display: "flex", flexShrink: 0 }}>
+            <FileText size={18} color="rgba(255,255,255,0.85)" />
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ color: "#FFFFFF", fontWeight: 700, fontSize: 14, marginBottom: 2 }}>Umowa Najmu Okazjonalnego</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+              <div style={{ color: "rgba(255,255,255,0.55)", fontSize: 11 }}>Wersja cyfrowa · eIDAS</div>
+              <div style={{ background: "rgba(14,124,102,0.35)", border: "1px solid rgba(14,124,102,0.9)", borderRadius: 20, padding: "2px 8px", display: "flex", alignItems: "center", gap: 4 }}>
+                <BadgeCheck size={11} color="#2dd4aa" />
+                <span style={{ color: "#2dd4aa", fontSize: 10, fontWeight: 700 }}>ZWERYFIKOWANO</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {[
+          { text: "Strona wynajmująca: Jan Kowalski", dot: T.cta },
+          { text: "Strona najemcy: Anna Nowak", dot: T.cta },
+          { text: "Okres: 12 miesięcy", dot: "rgba(255,255,255,0.35)" },
+          { text: "Kaucja: 3 000 PLN", dot: "rgba(255,255,255,0.35)" },
+        ].map((line, i) => (
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 0", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+            <div style={{ width: 6, height: 6, borderRadius: "50%", flexShrink: 0, background: line.dot }} />
+            <span style={{ color: i < 2 ? "#FFFFFF" : "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: i < 2 ? 600 : 400 }}>{line.text}</span>
+          </div>
+        ))}
+        <div style={{ marginTop: 18, display: "flex", gap: 10 }}>
+          {[
+            { label: "PODPIS WYNAJMUJĄCY", sig: "Jan K.", color: "#2dd4aa", rgb: T.sigRgbGreen },
+            { label: "PODPIS NAJEMCY", sig: "Anna N.", color: "#FFFFFF", rgb: "255,255,255" },
+          ].map((s, i) => (
+            <div key={i} style={{ flex: 1, background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 10, padding: "10px 12px" }}>
+              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 10, marginBottom: 4 }}>{s.label}</div>
+              <div style={{ fontFamily: "cursive", color: s.color, fontSize: 18, lineHeight: 1 }}>{s.sig}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop: 14, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 10, padding: "8px 12px", display: "flex", alignItems: "center", gap: 8 }}>
+          <Lock size={13} color="rgba(255,255,255,0.6)" />
+          <span style={{ color: "rgba(255,255,255,0.6)", fontSize: 12, fontWeight: 600 }}>Zabezpieczono · 256-bit SSL · RODO</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ComparisonBars({ inView }) {
+  const T = useT();
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      {[
+        { label: "Eksmisja sądowa", value: 95, display: "1–3 lata", bad: true },
+        { label: "Mediacja Rent Standard", value: 14, display: "14 dni", bad: false },
+      ].map((item, i) => (
+        <div key={i}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+            <span style={{ color: item.bad ? T.textMuted : T.cta, fontSize: 13, fontWeight: 600 }}>{item.label}</span>
+            <span style={{ color: item.bad ? T.textMuted : T.cta, fontSize: 13, fontWeight: 700 }}>{item.display}</span>
+          </div>
+          <div style={{ background: T.barBg, borderRadius: 99, height: 10, overflow: "hidden" }}>
+            <div style={{ height: "100%", borderRadius: 99, background: item.bad ? T.barBadBg : "linear-gradient(90deg,#0E7C66,#4dd4a8)", width: inView ? `${item.value}%` : "0%", transition: `width 1.2s cubic-bezier(.4,0,.2,1) ${i * 0.25}s` }} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function BentoCard({ children, style = {}, accent = "none" }) {
+  const T = useT();
+  const [hovered, setHovered] = useState(false);
+  const map = {
+    cta: { border: T.bentoCtaBorder, bg: T.bentoCtaBg, glow: T.bentoGlow },
+    info: { border: T.bentoInfoBorder, bg: T.bentoInfoBg, glow: "transparent" },
+    none: { border: T.bentoNoneBorder, bg: T.bentoNoneBg, glow: "transparent" },
+  };
+  const t = map[accent] || map.none;
+  return (
+    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} style={{
+      background: t.bg, border: `1px solid ${t.border}`, borderRadius: 20, padding: 28, backdropFilter: "blur(12px)",
+      boxShadow: hovered ? `0 20px 60px rgba(0,0,0,0.12),0 0 0 1px ${t.glow}` : "0 4px 24px rgba(0,0,0,0.06)",
+      transform: hovered ? "translateY(-4px) scale(1.01)" : "translateY(0) scale(1)",
+      transition: "all 0.35s cubic-bezier(.4,0,.2,1)", ...style
+    }}>{children}</div>
+  );
+}
+
+function FadeIn({ children, delay = 0 }) {
+  const [ref, inView] = useInView();
+  return (
+    <div ref={ref} style={{ opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(28px)", transition: `opacity 0.7s ease ${delay}s,transform 0.7s ease ${delay}s` }}>{children}</div>
+  );
+}
+
+export default function RentStandard() {
+  const [isDark, setIsDark] = useState(true);
+  const T = isDark ? DARK : LIGHT;
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
+  const [rodoChecked, setRodoChecked] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [painRef, painInView] = useInView();
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll);
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap";
+    document.head.appendChild(link);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const css = `
+    *{box-sizing:border-box;margin:0;}
+    ::selection{background:rgba(28,187,131,0.25);}
+    ::-webkit-scrollbar{width:4px;}
+    ::-webkit-scrollbar-track{background:${T.scrollbarTrack};}
+    ::-webkit-scrollbar-thumb{background:${T.scrollbarThumb};border-radius:4px;}
+    .pulse-btn{animation:pulse-glow 2.8s ease-in-out infinite;}
+    @keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 ${T.ctaGlow},0 8px 28px ${T.ctaGlow};}50%{box-shadow:0 0 0 12px rgba(28,187,131,0),0 8px 36px ${T.ctaGlow};}}
+    .cta-btn{background:linear-gradient(135deg,${T.cta},${T.ctaHover});color:#fff;border:none;cursor:pointer;font-family:Manrope,sans-serif;font-weight:800;border-radius:12px;transition:all 0.25s;display:inline-flex;align-items:center;gap:8px;letter-spacing:-0.01em;}
+    .cta-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px ${T.ctaGlow};}
+    .cta-btn:active{transform:translateY(0);}
+    .sec-btn{background:transparent;color:${T.secBtnColor};border:1px solid ${T.secBtnBorder};cursor:pointer;font-family:Manrope,sans-serif;font-weight:600;border-radius:12px;transition:all 0.25s;display:inline-flex;align-items:center;gap:8px;}
+    .sec-btn:hover{border-color:${T.ctaBorder};color:${T.textPrimary};}
+    input{background:${T.inputBg};border:1px solid ${T.inputBorder};border-radius:12px;color:${T.inputColor};font-family:Manrope,sans-serif;font-size:15px;padding:14px 16px;width:100%;transition:border-color 0.2s,background 0.2s;outline:none;}
+    input:focus{border-color:${T.info};background:${T.inputFocusBg};}
+    input::placeholder{color:${T.inputPlaceholder};}
+    .tag-cta{display:inline-flex;align-items:center;gap:6px;background:${T.ctaDim};border:1px solid ${T.ctaBorder};border-radius:99px;padding:4px 12px;color:${T.cta};font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;}
+    .tag-info{display:inline-flex;align-items:center;gap:6px;background:${T.tagInfoBg};border:1px solid ${T.tagInfoBorder};border-radius:99px;padding:4px 12px;color:${T.tagInfoColor};font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
+    @media(max-width:768px){.hero-grid{flex-direction:column!important;gap:28px!important;}.bento-3{grid-template-columns:1fr!important;}.proof-grid{flex-direction:column!important;}.compare-table td,.compare-table th{padding:10px 8px!important;font-size:13px!important;}.partner-logos{flex-wrap:wrap!important;justify-content:center!important;}}
+    @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}}
+  `;
+
+  const scrollToForm = () => formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  const handleSubmit = () => { if (!rodoChecked || !formData.email) return; setSubmitted(true); };
+
+  return (
+    <ThemeCtx.Provider value={T}>
+      <div style={{ background: T.bg, minHeight: "100vh", fontFamily: "Manrope,system-ui,sans-serif", color: T.textPrimary, overflowX: "hidden", transition: "background 0.4s,color 0.4s" }}>
+        <style dangerouslySetInnerHTML={{ __html: css }} />
+
+        {/* BG mesh */}
+        <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden" }}>
+          <div style={{ position: "absolute", top: -180, right: -180, width: 680, height: 680, background: `radial-gradient(ellipse,${T.meshGreen} 0%,transparent 65%)`, borderRadius: "50%" }} />
+          <div style={{ position: "absolute", bottom: -120, left: -120, width: 620, height: 620, background: `radial-gradient(ellipse,${T.meshBlue} 0%,transparent 65%)`, borderRadius: "50%" }} />
+          <div style={{ position: "absolute", top: "45%", left: "40%", width: 460, height: 460, background: `radial-gradient(ellipse,${T.meshGreenMid} 0%,transparent 60%)`, borderRadius: "50%" }} />
+        </div>
+
+        {/* NAV */}
+        <nav style={{ position: "sticky", top: 0, zIndex: 100, background: scrolled ? T.navBg : "transparent", backdropFilter: scrolled ? "blur(20px)" : "none", borderBottom: scrolled ? `1px solid ${T.surfBorder}` : "none", padding: "0 clamp(16px,4vw,48px)", transition: "all 0.3s ease" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 68 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ background: `linear-gradient(135deg,${T.info},${T.ctaHover})`, borderRadius: 10, width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 4px 16px ${T.ctaGlow}` }}>
+                <Shield size={18} color="#fff" strokeWidth={2.5} />
+              </div>
+              <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 20, fontWeight: 700, letterSpacing: "-0.03em", color: T.textPrimary }}>Rent Standard</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              {/* Theme toggle */}
+              <button onClick={() => setIsDark(!isDark)} style={{ background: T.toggleBg, border: `1px solid ${T.toggleBorder}`, borderRadius: 99, padding: "7px 10px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, color: T.textSecondary, fontSize: 13, fontWeight: 600, fontFamily: "Manrope,sans-serif", transition: "all 0.25s", flexShrink: 0 }}>
+                {isDark ? <><Sun size={15} color="#f59e0b" /><span className="toggle-label" style={{ color: "#f59e0b" }}>Jasny</span></> : <><Moon size={15} color={T.info} /><span className="toggle-label" style={{ color: T.info }}>Ciemny</span></>}
+              </button>
+              <button onClick={scrollToForm} className="cta-btn" style={{ padding: "10px 20px", fontSize: 14 }}>
+                <span className="nav-cta-text">Zabezpiecz najem</span>
+                <ChevronRight size={16} />
+              </button>
+            </div>
+          </div>
+        </nav>
+
+        {/* HERO */}
+        <section style={{ position: "relative", zIndex: 1, padding: "clamp(45px,7.5vw,92px) clamp(16px,4vw,48px) clamp(45px,6vw,76px)", overflow: "hidden" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+            <div className="hero-grid" style={{ display: "flex", alignItems: "center", gap: "clamp(16px,2.5vw,30px)" }}>
+              <div style={{ flex: "0.7 1 336px" }}>
+                <div className="tag-cta" style={{ marginBottom: 20, background: isDark ? "rgba(14,124,102,0.18)" : "rgba(14,124,102,0.10)", border: isDark ? "1px solid rgba(14,124,102,0.55)" : "1px solid rgba(14,124,102,0.45)", color: isDark ? "#2dd4aa" : "#0B6653" }}>
+                  <BadgeCheck size={12} />Certyfikowana ochrona najmu w Polsce
+                </div>
+                <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 22, color: T.textPrimary }}>
+                  Najem bez ryzyka.<br />
+                  <span style={{ whiteSpace: "nowrap", fontSize: "clamp(22px,3.2vw,42px)", color: T.info }}>
+                    Umowa + <span style={{ color: T.cta }}>podpis</span> + mediacja.
+                  </span>
+                </h1>
+                <p style={{ fontSize: "clamp(16px,2vw,19px)", lineHeight: 1.65, color: T.textSecondary, marginBottom: 36, maxWidth: 500 }}>
+                  Tworzymy cyfrową infrastrukturę dla Twojej nieruchomości. Od pancernej umowy po błyskawiczną mediację — wszystko w jednym miejscu.
+                </p>
+                <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+                  <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "16px 28px", fontSize: 16 }}>
+                    Chcę wynajmować bez ryzyka <ArrowRight size={18} />
+                  </button>
+                  <button className="sec-btn" style={{ padding: "16px 24px", fontSize: 15 }}>Dowiedz się więcej</button>
+                </div>
+                <div style={{ marginTop: 36, display: "flex", gap: 24, flexWrap: "wrap" }}>
+                  {[
+                    { icon: <Users size={14} />, text: "2 400+ chronionych najemców", color: T.cta },
+                    { icon: <Award size={14} />, text: "Zgodność z eIDAS", color: T.badgesColor },
+                    { icon: <Scale size={14} />, text: "RODO 100%", color: T.badgesColor },
+                  ].map((b, i) => (
+                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 7, color: T.badgesColor, fontSize: 13 }}>
+                      <span style={{ color: b.color }}>{b.icon}</span>{b.text}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div style={{ flex: "1 1 280px", minWidth: 0, maxWidth: 420 }}><ContractCard /></div>
+            </div>
+          </div>
+        </section>
+
+        {/* PAIN BLOCK */}
+        <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+            <FadeIn>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 20 }}>
+                <BentoCard accent="none">
+                  <div style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: 20 }}>
+                    <div style={{ background: T.warnBg, borderRadius: 12, padding: 10, display: "flex" }}>
+                      <AlertTriangle size={22} color={T.warn} />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 13, color: T.statLabelColor, marginBottom: 2 }}>SKALA PROBLEMU</div>
+                      <h3 style={{ fontSize: 18, fontWeight: 700, color: T.textPrimary }}>Ryzyko najmu w Polsce</h3>
+                    </div>
+                  </div>
+                  <div style={{ marginBottom: 14 }}>
+                    <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(42px,6vw,64px)", fontWeight: 700, lineHeight: 1, background: "linear-gradient(135deg,#ef4444,#f97316)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>7/10</span>
+                    <p style={{ color: T.textSecondary, fontSize: 15, marginTop: 6 }}>wynajmujących napotyka poważne problemy z najemcami</p>
+                  </div>
+                  <div style={{ background: T.warnBg, border: `1px solid ${T.warnBorder}`, borderRadius: 12, padding: "12px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ color: T.textSecondary, fontSize: 14 }}>Średnia strata finansowa</span>
+                    <span style={{ color: T.warn, fontWeight: 800, fontSize: 20, fontFamily: "Inter Tight,sans-serif" }}>8 983 PLN</span>
+                  </div>
+                </BentoCard>
+
+                <BentoCard accent="none">
+                  <div style={{ marginBottom: 20 }}>
+                    <div style={{ fontSize: 13, color: T.statLabelColor, marginBottom: 4 }}>CZAS ROZWIĄZANIA SPORU</div>
+                    <h3 style={{ fontSize: 18, fontWeight: 700, color: T.textPrimary }}>Sąd vs. Mediacja</h3>
+                  </div>
+                  <div ref={painRef}><ComparisonBars inView={painInView} /></div>
+                  <p style={{ marginTop: 18, fontSize: 13, color: T.statNote, fontStyle: "italic" }}>* Dane na podstawie statystyk Ministerstwa Sprawiedliwości 2024</p>
+                </BentoCard>
+
+                <BentoCard>
+                  <div style={{ fontSize: 13, color: T.statLabelColor, marginBottom: 14 }}>DLACZEGO WARTO DZIAŁAĆ TERAZ</div>
+                  {[
+                    { icon: <TrendingUp size={16} />, text: "Ceny wynajmu wzrosły o 18% w 2024 r.", color: T.cta },
+                    { icon: <Building2 size={16} />, text: "1,2 mln mieszkań na rynku najmu prywatnego", color: T.info },
+                    { icon: <Clock size={16} />, text: "Eksmisja sądowa: średnio 19 miesięcy", color: T.cta },
+                    { icon: <Handshake size={16} />, text: "Mediacja Rent Standard: decyzja w 14 dni", color: T.info },
+                  ].map((f, i) => (
+                    <div key={i} style={{ display: "flex", gap: 12, alignItems: "center", padding: "10px 14px", marginBottom: 8, background: T.factRowBg, borderRadius: 10, border: `1px solid ${T.factRowBorder}` }}>
+                      <span style={{ color: f.color, flexShrink: 0 }}>{f.icon}</span>
+                      <span style={{ color: T.textSecondary, fontSize: 14 }}>{f.text}</span>
+                    </div>
+                  ))}
+                </BentoCard>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* THREE PILLARS */}
+        <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+            <FadeIn>
+              <div style={{ textAlign: "center", marginBottom: 48 }}>
+                <div className="tag-info" style={{ marginBottom: 14, display: "inline-flex" }}>Jak działamy</div>
+                <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,48px)", lineHeight: 1.1, letterSpacing: "-0.03em", color: T.textPrimary }}>Trzy filary Twojego spokoju</h2>
+              </div>
+            </FadeIn>
+            <div className="bento-3" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
+              {[
+                { icon: <Shield size={26} />, badge: "01", accent: "cta", iC: T.cta, title: "Pancerna Umowa", sub: "Najem okazjonalny bez stresu", desc: "Klauzule chroniące kaucję i Twoją własność. Umowa przygotowana przez radcę prawnego, dostosowana do polskiego prawa.", features: ["Najem okazjonalny", "Klauzule kaucji", "Ochrona własności", "Audyt prawny"] },
+                { icon: <Zap size={26} />, badge: "02", accent: "info", iC: T.info, title: "Cyfrowe Podpisanie", sub: "Weryfikacja tożsamości i e-podpis", desc: "eIDAS — bezpiecznie i zdalnie w 5 minut. Pełna weryfikacja tożsamości obu stron przed podpisaniem.", features: ["E-podpis eIDAS", "Weryfikacja BIK", "100% zdalnie", "Archiwum 10 lat"] },
+                { icon: <Scale size={26} />, badge: "03", accent: "cta", iC: T.cta, title: "Szybka Mediacja", sub: "Rozwiązujemy spory bez sądu", desc: "Profesjonalny mediator na straży Twojego spokoju. Decyzja wiążąca dla obu stron — bez kosztów sądowych.", features: ["14-dniowy tryb", "Certyfik. mediator", "Bez sądu", "Wykonalna ugoda"] },
+              ].map((card, i) => (
+                <FadeIn key={i} delay={i * 0.12}>
+                  <BentoCard accent={card.accent} style={{ height: "100%" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
+                      <div style={{ background: `${card.iC}18`, border: `1px solid ${card.iC}40`, borderRadius: 14, padding: 12, display: "flex" }}>
+                        <span style={{ color: card.iC }}>{card.icon}</span>
+                      </div>
+                      <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 40, color: `${card.iC}20`, fontWeight: 700, lineHeight: 1 }}>{card.badge}</span>
+                    </div>
+                    <h3 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 22, marginBottom: 4, color: T.textPrimary }}>{card.title}</h3>
+                    <p style={{ color: card.iC, fontSize: 13, fontWeight: 600, marginBottom: 14 }}>{card.sub}</p>
+                    <p style={{ color: T.pillarDesc, fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>{card.desc}</p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                      {card.features.map((f, j) => (
+                        <div key={j} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                          <CheckCircle size={14} color={card.iC} />
+                          <span style={{ fontSize: 13, color: T.pillarFeat }}>{f}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </BentoCard>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* COMPARISON TABLE */}
+        <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
+          <div style={{ maxWidth: 900, margin: "0 auto" }}>
+            <FadeIn>
+              <div style={{ textAlign: "center", marginBottom: 40 }}>
+                <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(26px,4vw,44px)", letterSpacing: "-0.03em", marginBottom: 12, color: T.textPrimary }}>Rent Standard vs. Tradycyjny najem</h2>
+                <p style={{ color: T.textSecondary, fontSize: 16 }}>Sprawdź, co zyskujesz wybierając mądrzejsze rozwiązanie</p>
+              </div>
+              <div style={{ background: T.tableOuterBg, border: `1px solid ${T.tableOuterBorder}`, borderRadius: 20, overflow: "hidden" }}>
+                <table className="compare-table" style={{ width: "100%", borderCollapse: "collapse" }}>
+                  <thead>
+                    <tr style={{ background: T.tableHeadBg }}>
+                      <th style={{ padding: "16px 20px", textAlign: "left", color: T.textMuted, fontSize: 13, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", borderBottom: `1px solid ${T.tableHeadBorder}` }}>Aspekt</th>
+                      <th style={{ padding: "16px 20px", textAlign: "center", borderBottom: `1px solid ${T.tableHeadBorder}` }}>
+                        <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                          <Shield size={15} color={T.cta} />
+                          <span style={{ color: T.cta, fontWeight: 700, fontSize: 15 }}>Rent Standard</span>
+                        </div>
+                      </th>
+                      <th style={{ padding: "16px 20px", textAlign: "center", borderBottom: `1px solid ${T.tableHeadBorder}`, color: T.textSecondary, fontSize: 15, fontWeight: 600 }}>Tradycyjny Najem</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      ["Ochrona prawna umowy", "Profesjonalna, na miarę", "Generyczny wzór online"],
+                      ["Weryfikacja tożsamości", "BIK + eIDAS, real-time", "Brak lub papierowa"],
+                      ["Rozwiązywanie sporów", "Mediacja w 14 dni", "Sąd: 1–3 lata"],
+                      ["Podpisanie umowy", "E-podpis zdalnie, 5 min", "Spotkanie osobiste"],
+                      ["Archiwum dokumentów", "Bezpieczne, 10 lat", "Własna szuflada"],
+                      ["Wsparcie 24/7", "Tak — czat + telefon", "Brak"],
+                    ].map(([aspect, good, bad], i) => (
+                      <tr key={i} style={{ borderBottom: `1px solid ${T.tableRowBorder}`, background: i % 2 === 0 ? "transparent" : T.tableRowAlt }}>
+                        <td style={{ padding: "14px 20px", fontSize: 14, color: T.tableAspect, fontWeight: 500 }}>{aspect}</td>
+                        <td style={{ padding: "14px 20px", textAlign: "center" }}>
+                          <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: T.ctaDim, borderRadius: 8, padding: "4px 10px" }}>
+                            <CheckCircle size={14} color={T.cta} />
+                            <span style={{ fontSize: 13, color: T.cta, fontWeight: 600 }}>{good}</span>
+                          </div>
+                        </td>
+                        <td style={{ padding: "14px 20px", textAlign: "center" }}>
+                          <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: T.tableBadBg, borderRadius: 8, padding: "4px 10px" }}>
+                            <XCircle size={14} color={T.tableBadIcon} />
+                            <span style={{ fontSize: 13, color: T.tableBadColor }}>{bad}</span>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* LEAD CAPTURE */}
+        <section ref={formRef} style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
+          <div style={{ maxWidth: 700, margin: "0 auto" }}>
+            <FadeIn>
+              <div style={{ background: T.formCardBg, border: `1px solid ${T.formCardBorder}`, borderRadius: 24, padding: "clamp(28px,5vw,52px)", backdropFilter: "blur(20px)", boxShadow: T.formCardShadow }}>
+                {!submitted ? (
+                  <>
+                    <div style={{ textAlign: "center", marginBottom: 36 }}>
+                      <div style={{ background: T.formIconBg, border: `1px solid ${T.formIconBorder}`, borderRadius: 16, width: 60, height: 60, margin: "0 auto 18px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <FileText size={26} color={T.info} />
+                      </div>
+                      <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(22px,4vw,36px)", letterSpacing: "-0.03em", marginBottom: 12, color: T.textPrimary }}>
+                        Odbierz bezpłatny wzór bezpiecznej umowy
+                      </h2>
+                      <p style={{ color: T.textSecondary, fontSize: 15, lineHeight: 1.6 }}>
+                        + lista <strong style={{ color: T.cta }}>10 najczęstszych błędów</strong> w najmie, które kosztują właścicieli tysiące złotych.
+                      </p>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                      <div>
+                        <label style={{ display: "block", color: T.textSecondary, fontSize: 13, fontWeight: 600, marginBottom: 6, letterSpacing: ".03em" }}>IMIĘ</label>
+                        <div style={{ position: "relative" }}>
+                          <User size={16} color={T.inputPlaceholder} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)" }} />
+                          <input type="text" placeholder="Twoje imię" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} style={{ paddingLeft: 40 }} />
+                        </div>
+                      </div>
+                      <div>
+                        <label style={{ display: "block", color: T.textSecondary, fontSize: 13, fontWeight: 600, marginBottom: 6, letterSpacing: ".03em" }}>
+                          E-MAIL <span style={{ color: T.cta }}>*</span>
+                        </label>
+                        <div style={{ position: "relative" }}>
+                          <Mail size={16} color={T.inputPlaceholder} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)" }} />
+                          <input type="email" placeholder="twoj@email.pl" required value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} style={{ paddingLeft: 40 }} />
+                        </div>
+                      </div>
+                      <div>
+                        <label style={{ display: "flex", alignItems: "center", gap: 8, color: T.textSecondary, fontSize: 13, fontWeight: 600, marginBottom: 6, letterSpacing: ".03em" }}>
+                          NUMER TELEFONU
+                          <span style={{ background: T.formIconBg, border: `1px solid ${T.formIconBorder}`, borderRadius: 6, padding: "1px 7px", color: T.info, fontSize: 11, fontWeight: 700 }}>Szybka konsultacja</span>
+                        </label>
+                        <div style={{ position: "relative" }}>
+                          <Phone size={16} color={T.inputPlaceholder} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)" }} />
+                          <input type="tel" placeholder="+48 000 000 000" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} style={{ paddingLeft: 40 }} />
+                        </div>
+                      </div>
+                      <label style={{ display: "flex", alignItems: "flex-start", gap: 12, cursor: "pointer", marginTop: 4 }}>
+                        <div onClick={() => setRodoChecked(!rodoChecked)} style={{ width: 20, height: 20, borderRadius: 6, flexShrink: 0, background: rodoChecked ? T.cta : "transparent", border: `2px solid ${rodoChecked ? T.cta : T.checkboxBorder}`, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 2, transition: "all 0.2s", cursor: "pointer" }}>
+                          {rodoChecked && <CheckCircle size={13} color="#fff" strokeWidth={3} />}
+                        </div>
+                        <span style={{ color: T.consentText, fontSize: 13, lineHeight: 1.5 }}>
+                          Wyrażam zgodę na przetwarzanie moich danych osobowych przez Rent Standard Polska sp. z o.o. w celu otrzymania materiałów i kontaktu handlowego. Mogę cofnąć zgodę w każdej chwili.
+                        </span>
+                      </label>
+                      <button onClick={handleSubmit} className="cta-btn" disabled={!rodoChecked || !formData.email} style={{ padding: "18px 28px", fontSize: 16, justifyContent: "center", marginTop: 8, opacity: !rodoChecked || !formData.email ? 0.45 : 1, cursor: !rodoChecked || !formData.email ? "not-allowed" : "pointer" }}>
+                        Pobieram umowę i listę błędów <ArrowRight size={18} />
+                      </button>
+                      <p style={{ textAlign: "center", fontSize: 12, color: T.formPrivacy, lineHeight: 1.5 }}>
+                        <Lock size={11} style={{ verticalAlign: "middle", marginRight: 4 }} />
+                        Administratorem Twoich danych jest Rent Standard Polska. Zgodne z RODO. Nie spamujemy — gwarantujemy.
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <div style={{ textAlign: "center", padding: "20px 0" }}>
+                    <div style={{ width: 80, height: 80, borderRadius: "50%", background: `linear-gradient(135deg,${T.cta},${T.ctaHover})`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 24px", boxShadow: `0 0 0 20px ${T.ctaDim}` }}>
+                      <CheckCircle size={36} color="#fff" />
+                    </div>
+                    <h3 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 28, marginBottom: 12, color: T.textPrimary }}>Gotowe! Sprawdź swój e-mail.</h3>
+                    <p style={{ color: T.textSecondary, fontSize: 16 }}>
+                      Wzór umowy i lista 10 błędów zostały wysłane na <strong style={{ color: T.cta }}>{formData.email}</strong>. Nasz ekspert skontaktuje się z Tobą w ciągu 24h.
+                    </p>
+                  </div>
+                )}
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* SOCIAL PROOF */}
+        <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+            <FadeIn>
+              <div style={{ textAlign: "center", marginBottom: 40 }}>
+                <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(24px,4vw,42px)", letterSpacing: "-0.03em", color: T.textPrimary }}>Zaufali nam właściciele z całej Polski</h2>
+              </div>
+              <div className="proof-grid" style={{ display: "flex", gap: 20, marginBottom: 48 }}>
+                {[
+                  { quote: "Dzięki mediacji odzyskałem klucze w 10 dni. Byłem sceptyczny, ale profesjonalizm Rent Standard mnie zaskoczył.", name: "Marek", city: "Poznań", role: "Właściciel 2 mieszkań", stars: 5, accent: "cta", avF: T.cta, avT: T.ctaHover },
+                  { quote: "Umowa okazjonalna bez wizyty u notariusza? Nie wierzyłam — a jednak. Polecam wszystkim wynajmującym.", name: "Anna", city: "Warszawa", role: "Prywatna wynajmująca", stars: 5, accent: "info", avF: T.info, avT: "#5A9AB8" },
+                  { quote: "Mój najemca nie płacił 3 miesiące. Mediator rozwiązał sprawę bez sądu w dwa tygodnie. Genialne.", name: "Tomasz", city: "Kraków", role: "Portfel 5 nieruchomości", stars: 5, accent: "cta", avF: T.cta, avT: T.ctaHover },
+                ].map((t, i) => (
+                  <FadeIn key={i} delay={i * 0.1}>
+                    <BentoCard accent={t.accent} style={{ flex: 1 }}>
+                      <div style={{ display: "flex", gap: 2, marginBottom: 16 }}>
+                        {Array(t.stars).fill(0).map((_, j) => <Star key={j} size={14} color="#f59e0b" fill="#f59e0b" />)}
+                      </div>
+                      <p style={{ color: T.reviewQuote, fontSize: 15, lineHeight: 1.65, fontStyle: "italic", marginBottom: 18 }}>„{t.quote}"</p>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                        <div style={{ width: 38, height: 38, borderRadius: "50%", background: `linear-gradient(135deg,${t.avF},${t.avT})`, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 15, color: "#fff" }}>{t.name[0]}</div>
+                        <div>
+                          <div style={{ fontWeight: 700, fontSize: 14, color: T.textPrimary }}>{t.name}, {t.city}</div>
+                          <div style={{ color: T.reviewSubRole, fontSize: 12 }}>{t.role}</div>
+                        </div>
+                      </div>
+                    </BentoCard>
+                  </FadeIn>
+                ))}
+              </div>
+              <div style={{ border: `1px solid ${T.partnerBorder}`, borderRadius: 16, padding: "24px 32px", background: T.partnerBg }}>
+                <p style={{ textAlign: "center", color: T.partnerLabel, fontSize: 12, fontWeight: 600, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 20 }}>Certyfikacje i partnerzy</p>
+                <div className="partner-logos" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 40 }}>
+                  {[
+                    { name: "eIDAS", sub: "E-Podpis", color: T.cta },
+                    { name: "PZU", sub: "Asystent", color: T.partnerSub },
+                    { name: "BIK", sub: "Weryfikacja", color: T.partnerSub },
+                    { name: "ISO 27001", sub: "Bezpieczeństwo", color: T.partnerSub },
+                    { name: "RODO", sub: "Compliance", color: T.partnerSub },
+                  ].map((p, i) => (
+                    <div key={i} style={{ textAlign: "center" }}>
+                      <div style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 18, fontWeight: 700, color: p.color, letterSpacing: "-0.03em", opacity: 0.8 }}>{p.name}</div>
+                      <div style={{ color: T.partnerSub, fontSize: 11 }}>{p.sub}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* FINAL CTA */}
+        <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
+          <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
+            <FadeIn>
+              <div style={{ width: 120, height: 3, margin: "0 auto 32px", background: `linear-gradient(90deg,${T.cta},${T.info})`, borderRadius: 99 }} />
+              <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(26px,4vw,50px)", letterSpacing: "-0.03em", marginBottom: 16, color: T.textPrimary }}>Zacznij wynajmować z gwarancją pewności</h2>
+              <p style={{ color: T.finalSubtext, fontSize: "clamp(15px,2vw,18px)", maxWidth: 560, margin: "0 auto 36px" }}>
+                Dołącz do 2 400+ właścicieli, którzy śpią spokojnie dzięki Rent Standard Polska.
+              </p>
+              <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "18px 36px", fontSize: 17, margin: "0 auto" }}>
+                Chcę ochrony — zaczynam teraz <ArrowRight size={20} />
+              </button>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* FOOTER */}
+        <footer style={{ position: "relative", zIndex: 1, borderTop: `1px solid ${T.footerBorder}`, padding: "32px clamp(16px,4vw,48px)" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ background: `linear-gradient(135deg,${T.info},${T.ctaHover})`, borderRadius: 8, width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Shield size={14} color="#fff" />
+              </div>
+              <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 16, fontWeight: 700, color: T.textPrimary }}>Rent Standard</span>
+            </div>
+            <p style={{ color: T.footerText, fontSize: 13 }}>© 2026 Rent Standard Polska sp. z o.o. · KRS 0000000000 · RODO · Polityka prywatności</p>
+            <div style={{ display: "flex", gap: 20 }}>
+              {["Regulamin", "RODO", "Kontakt"].map((link) => (
+                <a key={link} href="#" style={{ color: T.footerLink, fontSize: 13, textDecoration: "none", transition: "color 0.2s" }}
+                  onMouseEnter={e => e.target.style.color = T.cta}
+                  onMouseLeave={e => e.target.style.color = T.footerLink}
+                >{link}</a>
+              ))}
+            </div>
+          </div>
+        </footer>
+      </div>
+    </ThemeCtx.Provider>
+  );
+}
