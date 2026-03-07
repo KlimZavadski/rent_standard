@@ -24,15 +24,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Prepare site
-        run: |
-          mkdir -p _site
-          cp landing.html _site/index.html
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install and build
+        run: npm ci && npm run build -- --base=/${{ github.event.repository.name }}/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: dist
 
       - name: Deploy
         id: deploy
