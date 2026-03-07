@@ -120,7 +120,7 @@ function FadeIn({ children, delay = 0 }) {
 }
 
 export default function App() {
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(false); // false = Light default
   const T = isDark ? DARK : LIGHT;
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const [rodoChecked, setRodoChecked] = useState(false);

@@ -213,5 +213,5 @@ export const palette = {
   textLight: { primary: "#FFFFFF", secondary: "rgba(255,255,255,0.55)", muted: "rgba(255,255,255,0.3)" },
 };
 
-export const ThemeCtx = createContext(DARK);
+export const ThemeCtx = createContext(LIGHT);
 export const useT = () => useContext(ThemeCtx);
