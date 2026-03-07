@@ -190,7 +190,7 @@ function FadeIn({ children, delay = 0 }) {
   );
 }
 
-export default function RentStandard() {
+export default function App() {
   const [isDark, setIsDark] = useState(true);
   const T = isDark ? DARK : LIGHT;
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });

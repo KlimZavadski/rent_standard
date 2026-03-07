@@ -10,10 +10,17 @@ The main section is a grid of cards with the following information:
 - The website of the agency
 - The social media links of the agency
 
+## Project structure
+- **`src/`** — React app: `main.jsx` (entry, mounts app), `App.jsx` (landing page component).
+- **`index.html`** — Vite entry; script points to `/src/main.jsx`.
+- **`tests/`** — Playwright smoke tests.
+- **`automation/`** — Shell scripts for build and local run.
+
 ## Technologies
 - HTML
 - CSS
 - JavaScript
+- React (Vite)
 
 ## Features
 - The landing page is responsive and works on all devices
