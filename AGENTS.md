@@ -33,4 +33,5 @@ Run from repo root: `./automation/build.sh`, `./automation/run-local.sh`.
 - **GitHub Pages**: workflow `.github/workflows/deploy-pages.yml` builds the project and deploys the `dist/` output to GitHub Pages (typically on push to the default branch or on release).
 
 ## Instructions
-- use playwrite MCP to launch and check the landing page
+- Use Playwright MCP to launch and check the landing page when needed.
+- After implementing a feature or making changes to the landing/UI: run the Playwright smoke test locally (e.g. `./automation/build.sh`, then `npx serve dist -l 4173 &`, then `npx wait-on http://localhost:4173 && npx playwright test`) and fix any failures before considering the task done.
