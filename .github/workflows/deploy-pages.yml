@@ -33,6 +33,22 @@ jobs:
       - name: Install and build
         run: npm install && npm run build -- --base=/${{ github.event.repository.name }}/
 
+      - name: Serve built site for testing
+        run: |
+          REPO="${{ github.event.repository.name }}"
+          mkdir -p serve-dir/"$REPO"
+          cp -r dist/* serve-dir/"$REPO"/
+          npx serve serve-dir -l 4173 &
+          npx wait-on "http://localhost:4173/$REPO/" -t 10000
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright (page opens, no runtime errors)
+        run: PLAYWRIGHT_BASE_URL=http://localhost:4173/${{ github.event.repository.name }} npx playwright test
+        env:
+          CI: true
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
