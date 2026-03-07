@@ -22,5 +22,15 @@ The main section is a grid of cards with the following information:
 - The landing page is easy to maintain
 - The landing page is easy to deploy
 
+## Automation
+In the `automation/` folder:
+- **`build.sh`** — builds the project (installs dependencies if needed, runs Vite build). Output in `dist/`.
+- **`run-local.sh`** — runs the dev server and opens the page in the browser (installs dependencies if needed).
+
+Run from repo root: `./automation/build.sh`, `./automation/run-local.sh`.
+
+## Deployment
+- **GitHub Pages**: workflow `.github/workflows/deploy-pages.yml` builds the project and deploys the `dist/` output to GitHub Pages (typically on push to the default branch or on release).
+
 ## Instructions
 - use playwrite MCP to launch and check the landing page
