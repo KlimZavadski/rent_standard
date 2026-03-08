@@ -6,6 +6,9 @@ import {
   BadgeCheck, Scale, Handshake, ChevronRight, Sun, Moon
 } from "lucide-react";
 import { DARK, LIGHT, ThemeCtx, useT } from "./theme.js";
+import structureImg from "./assets/images/structure.png";
+import structureWithTextImg from "./assets/images/structure_with_text.png";
+import { heroStructureDescriptions } from "./content/heroStructureDescriptions.js";
 
 function useInView(threshold = 0.15) {
   const ref = useRef(null);
@@ -157,7 +160,13 @@ export default function App() {
     input::placeholder{color:${T.inputPlaceholder};}
     .tag-cta{display:inline-flex;align-items:center;gap:6px;background:${T.ctaDim};border:1px solid ${T.ctaBorder};border-radius:99px;padding:4px 12px;color:${T.cta};font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;}
     .tag-info{display:inline-flex;align-items:center;gap:6px;background:${T.tagInfoBg};border:1px solid ${T.tagInfoBorder};border-radius:99px;padding:4px 12px;color:${T.tagInfoColor};font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
-    @media(max-width:768px){.hero-grid{flex-direction:column!important;gap:28px!important;}.bento-3{grid-template-columns:1fr!important;}.proof-grid{flex-direction:column!important;}.compare-table td,.compare-table th{padding:10px 8px!important;font-size:13px!important;}.partner-logos{flex-wrap:wrap!important;justify-content:center!important;}}
+    .hero-list-item{padding:8px 12px;margin:0 -12px 14px -12px;border-radius:10px;transition:background .2s ease;}
+    .hero-list-item:hover{background:rgba(14,124,102,0.09);}
+    .hero-structure-desktop,.hero-structure-mobile{width:100%;height:auto;border-radius:12px;}
+    .hero-structure-desktop{display:block;}
+    .hero-structure-mobile{display:none;}
+    .hero-grid>.hero-structure-col{align-self:flex-start;}
+    @media(max-width:850px){.hero-structure-desktop{display:none;}.hero-structure-mobile{display:block;}.hero-grid{flex-direction:column!important;gap:28px!important;}.hero-grid>:first-child{order:1}.hero-grid>:last-child{order:-1}.bento-3{grid-template-columns:1fr!important;}.proof-grid{flex-direction:column!important;}.compare-table td,.compare-table th{padding:10px 8px!important;font-size:13px!important;}.partner-logos{flex-wrap:wrap!important;justify-content:center!important;}}
     @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}}
   `;
 
@@ -166,7 +175,7 @@ export default function App() {
 
   return (
     <ThemeCtx.Provider value={T}>
-      <div style={{ background: T.bg, minHeight: "100vh", fontFamily: "Manrope,system-ui,sans-serif", color: T.textPrimary, overflowX: "hidden", transition: "background 0.4s,color 0.4s" }}>
+      <div style={{ background: T.bg, minHeight: "100vh", fontFamily: "Manrope,system-ui,sans-serif", color: T.textPrimary, transition: "background 0.4s,color 0.4s" }}>
         <style dangerouslySetInnerHTML={{ __html: css }} />
 
         {/* BG mesh */}
@@ -190,7 +199,7 @@ export default function App() {
               <button onClick={() => setIsDark(!isDark)} style={{ background: T.toggleBg, border: `1px solid ${T.toggleBorder}`, borderRadius: 99, padding: "7px 10px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, color: T.textSecondary, fontSize: 13, fontWeight: 600, fontFamily: "Manrope,sans-serif", transition: "all 0.25s", flexShrink: 0 }}>
                 {isDark ? <><Sun size={15} color="#f59e0b" /><span className="toggle-label" style={{ color: "#f59e0b" }}>Jasny</span></> : <><Moon size={15} color={T.info} /><span className="toggle-label" style={{ color: T.info }}>Ciemny</span></>}
               </button>
-              <button onClick={scrollToForm} className="cta-btn" style={{ padding: "10px 20px", fontSize: 14 }}>
+              <button onClick={scrollToForm} className="cta-btn" style={{ padding: "10px 20px", fontSize: 15 }}>
                 <span className="nav-cta-text">Zabezpiecz najem</span>
                 <ChevronRight size={16} />
               </button>
@@ -198,42 +207,57 @@ export default function App() {
           </div>
         </nav>
 
+        <div style={{ overflowX: "hidden" }}>
         {/* HERO */}
         <section style={{ position: "relative", zIndex: 1, padding: "clamp(45px,7.5vw,92px) clamp(16px,4vw,48px) clamp(45px,6vw,76px)", overflow: "hidden" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+            <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 12, color: T.textPrimary, width: "100%", textAlign: "center" }}>
+              <span style={{ color: T.info }}>Umowa ekspercka</span> - najem bez ryzyka
+            </h1>
+            <p style={{ width: "100%", textAlign: "center", color: T.textSecondary, fontSize: "clamp(16px,2vw,19px)", lineHeight: 1.5, marginBottom: 40, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
+              Umowa opracowana przez prawników specjalizujących się w sporach o najem mieszkań.
+            </p>
             <div className="hero-grid" style={{ display: "flex", alignItems: "center", gap: "clamp(16px,2.5vw,30px)" }}>
               <div style={{ flex: "0.7 1 336px" }}>
-                <div className="tag-cta" style={{ marginBottom: 20, background: isDark ? "rgba(14,124,102,0.18)" : "rgba(14,124,102,0.10)", border: isDark ? "1px solid rgba(14,124,102,0.55)" : "1px solid rgba(14,124,102,0.45)", color: isDark ? "#2dd4aa" : "#0B6653" }}>
-                  <BadgeCheck size={12} />Certyfikowana ochrona najmu w Polsce
-                </div>
-                <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 22, color: T.textPrimary }}>
-                  Najem bez ryzyka.<br />
-                  <span style={{ whiteSpace: "nowrap", fontSize: "clamp(22px,3.2vw,42px)", color: T.info }}>
-                    Umowa + <span style={{ color: T.cta }}>podpis</span> + mediacja.
-                  </span>
-                </h1>
-                <p style={{ fontSize: "clamp(16px,2vw,19px)", lineHeight: 1.65, color: T.textSecondary, marginBottom: 36, maxWidth: 500 }}>
-                  Tworzymy cyfrową infrastrukturę dla Twojej nieruchomości. Od pancernej umowy po błyskawiczną mediację — wszystko w jednym miejscu.
-                </p>
+                <ul style={{ listStyle: "none", padding: 0, margin: "0 0 28px", maxWidth: 520 }}>
+                  {heroStructureDescriptions.slice(1).map((item, i) => (
+                    <li key={i} className="hero-list-item">
+                      <strong style={{ display: "block", color: T.textPrimary, fontSize: 18, marginBottom: 2 }}>{`${i + 1}. ${item.title.replace(/^\d+\.\s*/, "")}`}</strong>
+                      <span style={{ color: T.textSecondary, fontSize: 16, lineHeight: 1.5 }}>{item.description}</span>
+                    </li>
+                  ))}
+                </ul>
                 <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-                  <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "16px 28px", fontSize: 16 }}>
+                  <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "16px 28px", fontSize: 18 }}>
                     Chcę wynajmować bez ryzyka <ArrowRight size={18} />
                   </button>
                   <button className="sec-btn" style={{ padding: "16px 24px", fontSize: 15 }}>Dowiedz się więcej</button>
                 </div>
                 <div style={{ marginTop: 36, display: "flex", gap: 24, flexWrap: "wrap" }}>
                   {[
-                    { icon: <Users size={14} />, text: "2 400+ chronionych najemców", color: T.cta },
+                    { icon: <Users size={14} />, badge: "2 400+", text: "chronionych najemców", color: T.cta },
                     { icon: <Award size={14} />, text: "Zgodność z eIDAS", color: T.badgesColor },
                     { icon: <Scale size={14} />, text: "RODO 100%", color: T.badgesColor },
                   ].map((b, i) => (
                     <div key={i} style={{ display: "flex", alignItems: "center", gap: 7, color: T.badgesColor, fontSize: 13 }}>
-                      <span style={{ color: b.color }}>{b.icon}</span>{b.text}
+                      <span style={{ color: b.color }}>{b.icon}</span>
+                      {b.badge ? (
+                        <>
+                          <span className="tag-cta" style={{ background: isDark ? "rgba(14,124,102,0.18)" : "rgba(14,124,102,0.10)", border: isDark ? "1px solid rgba(14,124,102,0.55)" : "1px solid rgba(14,124,102,0.45)", color: isDark ? "#2dd4aa" : "#0B6653", padding: "2px 8px", fontSize: 11 }}>{b.badge}</span>
+                          <span> {b.text}</span>
+                        </>
+                      ) : b.text}
                     </div>
                   ))}
                 </div>
               </div>
-              <div style={{ flex: "1 1 280px", minWidth: 0, maxWidth: 420 }}><ContractCard /></div>
+              <div className="hero-structure-col" style={{ flex: "1 1 280px", minWidth: 0, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <img src={structureImg} alt="Protected Lease Agreement — umowa ekspercka, weryfikacja i podpis, mediacja, wsparcie prawne, ubezpieczenie, najem okazjonalny" className="hero-structure-desktop" style={{ width: "100%", height: "auto", borderRadius: 12 }} />
+                <img src={structureWithTextImg} alt="Protected Lease Agreement — 6 poziomów ochrony: umowa ekspercka, weryfikacja i podpis, mediacja, wsparcie prawne, ubezpieczenie, najem okazjonalny" className="hero-structure-mobile" style={{ width: "100%", height: "auto", borderRadius: 12 }} />
+                <div className="tag-cta" style={{ marginTop: 16, background: isDark ? "rgba(14,124,102,0.18)" : "rgba(14,124,102,0.10)", border: isDark ? "1px solid rgba(14,124,102,0.55)" : "1px solid rgba(14,124,102,0.45)", color: isDark ? "#2dd4aa" : "#0B6653" }}>
+                  <BadgeCheck size={12} />Certyfikowana ochrona najmu w Polsce
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -298,6 +322,9 @@ export default function App() {
               <div style={{ textAlign: "center", marginBottom: 48 }}>
                 <div className="tag-info" style={{ marginBottom: 14, display: "inline-flex" }}>Jak działamy</div>
                 <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,48px)", lineHeight: 1.1, letterSpacing: "-0.03em", color: T.textPrimary }}>Trzy filary Twojego spokoju</h2>
+                <p style={{ marginTop: 10, whiteSpace: "nowrap", fontSize: "clamp(11px,1.6vw,21px)", color: T.info }}>
+                  Umowa + <span style={{ color: T.cta }}>podpis</span> + mediacja
+                </p>
               </div>
             </FadeIn>
             <div className="bento-3" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
@@ -439,7 +466,7 @@ export default function App() {
                           Wyrażam zgodę na przetwarzanie moich danych osobowych przez Rent Standard Polska sp. z o.o. w celu otrzymania materiałów i kontaktu handlowego. Mogę cofnąć zgodę w każdej chwili.
                         </span>
                       </label>
-                      <button onClick={handleSubmit} className="cta-btn" disabled={!rodoChecked || !formData.email} style={{ padding: "18px 28px", fontSize: 16, justifyContent: "center", marginTop: 8, opacity: !rodoChecked || !formData.email ? 0.45 : 1, cursor: !rodoChecked || !formData.email ? "not-allowed" : "pointer" }}>
+                      <button onClick={handleSubmit} className="cta-btn" disabled={!rodoChecked || !formData.email} style={{ padding: "18px 28px", fontSize: 18, justifyContent: "center", marginTop: 8, opacity: !rodoChecked || !formData.email ? 0.45 : 1, cursor: !rodoChecked || !formData.email ? "not-allowed" : "pointer" }}>
                         Pobieram umowę i listę błędów <ArrowRight size={18} />
                       </button>
                       <p style={{ textAlign: "center", fontSize: 12, color: T.formPrivacy, lineHeight: 1.5 }}>
@@ -524,7 +551,7 @@ export default function App() {
               <p style={{ color: T.finalSubtext, fontSize: "clamp(15px,2vw,18px)", maxWidth: 560, margin: "0 auto 36px" }}>
                 Dołącz do 2 400+ właścicieli, którzy śpią spokojnie dzięki Rent Standard Polska.
               </p>
-              <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "18px 36px", fontSize: 17, margin: "0 auto" }}>
+              <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "18px 36px", fontSize: 19, margin: "0 auto" }}>
                 Chcę ochrony — zaczynam teraz <ArrowRight size={20} />
               </button>
             </FadeIn>
@@ -551,6 +578,7 @@ export default function App() {
             </div>
           </div>
         </footer>
+        </div>
       </div>
     </ThemeCtx.Provider>
   );
