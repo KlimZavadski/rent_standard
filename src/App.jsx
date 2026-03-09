@@ -10,6 +10,8 @@ import structureDarkImg from "./assets/images/structure_dark.png";
 import structureLightImg from "./assets/images/structure_light.png";
 import structureWithTextDarkImg from "./assets/images/structure_with_text_dark.png";
 import structureWithTextLightImg from "./assets/images/structure_with_text_light.png";
+import shieldDarkImg from "./assets/images/shield_dark.png";
+import shieldLightImg from "./assets/images/shield_light.png";
 import { heroStructureDescriptions } from "./content/heroStructureDescriptions.js";
 
 function useInView(threshold = 0.15) {
@@ -169,7 +171,9 @@ export default function App() {
     .hero-structure-mobile{display:none;}
     .hero-grid>.hero-structure-col{align-self:flex-start;}
     @media(max-width:850px){.hero-structure-desktop{display:none;}.hero-structure-mobile{display:block;}.hero-structure-badge{display:none;}.hero-grid{flex-direction:column!important;gap:28px!important;}.hero-grid>:first-child{order:1}.hero-grid>:last-child{order:-1}.bento-3{grid-template-columns:1fr!important;}.proof-grid{flex-direction:column!important;}.compare-table td,.compare-table th{padding:10px 8px!important;font-size:13px!important;}.partner-logos{flex-wrap:wrap!important;justify-content:center!important;}}
-    @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}}
+    @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}.hero-trust-wrap{flex-direction:column;}}
+    .form-shield-img{flex-shrink:0;}
+    @media(max-width:850px){.form-row{flex-direction:column;align-items:center;}.form-shield-col{justify-content:center!important;padding-right:0!important;}.form-shield-img{width:120px!important;max-width:120px!important;}.form-spacer{display:none;}}
   `;
 
   const scrollToForm = () => formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -217,17 +221,46 @@ export default function App() {
               <span style={{ color: T.info }}>Umowa ekspercka</span> - najem bez ryzyka
             </h1>
             <p style={{ width: "100%", textAlign: "center", color: T.textSecondary, fontSize: "clamp(16px,2vw,19px)", lineHeight: 1.5, marginBottom: 40, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
-              Umowa opracowana przez prawników specjalizujących się w sporach o najem mieszkań.
+              Ochrona najmu od umowy po mediację — stworzona przez prawników.
             </p>
             <div className="hero-grid" style={{ display: "flex", alignItems: "center", gap: "clamp(16px,2.5vw,30px)" }}>
               <div style={{ flex: "0.7 1 336px" }}>
                 <ul style={{ listStyle: "none", padding: 0, margin: "0 0 28px", maxWidth: 520 }}>
-                  {heroStructureDescriptions.slice(1).map((item, i) => (
-                    <li key={i} className="hero-list-item">
-                      <strong style={{ display: "block", color: T.textPrimary, fontSize: 18, marginBottom: 2 }}>{`${i + 1}. ${item.title.replace(/^\d+\.\s*/, "")}`}</strong>
-                      <span style={{ color: T.textSecondary, fontSize: 16, lineHeight: 1.5 }}>{item.description}</span>
-                    </li>
-                  ))}
+                  {(() => {
+                    const items = heroStructureDescriptions.slice(1);
+                    const primary = items.filter(it => it.primary);
+                    const secondary = items.filter(it => !it.primary);
+                    let num = 0;
+                    return [
+                      ...primary.map((item, i) => {
+                        num += 1;
+                        const displayNum = num;
+                        const title = item.title.replace(/^\d+\.\s*/, "");
+                        return (
+                          <li key={`p-${i}`} className="hero-list-item">
+                            <strong style={{ display: "block", color: T.textPrimary, fontSize: 18, marginBottom: 2 }}>{`${displayNum}. ${title}`}</strong>
+                            <span style={{ color: T.textSecondary, fontSize: 16, lineHeight: 1.5 }}>{item.description}</span>
+                          </li>
+                        );
+                      }),
+                      secondary.length > 0 && (
+                        <li key="sec-label" style={{ listStyle: "none", marginTop: 8, marginBottom: 4 }}>
+                          <span style={{ fontSize: 12, fontWeight: 600, color: T.textMuted, letterSpacing: ".04em", textTransform: "uppercase" }}>Dodatkowe zabezpieczenia</span>
+                        </li>
+                      ),
+                      ...secondary.map((item, i) => {
+                        num += 1;
+                        const displayNum = num;
+                        const title = item.title.replace(/^\d+\.\s*/, "");
+                        return (
+                          <li key={`s-${i}`} className="hero-list-item" style={{ marginBottom: 4 }}>
+                            <strong style={{ display: "block", color: T.textSecondary, fontSize: 14, marginBottom: 2 }}>{`${displayNum}. ${title}`}</strong>
+                            <span style={{ color: T.textSecondary, fontSize: 14, lineHeight: 1.5, opacity: 0.9 }}>{item.description}</span>
+                          </li>
+                        );
+                      }),
+                    ];
+                  })()}
                 </ul>
                 <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
                   <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "16px 28px", fontSize: 18 }}>
@@ -235,22 +268,16 @@ export default function App() {
                   </button>
                   <button className="sec-btn" style={{ padding: "16px 24px", fontSize: 15 }}>Dowiedz się więcej</button>
                 </div>
-                <div style={{ marginTop: 36, display: "flex", gap: 24, flexWrap: "wrap" }}>
-                  {[
-                    { icon: <Users size={14} />, badge: "2 400+", text: "chronionych najemców", color: T.cta },
-                    { icon: <Award size={14} />, text: "Zgodność z eIDAS", color: T.badgesColor },
-                    { icon: <Scale size={14} />, text: "RODO 100%", color: T.badgesColor },
-                  ].map((b, i) => (
-                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 7, color: T.badgesColor, fontSize: 16 }}>
-                      <span style={{ color: b.color }}>{b.icon}</span>
-                      {b.badge ? (
-                        <>
-                          <span className="tag-cta" style={{ background: isDark ? "rgba(14,124,102,0.18)" : "rgba(14,124,102,0.10)", border: isDark ? "1px solid rgba(14,124,102,0.55)" : "1px solid rgba(14,124,102,0.45)", color: isDark ? "#2dd4aa" : "#0B6653", padding: "3px 10px", fontSize: 13 }}>{b.badge}</span>
-                          <span> {b.text}</span>
-                        </>
-                      ) : b.text}
-                    </div>
-                  ))}
+                <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12, alignItems: "flex-start" }} className="hero-trust-wrap">
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, background: T.ctaDim, border: `1px solid ${T.ctaBorder}`, borderRadius: 99, padding: "8px 20px" }}>
+                    <Users size={20} color={T.cta} />
+                    <span style={{ fontSize: 22, fontWeight: 800, color: T.cta, fontFamily: "Inter Tight,sans-serif" }}>2 400+</span>
+                    <span style={{ fontSize: 15, color: T.textSecondary }}>chronionych najemców</span>
+                  </div>
+                  <div style={{ display: "flex", gap: 16, flexWrap: "wrap", color: T.badgesColor, fontSize: 12 }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Award size={12} /> Zgodność z eIDAS</span>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Scale size={12} /> RODO 100%</span>
+                  </div>
                 </div>
               </div>
               <div className="hero-structure-col" style={{ flex: "1 1 280px", minWidth: 0, display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -309,7 +336,7 @@ export default function App() {
                     { icon: <TrendingUp size={16} />, text: "Ceny wynajmu wzrosły o 18% w 2024 r.", color: T.cta },
                     { icon: <Building2 size={16} />, text: "1,2 mln mieszkań na rynku najmu prywatnego", color: T.info },
                     { icon: <Clock size={16} />, text: "Eksmisja sądowa: średnio 19 miesięcy", color: T.cta },
-                    { icon: <Handshake size={16} />, text: "Mediacja Rent Standard: decyzja w 14 dni", color: T.info },
+                    { icon: <AlertTriangle size={16} />, text: "68% sporów najmu dotyczy zwrotu kaucji", color: T.info },
                   ].map((f, i) => (
                     <div key={i} style={{ display: "flex", gap: 12, alignItems: "center", padding: "10px 14px", marginBottom: 8, background: T.factRowBg, borderRadius: 10, border: `1px solid ${T.factRowBorder}` }}>
                       <span style={{ color: f.color, flexShrink: 0 }}>{f.icon}</span>
@@ -336,8 +363,8 @@ export default function App() {
             </FadeIn>
             <div className="bento-3" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
               {[
-                { icon: <Shield size={26} />, badge: "01", accent: "cta", iC: T.cta, title: "Pancerna Umowa", sub: "Najem okazjonalny bez stresu", desc: "Klauzule chroniące kaucję i Twoją własność. Umowa przygotowana przez radcę prawnego, dostosowana do polskiego prawa.", features: ["Najem okazjonalny", "Klauzule kaucji", "Ochrona własności", "Audyt prawny"] },
-                { icon: <Zap size={26} />, badge: "02", accent: "info", iC: T.info, title: "Cyfrowe Podpisanie", sub: "Weryfikacja tożsamości i e-podpis", desc: "eIDAS — bezpiecznie i zdalnie w 5 minut. Pełna weryfikacja tożsamości obu stron przed podpisaniem.", features: ["E-podpis eIDAS", "Weryfikacja BIK", "100% zdalnie", "Archiwum 10 lat"] },
+                { icon: <Shield size={26} />, badge: "01", accent: "cta", iC: T.cta, title: "Pancerna Umowa", sub: "Najem okazjonalny bez stresu", desc: "Klauzule chroniące kaucję i Twoją własność. Umowa przygotowana przez radcę prawnego, dostosowana do polskiego prawa.", features: ["Tryb okazjonalny (art. 692¹ KC)", "Klauzule kaucji", "Ochrona własności", "Audyt prawny"] },
+                { icon: <Zap size={26} />, badge: "02", accent: "info", iC: T.info, title: "Cyfrowe Podpisanie", sub: "Weryfikacja tożsamości i e-podpis", desc: "eIDAS — bezpiecznie i zdalnie w 5 minut. Pełna weryfikacja tożsamości obu stron przed podpisaniem.", features: ["Kwalifikowany e-podpis", "Weryfikacja BIK", "100% zdalnie", "Archiwum 10 lat"] },
                 { icon: <Scale size={26} />, badge: "03", accent: "cta", iC: T.cta, title: "Szybka Mediacja", sub: "Rozwiązujemy spory bez sądu", desc: "Profesjonalny mediator na straży Twojego spokoju. Decyzja wiążąca dla obu stron — bez kosztów sądowych.", features: ["14-dniowy tryb", "Certyfik. mediator", "Bez sądu", "Wykonalna ugoda"] },
               ].map((card, i) => (
                 <FadeIn key={i} delay={i * 0.12}>
@@ -369,7 +396,12 @@ export default function App() {
 
         {/* LEAD CAPTURE */}
         <section ref={formRef} style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
-          <div style={{ maxWidth: 700, margin: "0 auto" }}>
+          <div style={{ width: 120, height: 3, margin: "0 auto 48px", background: `linear-gradient(90deg,${T.cta},${T.info})`, borderRadius: 99 }} />
+          <div className="form-row" style={{ maxWidth: 1100, margin: "0 auto", display: "flex", alignItems: "flex-start", justifyContent: "center", gap: 0 }}>
+            <div style={{ width: 200, flexShrink: 0, display: "flex", justifyContent: "flex-end", paddingRight: 28 }} className="form-shield-col">
+              <img src={isDark ? shieldDarkImg : shieldLightImg} alt="" style={{ width: 200, maxWidth: "100%", objectFit: "contain" }} className="form-shield-img" />
+            </div>
+            <div style={{ flex: "0 0 auto", width: "100%", maxWidth: 700 }}>
             <FadeIn>
               <div style={{ background: T.formCardBg, border: `1px solid ${T.formCardBorder}`, borderRadius: 24, padding: "clamp(28px,5vw,52px)", backdropFilter: "blur(20px)", boxShadow: T.formCardShadow }}>
                 {!submitted ? (
@@ -442,11 +474,14 @@ export default function App() {
                 )}
               </div>
             </FadeIn>
+            </div>
+            <div style={{ width: 200, flexShrink: 0 }} className="form-spacer" aria-hidden="true" />
           </div>
         </section>
 
         {/* COMPARISON TABLE */}
         <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
+          <div style={{ width: 120, height: 3, margin: "0 auto 48px", background: `linear-gradient(90deg,${T.cta},${T.info})`, borderRadius: 99 }} />
           <div style={{ maxWidth: 900, margin: "0 auto" }}>
             <FadeIn>
               <div style={{ textAlign: "center", marginBottom: 40 }}>
