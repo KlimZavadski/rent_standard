@@ -366,59 +366,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* COMPARISON TABLE */}
-        <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
-          <div style={{ maxWidth: 900, margin: "0 auto" }}>
-            <FadeIn>
-              <div style={{ textAlign: "center", marginBottom: 40 }}>
-                <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(26px,4vw,44px)", letterSpacing: "-0.03em", marginBottom: 12, color: T.textPrimary }}>Rent Standard vs. Tradycyjny najem</h2>
-                <p style={{ color: T.textSecondary, fontSize: 16 }}>Sprawdź, co zyskujesz wybierając mądrzejsze rozwiązanie</p>
-              </div>
-              <div style={{ background: T.tableOuterBg, border: `1px solid ${T.tableOuterBorder}`, borderRadius: 20, overflow: "hidden" }}>
-                <table className="compare-table" style={{ width: "100%", borderCollapse: "collapse" }}>
-                  <thead>
-                    <tr style={{ background: T.tableHeadBg }}>
-                      <th style={{ padding: "16px 20px", textAlign: "left", color: T.textMuted, fontSize: 13, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", borderBottom: `1px solid ${T.tableHeadBorder}` }}>Aspekt</th>
-                      <th style={{ padding: "16px 20px", textAlign: "center", borderBottom: `1px solid ${T.tableHeadBorder}` }}>
-                        <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-                          <Shield size={15} color={T.cta} />
-                          <span style={{ color: T.cta, fontWeight: 700, fontSize: 15 }}>Rent Standard</span>
-                        </div>
-                      </th>
-                      <th style={{ padding: "16px 20px", textAlign: "center", borderBottom: `1px solid ${T.tableHeadBorder}`, color: T.textSecondary, fontSize: 15, fontWeight: 600 }}>Tradycyjny Najem</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[
-                      ["Ochrona prawna umowy", "Profesjonalna, na miarę", "Generyczny wzór online"],
-                      ["Weryfikacja tożsamości", "BIK + eIDAS, real-time", "Brak lub papierowa"],
-                      ["Rozwiązywanie sporów", "Mediacja w 14 dni", "Sąd: 1–3 lata"],
-                      ["Podpisanie umowy", "E-podpis zdalnie, 5 min", "Spotkanie osobiste"],
-                      ["Archiwum dokumentów", "Bezpieczne, 10 lat", "Własna szuflada"],
-                      ["Wsparcie 24/7", "Tak — czat + telefon", "Brak"],
-                    ].map(([aspect, good, bad], i) => (
-                      <tr key={i} style={{ borderBottom: `1px solid ${T.tableRowBorder}`, background: i % 2 === 0 ? "transparent" : T.tableRowAlt }}>
-                        <td style={{ padding: "14px 20px", fontSize: 14, color: T.tableAspect, fontWeight: 500 }}>{aspect}</td>
-                        <td style={{ padding: "14px 20px", textAlign: "center" }}>
-                          <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: T.ctaDim, borderRadius: 8, padding: "4px 10px" }}>
-                            <CheckCircle size={14} color={T.cta} />
-                            <span style={{ fontSize: 13, color: T.cta, fontWeight: 600 }}>{good}</span>
-                          </div>
-                        </td>
-                        <td style={{ padding: "14px 20px", textAlign: "center" }}>
-                          <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: T.tableBadBg, borderRadius: 8, padding: "4px 10px" }}>
-                            <XCircle size={14} color={T.tableBadIcon} />
-                            <span style={{ fontSize: 13, color: T.tableBadColor }}>{bad}</span>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </FadeIn>
-          </div>
-        </section>
 
         {/* LEAD CAPTURE */}
         <section ref={formRef} style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
@@ -498,8 +445,60 @@ export default function App() {
           </div>
         </section>
 
-        {/* SOCIAL PROOF */}
+        {/* COMPARISON TABLE */}
         <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
+          <div style={{ maxWidth: 900, margin: "0 auto" }}>
+            <FadeIn>
+              <div style={{ textAlign: "center", marginBottom: 40 }}>
+                <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(26px,4vw,44px)", letterSpacing: "-0.03em", marginBottom: 12, color: T.textPrimary }}>Rent Standard vs. Tradycyjny najem</h2>
+                <p style={{ color: T.textSecondary, fontSize: 16 }}>Sprawdź, co zyskujesz wybierając mądrzejsze rozwiązanie</p>
+              </div>
+              <div style={{ background: T.tableOuterBg, border: `1px solid ${T.tableOuterBorder}`, borderRadius: 20, overflow: "hidden" }}>
+                <table className="compare-table" style={{ width: "100%", borderCollapse: "collapse" }}>
+                  <thead>
+                    <tr style={{ background: T.tableHeadBg }}>
+                      <th style={{ padding: "16px 20px", textAlign: "left", color: T.textMuted, fontSize: 13, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", borderBottom: `1px solid ${T.tableHeadBorder}` }}>Aspekt</th>
+                      <th style={{ padding: "16px 20px", textAlign: "center", borderBottom: `1px solid ${T.tableHeadBorder}` }}>
+                        <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                          <Shield size={15} color={T.cta} />
+                          <span style={{ color: T.cta, fontWeight: 700, fontSize: 15 }}>Rent Standard</span>
+                        </div>
+                      </th>
+                      <th style={{ padding: "16px 20px", textAlign: "center", borderBottom: `1px solid ${T.tableHeadBorder}`, color: T.textSecondary, fontSize: 15, fontWeight: 600 }}>Tradycyjny Najem</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      ["Ochrona prawna umowy", "Profesjonalna, na miarę", "Generyczny wzór online"],
+                      ["Weryfikacja tożsamości", "BIK + eIDAS, real-time", "Brak lub papierowa"],
+                      ["Rozwiązywanie sporów", "Mediacja w 14 dni", "Sąd: 1–3 lata"],
+                      ["Podpisanie umowy", "E-podpis zdalnie, 5 min", "Spotkanie osobiste"],
+                      ["Archiwum dokumentów", "Bezpieczne, 10 lat", "Własna szuflada"],
+                      ["Wsparcie 24/7", "Tak — czat + telefon", "Brak"],
+                    ].map(([aspect, good, bad], i) => (
+                      <tr key={i} style={{ borderBottom: `1px solid ${T.tableRowBorder}`, background: i % 2 === 0 ? "transparent" : T.tableRowAlt }}>
+                        <td style={{ padding: "14px 20px", fontSize: 14, color: T.tableAspect, fontWeight: 500 }}>{aspect}</td>
+                        <td style={{ padding: "14px 20px", textAlign: "center" }}>
+                          <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: T.ctaDim, borderRadius: 8, padding: "4px 10px" }}>
+                            <CheckCircle size={14} color={T.cta} />
+                            <span style={{ fontSize: 13, color: T.cta, fontWeight: 600 }}>{good}</span>
+                          </div>
+                        </td>
+                        <td style={{ padding: "14px 20px", textAlign: "center" }}>
+                          <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: T.tableBadBg, borderRadius: 8, padding: "4px 10px" }}>
+                            <XCircle size={14} color={T.tableBadIcon} />
+                            <span style={{ fontSize: 13, color: T.tableBadColor }}>{bad}</span>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
             <FadeIn>
               <div style={{ textAlign: "center", marginBottom: 40 }}>
