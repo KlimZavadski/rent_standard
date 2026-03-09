@@ -45,7 +45,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run Playwright (page opens, no runtime errors)
-        run: PLAYWRIGHT_BASE_URL=http://localhost:4173/${{ github.event.repository.name }} npx playwright test
+        run: PLAYWRIGHT_BASE_URL=http://localhost:4173/${{ github.event.repository.name }}/ npx playwright test
         env:
           CI: true
 
