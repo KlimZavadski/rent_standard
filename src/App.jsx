@@ -6,8 +6,10 @@ import {
   BadgeCheck, Scale, Handshake, ChevronRight, Sun, Moon
 } from "lucide-react";
 import { DARK, LIGHT, ThemeCtx, useT } from "./theme.js";
-import structureImg from "./assets/images/structure.png";
-import structureWithTextImg from "./assets/images/structure_with_text.png";
+import structureDarkImg from "./assets/images/structure_dark.png";
+import structureLightImg from "./assets/images/structure_light.png";
+import structureWithTextDarkImg from "./assets/images/structure_with_text_dark.png";
+import structureWithTextLightImg from "./assets/images/structure_with_text_light.png";
 import { heroStructureDescriptions } from "./content/heroStructureDescriptions.js";
 
 function useInView(threshold = 0.15) {
@@ -166,7 +168,7 @@ export default function App() {
     .hero-structure-desktop{display:block;}
     .hero-structure-mobile{display:none;}
     .hero-grid>.hero-structure-col{align-self:flex-start;}
-    @media(max-width:850px){.hero-structure-desktop{display:none;}.hero-structure-mobile{display:block;}.hero-grid{flex-direction:column!important;gap:28px!important;}.hero-grid>:first-child{order:1}.hero-grid>:last-child{order:-1}.bento-3{grid-template-columns:1fr!important;}.proof-grid{flex-direction:column!important;}.compare-table td,.compare-table th{padding:10px 8px!important;font-size:13px!important;}.partner-logos{flex-wrap:wrap!important;justify-content:center!important;}}
+    @media(max-width:850px){.hero-structure-desktop{display:none;}.hero-structure-mobile{display:block;}.hero-structure-badge{display:none;}.hero-grid{flex-direction:column!important;gap:28px!important;}.hero-grid>:first-child{order:1}.hero-grid>:last-child{order:-1}.bento-3{grid-template-columns:1fr!important;}.proof-grid{flex-direction:column!important;}.compare-table td,.compare-table th{padding:10px 8px!important;font-size:13px!important;}.partner-logos{flex-wrap:wrap!important;justify-content:center!important;}}
     @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}}
   `;
 
@@ -239,11 +241,11 @@ export default function App() {
                     { icon: <Award size={14} />, text: "Zgodność z eIDAS", color: T.badgesColor },
                     { icon: <Scale size={14} />, text: "RODO 100%", color: T.badgesColor },
                   ].map((b, i) => (
-                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 7, color: T.badgesColor, fontSize: 13 }}>
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 7, color: T.badgesColor, fontSize: 16 }}>
                       <span style={{ color: b.color }}>{b.icon}</span>
                       {b.badge ? (
                         <>
-                          <span className="tag-cta" style={{ background: isDark ? "rgba(14,124,102,0.18)" : "rgba(14,124,102,0.10)", border: isDark ? "1px solid rgba(14,124,102,0.55)" : "1px solid rgba(14,124,102,0.45)", color: isDark ? "#2dd4aa" : "#0B6653", padding: "2px 8px", fontSize: 11 }}>{b.badge}</span>
+                          <span className="tag-cta" style={{ background: isDark ? "rgba(14,124,102,0.18)" : "rgba(14,124,102,0.10)", border: isDark ? "1px solid rgba(14,124,102,0.55)" : "1px solid rgba(14,124,102,0.45)", color: isDark ? "#2dd4aa" : "#0B6653", padding: "3px 10px", fontSize: 13 }}>{b.badge}</span>
                           <span> {b.text}</span>
                         </>
                       ) : b.text}
@@ -252,9 +254,14 @@ export default function App() {
                 </div>
               </div>
               <div className="hero-structure-col" style={{ flex: "1 1 280px", minWidth: 0, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <img src={structureImg} alt="Protected Lease Agreement — umowa ekspercka, weryfikacja i podpis, mediacja, wsparcie prawne, ubezpieczenie, najem okazjonalny" className="hero-structure-desktop" style={{ width: "100%", height: "auto", borderRadius: 12 }} />
-                <img src={structureWithTextImg} alt="Protected Lease Agreement — 6 poziomów ochrony: umowa ekspercka, weryfikacja i podpis, mediacja, wsparcie prawne, ubezpieczenie, najem okazjonalny" className="hero-structure-mobile" style={{ width: "100%", height: "auto", borderRadius: 12 }} />
-                <div className="tag-cta" style={{ marginTop: 16, background: isDark ? "rgba(14,124,102,0.18)" : "rgba(14,124,102,0.10)", border: isDark ? "1px solid rgba(14,124,102,0.55)" : "1px solid rgba(14,124,102,0.45)", color: isDark ? "#2dd4aa" : "#0B6653" }}>
+                  <img src={isDark ? structureDarkImg : structureLightImg} alt="Protected Lease Agreement — umowa ekspercka, weryfikacja i podpis, mediacja, wsparcie prawne, ubezpieczenie, najem okazjonalny" className="hero-structure-desktop" style={{ width: "100%", height: "auto", borderRadius: 12 }} />
+                  <img
+                    src={isDark ? structureWithTextDarkImg : structureWithTextLightImg}
+                    alt="Protected Lease Agreement — 6 poziomów ochrony: umowa ekspercka, weryfikacja i podpis, mediacja, wsparcie prawne, ubezpieczenie, najem okazjonalny"
+                    className="hero-structure-mobile"
+                    style={{ width: "100%", height: "auto", borderRadius: 12 }}
+                  />
+                  <div className="tag-cta hero-structure-badge" style={{ marginTop: 16, background: isDark ? "rgba(14,124,102,0.18)" : "rgba(14,124,102,0.10)", border: isDark ? "1px solid rgba(14,124,102,0.55)" : "1px solid rgba(14,124,102,0.45)", color: isDark ? "#2dd4aa" : "#0B6653" }}>
                   <BadgeCheck size={12} />Certyfikowana ochrona najmu w Polsce
                 </div>
               </div>
@@ -263,7 +270,7 @@ export default function App() {
         </section>
 
         {/* PAIN BLOCK */}
-        <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
+        <section style={{ position: "relative", zIndex: 1, padding: "clamp(32px,4.8vw,64px) clamp(16px,4vw,48px)" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
             <FadeIn>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 20 }}>
@@ -316,7 +323,7 @@ export default function App() {
         </section>
 
         {/* THREE PILLARS */}
-        <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
+        <section style={{ position: "relative", zIndex: 1, padding: "clamp(32px,4.8vw,64px) clamp(16px,4vw,48px)" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
             <FadeIn>
               <div style={{ textAlign: "center", marginBottom: 48 }}>
