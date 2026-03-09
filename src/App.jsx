@@ -499,6 +499,8 @@ export default function App() {
           </div>
         </section>
 
+          {/* SOCIAL PROOF (temporarily hidden) */}
+          {/* <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
             <FadeIn>
               <div style={{ textAlign: "center", marginBottom: 40 }}>
@@ -546,7 +548,7 @@ export default function App() {
               </div>
             </FadeIn>
           </div>
-        </section>
+        </section> */}
 
         {/* FINAL CTA */}
         <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
