@@ -383,7 +383,7 @@ export default function App() {
                       {card.features.map((f, j) => (
                         <div key={j} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                           <CheckCircle size={14} color={card.iC} />
-                          <span style={{ fontSize: 13, color: T.pillarFeat }}>{f}</span>
+                          <span style={{ fontSize: 13, color: T.pillarFeat, lineHeight: 1.6 }}>{f}</span>
                         </div>
                       ))}
                     </div>
