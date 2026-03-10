@@ -153,10 +153,6 @@ export default function App({ variantId = "gpt_recommendations" }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
     onResize();
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap";
-    document.head.appendChild(link);
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
@@ -290,7 +286,7 @@ export default function App({ variantId = "gpt_recommendations" }) {
           </div>
         </nav>
 
-        <div className="main-content" style={{ overflowX: "hidden" }}>
+        <main className="main-content" style={{ overflowX: "hidden" }}>
         {/* HERO */}
         <section style={{ position: "relative", zIndex: 1, padding: "clamp(45px,7.5vw,92px) clamp(16px,4vw,48px) clamp(45px,6vw,76px)", overflow: "hidden" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
@@ -374,9 +370,13 @@ export default function App({ variantId = "gpt_recommendations" }) {
         </section>
 
         {/* PAIN BLOCK */}
-        <section style={{ position: "relative", zIndex: 1, padding: "clamp(32px,4.8vw,64px) clamp(16px,4vw,48px)" }}>
+        <section style={{ position: "relative", zIndex: 1, padding: "clamp(32px,4.8vw,64px) clamp(16px,4vw,48px)" }} aria-labelledby="pain-heading">
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
             <FadeIn>
+              <div style={{ textAlign: "center", marginBottom: 48 }}>
+                <div className="tag-info" style={{ marginBottom: 14, display: "inline-flex" }}>Skala problemu</div>
+                <h2 id="pain-heading" style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,48px)", lineHeight: 1.1, letterSpacing: "-0.03em", color: T.textPrimary }}>Dlaczego musisz się zabezpieczyć</h2>
+              </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 20 }}>
                 <BentoCard accent="none">
                   <div style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: 20 }}>
@@ -781,7 +781,7 @@ export default function App({ variantId = "gpt_recommendations" }) {
             </div>
           </div>
         </footer>
-        </div>
+        </main>
       </div>
     </ThemeCtx.Provider>
   );
