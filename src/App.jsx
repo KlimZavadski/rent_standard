@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   Shield, FileText, Zap, CheckCircle, XCircle, ArrowRight,
   Star, Lock, Clock, TrendingUp, Users, AlertTriangle,
@@ -6,6 +7,7 @@ import {
   BadgeCheck, Scale, Handshake, ChevronRight, Sun, Moon, Check
 } from "lucide-react";
 import { getThemesForVariant, ThemeCtx, useT } from "./theme.js";
+import { LANDING_VARIANTS } from "./landingVariants.js";
 import structureDarkImg from "./assets/images/structure_dark.png";
 import structureLightImg from "./assets/images/structure_light.png";
 import structureWithTextDarkImg from "./assets/images/structure_with_text_dark.png";
@@ -127,6 +129,7 @@ function FadeIn({ children, delay = 0 }) {
 }
 
 export default function App({ variantId = "main" }) {
+  const location = useLocation();
   const [isDark, setIsDark] = useState(false); // false = Light default
   const themes = getThemesForVariant(variantId);
   const T = isDark ? themes.DARK : themes.LIGHT;
@@ -228,10 +231,38 @@ export default function App({ variantId = "main" }) {
         <nav style={{ position: "sticky", top: 0, zIndex: 100, background: T.navBg, backdropFilter: "blur(20px)", borderBottom: `1px solid ${T.surfBorder}`, padding: "0 clamp(16px,4vw,48px)", transition: "background 0.3s ease,box-shadow 0.3s ease", boxShadow: scrolled ? "0 10px 30px rgba(0,0,0,0.35)" : "none" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 68 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ background: `linear-gradient(135deg,${T.info},${T.ctaHover})`, borderRadius: 10, width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 4px 16px ${T.ctaGlow}` }}>
-                <Shield size={18} color="#fff" strokeWidth={2.5} />
-              </div>
-              <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 20, fontWeight: 700, letterSpacing: "-0.03em", color: T.textPrimary }}>Rent Standard</span>
+              <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", color: "inherit" }}>
+                <div style={{ background: `linear-gradient(135deg,${T.info},${T.ctaHover})`, borderRadius: 10, width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 4px 16px ${T.ctaGlow}` }}>
+                  <Shield size={18} color="#fff" strokeWidth={2.5} />
+                </div>
+                <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 20, fontWeight: 700, letterSpacing: "-0.03em", color: T.textPrimary }}>Rent Standard</span>
+              </Link>
+              {LANDING_VARIANTS.length > 1 && (
+                <div style={{ display: "flex", alignItems: "center", gap: 4, marginLeft: 16 }}>
+                  {LANDING_VARIANTS.map(({ path, label, variantId: id }) => {
+                    const isActive = location.pathname === path || (path !== "/" && location.pathname.startsWith(path));
+                    return (
+                      <Link
+                        key={id}
+                        to={path}
+                        style={{
+                          padding: "6px 12px",
+                          borderRadius: 8,
+                          fontSize: 14,
+                          fontWeight: isActive ? 700 : 600,
+                          color: isActive ? T.cta : T.textSecondary,
+                          textDecoration: "none",
+                          background: isActive ? T.ctaDim : "transparent",
+                          border: `1px solid ${isActive ? T.ctaBorder : "transparent"}`,
+                          transition: "color 0.2s, background 0.2s",
+                        }}
+                      >
+                        {label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               {/* Theme toggle */}
