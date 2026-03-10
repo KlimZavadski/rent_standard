@@ -515,9 +515,29 @@ export default function App() {
                       <tr key={i} style={{ borderBottom: `1px solid ${T.tableRowBorder}`, background: i % 2 === 0 ? "transparent" : T.tableRowAlt }}>
                         <td style={{ padding: "14px 20px", fontSize: 14, color: T.tableAspect, fontWeight: 500 }}>{aspect}</td>
                         <td style={{ padding: "14px 20px", textAlign: "center" }}>
-                          <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: T.ctaDim, borderRadius: 8, padding: "4px 10px" }}>
-                            <CheckCircle size={14} color={T.cta} />
-                            <span style={{ fontSize: 13, color: T.cta, fontWeight: 600 }}>{good}</span>
+                          <div
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: 6,
+                              background: T.ctaDim,
+                              borderRadius: 999,
+                              padding: "5px 12px",
+                              border: `1px solid ${T.ctaBorder}`,
+                              boxShadow: `0 0 0 1px ${T.ctaGlow}`,
+                            }}
+                          >
+                            <CheckCircle size={14} color={isDark ? "#bbf7d0" : T.cta} />
+                            <span
+                              style={{
+                                fontSize: 13,
+                                color: isDark ? "#e0f2f1" : T.cta,
+                                fontWeight: 700,
+                                letterSpacing: 0.01,
+                              }}
+                            >
+                              {good}
+                            </span>
                           </div>
                         </td>
                         <td style={{ padding: "14px 20px", textAlign: "center" }}>
