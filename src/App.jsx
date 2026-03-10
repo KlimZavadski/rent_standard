@@ -398,25 +398,29 @@ export default function App() {
         {/* LEAD CAPTURE */}
         <section ref={formRef} style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
           <div style={{ width: 120, height: 3, margin: "0 auto 48px", background: `linear-gradient(90deg,${T.cta},${T.info})`, borderRadius: 99 }} />
-          <div className="form-row" style={{ maxWidth: 1100, margin: "0 auto", display: "flex", alignItems: "flex-start", justifyContent: "center", gap: 0 }}>
-            <div style={{ width: 200, flexShrink: 0, display: "flex", justifyContent: "flex-end", paddingRight: 28 }} className="form-shield-col">
-              <img src={isDark ? shieldDarkImg : shieldLightImg} alt="" style={{ width: 200, maxWidth: "100%", objectFit: "contain" }} className="form-shield-img" />
-            </div>
+          <div className="form-row" style={{ maxWidth: 900, margin: "0 auto", display: "flex", alignItems: "flex-start", justifyContent: "center", gap: 0 }}>
             <div style={{ flex: "0 0 auto", width: "100%", maxWidth: 700 }}>
             <FadeIn>
               <div style={{ background: T.formCardBg, border: `1px solid ${T.formCardBorder}`, borderRadius: 24, padding: "clamp(28px,5vw,52px)", backdropFilter: "blur(20px)", boxShadow: T.formCardShadow }}>
                 {!submitted ? (
                   <>
-                    <div style={{ textAlign: "center", marginBottom: 36 }}>
-                      <div style={{ background: T.formIconBg, border: `1px solid ${T.formIconBorder}`, borderRadius: 16, width: 60, height: 60, margin: "0 auto 18px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <FileText size={26} color={T.info} />
+                    <div style={{ display: "flex", alignItems: "flex-start", gap: 40, marginBottom: 32, flexWrap: "wrap" }}>
+                      <div style={{ flexShrink: 0, borderRadius: 18, background: T.formIconBg, border: `1px solid ${T.formIconBorder}`, padding: 14 }}>
+                        <img
+                          src={isDark ? shieldDarkImg : shieldLightImg}
+                          alt=""
+                          style={{ width: 80, height: "auto", maxWidth: "100%", objectFit: "contain" }}
+                          className="form-shield-img"
+                        />
                       </div>
-                      <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(22px,4vw,36px)", letterSpacing: "-0.03em", marginBottom: 12, color: T.textPrimary }}>
-                        Odbierz bezpłatny wzór bezpiecznej umowy
-                      </h2>
-                      <p style={{ color: T.textSecondary, fontSize: 15, lineHeight: 1.6 }}>
-                        + lista <strong style={{ color: T.cta }}>10 najczęstszych błędów</strong> w najmie, które kosztują właścicieli tysiące złotych.
-                      </p>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(22px,4vw,32px)", letterSpacing: "-0.03em", marginBottom: 8, color: T.textPrimary }}>
+                          Odbierz bezpłatny wzór bezpiecznej umowy
+                        </h2>
+                        <p style={{ color: T.textSecondary, fontSize: 15, lineHeight: 1.6 }}>
+                          + lista <strong style={{ color: T.cta }}>10 najczęstszych błędów</strong> w najmie, które kosztują właścicieli tysiące złotych.
+                        </p>
+                      </div>
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                       <div>
@@ -476,7 +480,6 @@ export default function App() {
               </div>
             </FadeIn>
             </div>
-            <div style={{ width: 200, flexShrink: 0 }} className="form-spacer" aria-hidden="true" />
           </div>
         </section>
 
