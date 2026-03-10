@@ -148,6 +148,7 @@ export default function App() {
 
   const css = `
     *{box-sizing:border-box;margin:0;}
+    html,body{min-height:100%;background:${T.bg};color:${T.textPrimary};}
     ::selection{background:rgba(28,187,131,0.25);}
     ::-webkit-scrollbar{width:4px;}
     ::-webkit-scrollbar-track{background:${T.scrollbarTrack};}
@@ -192,7 +193,7 @@ export default function App() {
         </div>
 
         {/* NAV */}
-        <nav style={{ position: "sticky", top: 0, zIndex: 100, background: scrolled ? T.navBg : "transparent", backdropFilter: scrolled ? "blur(20px)" : "none", borderBottom: scrolled ? `1px solid ${T.surfBorder}` : "none", padding: "0 clamp(16px,4vw,48px)", transition: "all 0.3s ease" }}>
+        <nav style={{ position: "sticky", top: 0, zIndex: 100, background: T.navBg, backdropFilter: "blur(20px)", borderBottom: `1px solid ${T.surfBorder}`, padding: "0 clamp(16px,4vw,48px)", transition: "background 0.3s ease,box-shadow 0.3s ease", boxShadow: scrolled ? "0 10px 30px rgba(0,0,0,0.35)" : "none" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 68 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ background: `linear-gradient(135deg,${T.info},${T.ctaHover})`, borderRadius: 10, width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 4px 16px ${T.ctaGlow}` }}>
