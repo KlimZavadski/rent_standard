@@ -42,6 +42,6 @@ Run from repo root: `./automation/build.sh`, `./automation/run-local.sh`.
 
 ## Instructions
 - **AGENTS.md is always written in English.** Keep all content and any new sections in English.
+- After implementing a feature or making changes to the landing/UI: run the project build via automation, e.g. `./automation/build.sh`.
 - Use Playwright MCP to launch and check the landing page when needed.
-- After implementing a feature or making changes to the landing/UI: run the Playwright smoke test locally (e.g. `./automation/build.sh`, then `npx serve dist -l 4173 &`, then `npx wait-on http://localhost:4173 && npx playwright test`) and fix any failures before considering the task done.
 - **Feature planning:** When planning a feature or creating a plan, the agent must add the feature scheme to the **`schemes/`** folder and draw it using **Mermaid** (a `.md` file with a fenced `mermaid` code block). Name the file after the feature, e.g. `schemes/contact-form-flow.md`. After implementing a large feature, always run the Playwright tests and fix any failures before considering the task done.
