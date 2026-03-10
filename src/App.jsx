@@ -3,7 +3,7 @@ import {
   Shield, FileText, Zap, CheckCircle, XCircle, ArrowRight,
   Star, Lock, Clock, TrendingUp, Users, AlertTriangle,
   Phone, Mail, User, Award, Building2,
-  BadgeCheck, Scale, Handshake, ChevronRight, Sun, Moon
+  BadgeCheck, Scale, Handshake, ChevronRight, Sun, Moon, Check
 } from "lucide-react";
 import { DARK, LIGHT, ThemeCtx, useT } from "./theme.js";
 import structureDarkImg from "./assets/images/structure_dark.png";
@@ -130,6 +130,7 @@ export default function App() {
   const [isDark, setIsDark] = useState(false); // false = Light default
   const T = isDark ? DARK : LIGHT;
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
+  const [emailError, setEmailError] = useState(null);
   const [rodoChecked, setRodoChecked] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -174,11 +175,41 @@ export default function App() {
     @media(max-width:850px){.hero-structure-desktop{display:none;}.hero-structure-mobile{display:block;}.hero-structure-badge{display:none;}.hero-grid{flex-direction:column!important;gap:28px!important;}.hero-grid>:first-child{order:1}.hero-grid>:last-child{order:-1}.bento-3{grid-template-columns:1fr!important;}.proof-grid{flex-direction:column!important;}.compare-table td,.compare-table th{padding:10px 8px!important;font-size:13px!important;}.partner-logos{flex-wrap:wrap!important;justify-content:center!important;}}
     @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}.hero-trust-wrap{flex-direction:column;}}
     .form-shield-img{flex-shrink:0;}
-    @media(max-width:850px){.form-row{flex-direction:column;align-items:center;}.form-shield-col{justify-content:center!important;padding-right:0!important;}.form-shield-img{width:120px!important;max-width:120px!important;}.form-spacer{display:none;}}
+    .form-header-row{gap:40px;}
+    .form-fields{display:flex;flex-direction:column;gap:16px;}
+    .form-sub-desktop{display:block;}
+    .form-sub-mobile{display:none;}
+    @media(max-width:850px){
+      .form-row{flex-direction:column;align-items:center;}
+      .form-shield-col{justify-content:center!important;padding-right:0!important;}
+      .form-shield-img{width:120px!important;max-width:120px!important;}
+      .form-spacer{display:none;}
+      .form-header-row{gap:20px;}
+      .form-fields{gap:14px;}
+      .form-sub-desktop{display:none;}
+      .form-sub-mobile{display:block;}
+    }
   `;
 
   const scrollToForm = () => formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-  const handleSubmit = () => { if (!rodoChecked || !formData.email) return; setSubmitted(true); };
+  const isValidEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((s || "").trim());
+  const validateEmail = () => {
+    if (!formData.email) {
+      setEmailError("Podaj adres e-mail.");
+      return false;
+    }
+    if (!isValidEmail(formData.email)) {
+      setEmailError("Nieprawidłowy format adresu e-mail.");
+      return false;
+    }
+    setEmailError(null);
+    return true;
+  };
+  const handleSubmit = () => {
+    if (!rodoChecked || !formData.name) return;
+    if (!validateEmail()) return;
+    setSubmitted(true);
+  };
 
   return (
     <ThemeCtx.Provider value={T}>
@@ -404,7 +435,7 @@ export default function App() {
               <div style={{ background: T.formCardBg, border: `1px solid ${T.formCardBorder}`, borderRadius: 24, padding: "clamp(28px,5vw,52px)", backdropFilter: "blur(20px)", boxShadow: T.formCardShadow }}>
                 {!submitted ? (
                   <>
-                    <div style={{ display: "flex", alignItems: "flex-start", gap: 40, marginBottom: 32, flexWrap: "wrap" }}>
+                        <div className="form-header-row" style={{ display: "flex", alignItems: "flex-start", marginBottom: 32, flexWrap: "wrap" }}>
                       <div style={{ flexShrink: 0, borderRadius: 18, background: T.formIconBg, border: `1px solid ${T.formIconBorder}`, padding: 14 }}>
                         <img
                           src={isDark ? shieldDarkImg : shieldLightImg}
@@ -414,20 +445,30 @@ export default function App() {
                         />
                       </div>
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(22px,4vw,32px)", letterSpacing: "-0.03em", marginBottom: 8, color: T.textPrimary }}>
-                          Odbierz bezpłatny wzór bezpiecznej umowy
+                            <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,36px)", letterSpacing: "-0.03em", marginBottom: 8, color: T.textPrimary }}>
+                              Zabezpiecz swój najem
                         </h2>
-                        <p style={{ color: T.textSecondary, fontSize: 15, lineHeight: 1.6 }}>
-                          + lista <strong style={{ color: T.cta }}>10 najczęstszych błędów</strong> w najmie, które kosztują właścicieli tysiące złotych.
+                            <p className="form-sub-desktop" style={{ color: T.textSecondary, fontSize: 15, lineHeight: 1.6 }}>
+                              <strong style={{ color: T.info }}>Dołącz</strong> do pilotażowej wersji serwisu, który pomaga właścicielom mieszkań{" "}
+                              <strong style={{ color: T.cta }}>chronić się przed problemami z najemcami</strong>
+                            </p>
+                            <p className="form-sub-mobile" style={{ color: T.textSecondary, fontSize: 15, lineHeight: 1.6 }}>
+                              <strong style={{ color: T.info }}>Dołącz</strong> do pilotażu serwisu{" "}
+                              <strong style={{ color: T.cta }}>ochrony najmu</strong>
                         </p>
                       </div>
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                    <div className="form-fields" style={{ display: "flex", flexDirection: "column" }}>
                       <div>
-                        <label style={{ display: "block", color: T.textSecondary, fontSize: 13, fontWeight: 600, marginBottom: 6, letterSpacing: ".03em" }}>IMIĘ</label>
+                            <label style={{ display: "block", color: T.textSecondary, fontSize: 13, fontWeight: 600, marginBottom: 6, letterSpacing: ".03em" }}>
+                              IMIĘ <span style={{ color: T.cta }}>*</span>
+                            </label>
                         <div style={{ position: "relative" }}>
                           <User size={16} color={T.inputPlaceholder} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)" }} />
-                          <input type="text" placeholder="Twoje imię" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} style={{ paddingLeft: 40 }} />
+                              <input type="text" placeholder="Twoje imię" required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} style={{ paddingLeft: 40 }} />
+                            </div>
+                            <div style={{ minHeight: 14, marginTop: 4 }}>
+                              <p style={{ margin: 0, fontSize: 12, color: "transparent" }}> </p>
                         </div>
                       </div>
                       <div>
@@ -435,30 +476,61 @@ export default function App() {
                           E-MAIL <span style={{ color: T.cta }}>*</span>
                         </label>
                         <div style={{ position: "relative" }}>
-                          <Mail size={16} color={T.inputPlaceholder} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)" }} />
-                          <input type="email" placeholder="twoj@email.pl" required value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} style={{ paddingLeft: 40 }} />
+                              <Mail size={16} color={emailError ? T.warn : T.inputPlaceholder} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)" }} />
+                              <input
+                                type="email"
+                                placeholder="twoj@email.pl"
+                                required
+                                value={formData.email}
+                                onChange={e => { setFormData({ ...formData, email: e.target.value }); if (emailError) setEmailError(null); }}
+                                onBlur={validateEmail}
+                                style={{ paddingLeft: 40, borderColor: emailError ? T.warn : undefined }}
+                              />
+                            </div>
+                            <div style={{ minHeight: 14, marginTop: 4 }}>
+                              <p style={{ margin: 0, fontSize: 12, color: T.warn, opacity: emailError ? 1 : 0 }}>
+                                {emailError || " "}
+                              </p>
                         </div>
                       </div>
                       <div>
                         <label style={{ display: "flex", alignItems: "center", gap: 8, color: T.textSecondary, fontSize: 13, fontWeight: 600, marginBottom: 6, letterSpacing: ".03em" }}>
-                          NUMER TELEFONU
-                          <span style={{ background: T.formIconBg, border: `1px solid ${T.formIconBorder}`, borderRadius: 6, padding: "1px 7px", color: T.info, fontSize: 11, fontWeight: 700 }}>Szybka konsultacja</span>
+                              NUMER TELEFONU
                         </label>
                         <div style={{ position: "relative" }}>
                           <Phone size={16} color={T.inputPlaceholder} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)" }} />
                           <input type="tel" placeholder="+48 000 000 000" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} style={{ paddingLeft: 40 }} />
                         </div>
+                            <div style={{ minHeight: 14, marginTop: 4 }}>
+                              <p style={{ margin: 0, fontSize: 12, color: "transparent" }}> </p>
+                            </div>
                       </div>
                       <label style={{ display: "flex", alignItems: "flex-start", gap: 12, cursor: "pointer", marginTop: 4 }}>
-                        <div onClick={() => setRodoChecked(!rodoChecked)} style={{ width: 20, height: 20, borderRadius: 6, flexShrink: 0, background: rodoChecked ? T.cta : "transparent", border: `2px solid ${rodoChecked ? T.cta : T.checkboxBorder}`, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 2, transition: "all 0.2s", cursor: "pointer" }}>
-                          {rodoChecked && <CheckCircle size={13} color="#fff" strokeWidth={3} />}
+                            <div
+                              onClick={() => setRodoChecked(!rodoChecked)}
+                              style={{
+                                width: 20,
+                                height: 20,
+                                borderRadius: 6,
+                                flexShrink: 0,
+                                background: rodoChecked ? T.cta : "transparent",
+                                border: `2px solid ${rodoChecked ? T.cta : T.checkboxBorder}`,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                marginTop: 2,
+                                transition: "all 0.2s",
+                                cursor: "pointer",
+                              }}
+                            >
+                              {rodoChecked && <Check size={14} color="#fff" strokeWidth={3} />}
                         </div>
                         <span style={{ color: T.consentText, fontSize: 13, lineHeight: 1.5 }}>
                           Wyrażam zgodę na przetwarzanie moich danych osobowych przez Rent Standard Polska sp. z o.o. w celu otrzymania materiałów i kontaktu handlowego. Mogę cofnąć zgodę w każdej chwili.
                         </span>
                       </label>
-                      <button onClick={handleSubmit} className="cta-btn" disabled={!rodoChecked || !formData.email} style={{ padding: "18px 28px", fontSize: 18, justifyContent: "center", marginTop: 8, opacity: !rodoChecked || !formData.email ? 0.45 : 1, cursor: !rodoChecked || !formData.email ? "not-allowed" : "pointer" }}>
-                        Pobieram umowę i listę błędów <ArrowRight size={18} />
+                          <button onClick={handleSubmit} className="cta-btn" disabled={!rodoChecked || !formData.email || !formData.name || !!emailError} style={{ padding: "18px 28px", fontSize: 18, justifyContent: "center", marginTop: 8, opacity: !rodoChecked || !formData.email || !formData.name || !!emailError ? 0.45 : 1, cursor: !rodoChecked || !formData.email || !formData.name || !!emailError ? "not-allowed" : "pointer" }}>
+                            Dołącz do pilotażu <ArrowRight size={18} />
                       </button>
                       <p style={{ textAlign: "center", fontSize: 12, color: T.formPrivacy, lineHeight: 1.5 }}>
                         <Lock size={11} style={{ verticalAlign: "middle", marginRight: 4 }} />
