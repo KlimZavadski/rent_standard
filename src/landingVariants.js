@@ -1,6 +1,6 @@
 /**
- * Список вариантов лендингов для A/B или мульти-тестов.
- * path — URL путь, label — текст в хедере, variantId — передаётся в App.
+ * List of landing variants for A/B or multi-variant tests.
+ * path — URL path, label — header text, variantId — passed to App.
  */
 export const LANDING_VARIANTS = [
   { path: "/", label: "Main", variantId: "main" },

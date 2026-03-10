@@ -17,6 +17,11 @@ The main section is a grid of cards with the following information:
 - **`tests/`** — Playwright smoke tests.
 - **`automation/`** — Shell scripts for build and local run.
 
+## Themes
+- **Base themes** live in `src/theme.js` (`DARK`, `LIGHT`). Variant themes are in `src/themes/{variantId}.js` and are **merged on top of the base**: each variant exports partial `{ DARK, LIGHT }` overrides that are shallow-merged with the base theme via `mergeTheme(base, overrides)`.
+- **Registration:** `src/themes/index.js` imports each variant theme and calls `registerVariantTheme(variantId, { DARK, LIGHT })`. To add a variant: create `src/themes/{variantId}.js` (export `DARK` and/or `LIGHT` overrides), then add the import and `registerVariantTheme` call in `themes/index.js`.
+- **Resolution:** `getThemesForVariant(variantId)` returns the registered theme for that variant, or falls back to `main`, then to the base `DARK`/`LIGHT` from `theme.js`. When changing or adding theme keys, only override what differs in variant files; the rest is inherited from the base.
+
 ## Technologies
 - HTML
 - CSS

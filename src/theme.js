@@ -213,5 +213,37 @@ export const palette = {
   textLight: { primary: "#FFFFFF", secondary: "rgba(255,255,255,0.55)", muted: "rgba(255,255,255,0.3)" },
 };
 
+/** Merge overrides on top of the base theme */
+function mergeTheme(base, overrides) {
+  if (!overrides || Object.keys(overrides).length === 0) return base;
+  return { ...base, ...overrides };
+}
+
+const variantThemes = {};
+
+/**
+ * Themes (DARK/LIGHT) for a variant. Sources: files in src/themes/{variantId}.js.
+ * Fallback: variant not found → main → base theme from theme.js.
+ */
+export function getThemesForVariant(variantId) {
+  if (variantThemes[variantId]) return variantThemes[variantId];
+  if (variantThemes.main) return variantThemes.main;
+  return { DARK, LIGHT };
+}
+
+/**
+ * Registers a variant theme (called from src/themes/index.js).
+ * overrides — partial DARK/LIGHT objects, merged on top of the base theme.
+ */
+export function registerVariantTheme(variantId, { DARK: darkOverrides, LIGHT: lightOverrides }) {
+  variantThemes[variantId] = {
+    DARK: mergeTheme(DARK, darkOverrides),
+    LIGHT: mergeTheme(LIGHT, lightOverrides),
+  };
+}
+
+/** For theme files: merge on top of base (e.g. mergeTheme(DARK, { cta: "#..." })) */
+export { mergeTheme };
+
 export const ThemeCtx = createContext(LIGHT);
 export const useT = () => useContext(ThemeCtx);

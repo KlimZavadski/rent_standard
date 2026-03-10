@@ -5,7 +5,7 @@ import {
   Phone, Mail, User, Award, Building2,
   BadgeCheck, Scale, Handshake, ChevronRight, Sun, Moon, Check
 } from "lucide-react";
-import { DARK, LIGHT, ThemeCtx, useT } from "./theme.js";
+import { getThemesForVariant, ThemeCtx, useT } from "./theme.js";
 import structureDarkImg from "./assets/images/structure_dark.png";
 import structureLightImg from "./assets/images/structure_light.png";
 import structureWithTextDarkImg from "./assets/images/structure_with_text_dark.png";
@@ -126,9 +126,10 @@ function FadeIn({ children, delay = 0 }) {
   );
 }
 
-export default function App() {
+export default function App({ variantId = "main" }) {
   const [isDark, setIsDark] = useState(false); // false = Light default
-  const T = isDark ? DARK : LIGHT;
+  const themes = getThemesForVariant(variantId);
+  const T = isDark ? themes.DARK : themes.LIGHT;
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const [emailError, setEmailError] = useState(null);
   const [rodoChecked, setRodoChecked] = useState(false);
