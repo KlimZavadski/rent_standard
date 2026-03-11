@@ -137,6 +137,8 @@ export default function App({ variantId = "main" }) {
   const [emailError, setEmailError] = useState(null);
   const [rodoChecked, setRodoChecked] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [painRef, painInView] = useInView();
   const formRef = useRef(null);
@@ -205,10 +207,66 @@ export default function App({ variantId = "main" }) {
     setEmailError(null);
     return true;
   };
-  const handleSubmit = () => {
+
+  const LEADS_ENDPOINT = (import.meta.env.VITE_LEADS_ENDPOINT || "").trim();
+
+  const handleSubmit = async () => {
+    if (isSubmitting) return;
     if (!rodoChecked || !formData.name) return;
     if (!validateEmail()) return;
-    setSubmitted(true);
+    if (!LEADS_ENDPOINT) {
+      setSubmitError("Brak konfiguracji wysyłki.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+    try {
+      const params = new URLSearchParams(window.location.search || "");
+      const utm = Object.fromEntries(
+        [...params.entries()].filter(([k]) => k.toLowerCase().startsWith("utm_"))
+      );
+
+      const payload = {
+        name: (formData.name || "").trim(),
+        email: (formData.email || "").trim(),
+        phone: (formData.phone || "").trim(),
+        variant_id: variantId,
+        utm,
+        userAgent: navigator.userAgent,
+        data: JSON.stringify({
+          pageUrl: window.location.href,
+          consent: true,
+        }),
+      };
+
+      const res = await fetch(LEADS_ENDPOINT, {
+        method: "POST",
+        // Apps Script web apps can be picky about CORS preflight. Using text/plain avoids OPTIONS.
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload),
+      });
+
+      const raw = await res.text();
+      let json = null;
+      try { json = JSON.parse(raw); } catch { /* ignore */ }
+
+      if (!res.ok) {
+        const hint = json?.error || raw?.slice?.(0, 140) || "";
+        throw new Error(`HTTP ${res.status}${hint ? `: ${hint}` : ""}`);
+      }
+      if (!json?.ok) {
+        const hint = json?.error || raw?.slice?.(0, 140) || "Submit failed";
+        throw new Error(hint);
+      }
+
+      setSubmitted(true);
+    } catch (e) {
+      const msg = (e && typeof e === "object" && "message" in e) ? e.message : String(e || "");
+      setSubmitError(`Nie udało się wysłać formularza. ${msg}`.trim());
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -561,9 +619,26 @@ export default function App({ variantId = "main" }) {
                           Wyrażam zgodę na przetwarzanie moich danych osobowych przez Rent Standard Polska sp. z o.o. w celu otrzymania materiałów i kontaktu handlowego. Mogę cofnąć zgodę w każdej chwili.
                         </span>
                       </label>
-                          <button onClick={handleSubmit} className="cta-btn" disabled={!rodoChecked || !formData.email || !formData.name || !!emailError} style={{ padding: "18px 28px", fontSize: 18, justifyContent: "center", marginTop: 8, opacity: !rodoChecked || !formData.email || !formData.name || !!emailError ? 0.45 : 1, cursor: !rodoChecked || !formData.email || !formData.name || !!emailError ? "not-allowed" : "pointer" }}>
-                            Dołącz do pilotażu <ArrowRight size={18} />
-                      </button>
+                          <button
+                            onClick={handleSubmit}
+                            className="cta-btn"
+                            disabled={isSubmitting || !rodoChecked || !formData.email || !formData.name || !!emailError}
+                            style={{
+                              padding: "18px 28px",
+                              fontSize: 18,
+                              justifyContent: "center",
+                              marginTop: 8,
+                              opacity: isSubmitting || !rodoChecked || !formData.email || !formData.name || !!emailError ? 0.45 : 1,
+                              cursor: isSubmitting || !rodoChecked || !formData.email || !formData.name || !!emailError ? "not-allowed" : "pointer"
+                            }}
+                          >
+                            {isSubmitting ? "Wysyłanie..." : <>Dołącz do pilotażu <ArrowRight size={18} /></>}
+                          </button>
+                          <div style={{ minHeight: 18, marginTop: 8 }}>
+                            <p style={{ margin: 0, fontSize: 12, color: T.warn, opacity: submitError ? 1 : 0 }}>
+                              {submitError || " "}
+                            </p>
+                          </div>
                       <p style={{ textAlign: "center", fontSize: 12, color: T.formPrivacy, lineHeight: 1.5 }}>
                         <Lock size={11} style={{ verticalAlign: "middle", marginRight: 4 }} />
                         Administratorem Twoich danych jest Rent Standard Polska. Zgodne z RODO. Nie spamujemy — gwarantujemy.
@@ -575,9 +650,9 @@ export default function App({ variantId = "main" }) {
                     <div style={{ width: 80, height: 80, borderRadius: "50%", background: `linear-gradient(135deg,${T.cta},${T.ctaHover})`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 24px", boxShadow: `0 0 0 20px ${T.ctaDim}` }}>
                       <CheckCircle size={36} color="#fff" />
                     </div>
-                    <h3 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 28, marginBottom: 12, color: T.textPrimary }}>Gotowe! Sprawdź swój e-mail.</h3>
+                    <h3 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 28, marginBottom: 12, color: T.textPrimary }}>Gotowe! Twoje dane zostały wysłane.</h3>
                     <p style={{ color: T.textSecondary, fontSize: 16 }}>
-                      Wzór umowy i lista 10 błędów zostały wysłane na <strong style={{ color: T.cta }}>{formData.email}</strong>. Nasz ekspert skontaktuje się z Tobą w ciągu 24h.
+                      Skontaktujemy się z Tobą w najbliższym czasie.
                     </p>
                   </div>
                 )}
