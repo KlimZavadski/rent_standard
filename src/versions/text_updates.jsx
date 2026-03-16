@@ -4,7 +4,7 @@ import {
   Shield, FileText, Zap, CheckCircle, XCircle, ArrowRight,
   Lock, Clock, TrendingUp, Users, AlertTriangle,
   Phone, Mail, User, Award, Building2,
-  BadgeCheck, Scale, Handshake, ChevronRight, Sun, Moon, Check
+  BadgeCheck, Scale, ChevronRight, Sun, Moon, Check
 } from "lucide-react";
 import { getThemesForVariant, ThemeCtx, useT } from "../theme.js";
 import { LANDING_VARIANTS } from "../landingVariants.js";
@@ -23,10 +23,11 @@ function useInView(threshold = 0.15) {
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true); }, { threshold });
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
-  }, []);
+  }, [threshold]);
   return [ref, inView];
 }
 
+// eslint-disable-next-line no-unused-vars -- reserved for future use
 function ContractCard() {
   const T = useT();
   return (
