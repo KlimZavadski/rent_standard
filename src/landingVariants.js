@@ -4,5 +4,6 @@
  */
 export const LANDING_VARIANTS = [
   { path: "/", label: "Main", variantId: "main" },
-  { path: "/versions/gpt_recommendations", label: "GPT Recommendations", variantId: "gpt_recommendations" },
+  { path: "/versions/gpt_recommendations", label: "G", variantId: "gpt_recommendations" },
+  { path: "/versions/text_updates", label: "New Texts", variantId: "text_updates" },
 ];

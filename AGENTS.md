@@ -11,7 +11,8 @@ The main section is a grid of cards with the following information:
 - The social media links of the agency
 
 ## Project structure
-- **`src/`** — React app: `main.jsx` (entry, mounts app), `App.jsx` (landing page component).
+- **`src/`** — React app: `main.jsx` (entry, mounts app), `App.jsx` (main landing page component).
+- **`src/versions/`** — alternative landing variants (A/B tests). Each React component here corresponds to a variant registered in `landingVariants.js` and rendered via `main.jsx` routing.
 - **`index.html`** — Vite entry; script points to `/src/main.jsx`.
 - **`schemes/`** — Feature schemes in Mermaid: when planning a feature, the agent adds a scheme file here and draws the diagram using Mermaid.
 - **`tests/`** — Playwright smoke tests.
