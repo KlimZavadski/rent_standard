@@ -1,8 +1,14 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import eslint from "vite-plugin-eslint";
 
-export default defineConfig({
-  plugins: [react()],
+export default defineConfig(({ mode }) => ({
+  plugins: [
+    react(),
+    ...(mode === "development"
+      ? [eslint({ cache: true, lintOnStart: true })]
+      : []),
+  ],
   build: {
     minify: "terser",
     terserOptions: {
@@ -17,4 +23,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));

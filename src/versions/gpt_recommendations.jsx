@@ -513,7 +513,7 @@ export default function App({ variantId = "gpt_recommendations" }) {
                               <input type="text" placeholder="Twoje imię" required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} style={{ paddingLeft: 40 }} />
                             </div>
                             <div style={{ minHeight: 14, marginTop: 4 }}>
-                              <p style={{ margin: 0, fontSize: 12, color: "transparent" }}> </p>
+                              <p style={{ margin: 0, fontSize: 12, color: "transparent" }}> </p>
                         </div>
                       </div>
                       <div>
@@ -534,7 +534,7 @@ export default function App({ variantId = "gpt_recommendations" }) {
                             </div>
                             <div style={{ minHeight: 14, marginTop: 4 }}>
                               <p style={{ margin: 0, fontSize: 12, color: T.warn, opacity: emailError ? 1 : 0 }}>
-                                {emailError || " "}
+                                {emailError || " "}
                               </p>
                         </div>
                       </div>
@@ -547,7 +547,7 @@ export default function App({ variantId = "gpt_recommendations" }) {
                           <input type="tel" placeholder="+48 000 000 000" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} style={{ paddingLeft: 40 }} />
                         </div>
                             <div style={{ minHeight: 14, marginTop: 4 }}>
-                              <p style={{ margin: 0, fontSize: 12, color: "transparent" }}> </p>
+                              <p style={{ margin: 0, fontSize: 12, color: "transparent" }}> </p>
                             </div>
                       </div>
                       <label style={{ display: "flex", alignItems: "flex-start", gap: 12, cursor: "pointer", marginTop: 4 }}>

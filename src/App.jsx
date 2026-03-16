@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Shield, FileText, Zap, CheckCircle, XCircle, ArrowRight,
-  Star, Lock, Clock, TrendingUp, Users, AlertTriangle,
+  Lock, Clock, TrendingUp, Users, AlertTriangle,
   Phone, Mail, User, Award, Building2,
   BadgeCheck, Scale, Handshake, ChevronRight, Sun, Moon, Check
 } from "lucide-react";
@@ -558,7 +558,7 @@ export default function App({ variantId = "main" }) {
                               <input type="text" placeholder="Twoje imię" required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} style={{ paddingLeft: 40 }} />
                             </div>
                             <div style={{ minHeight: 14, marginTop: 4 }}>
-                              <p style={{ margin: 0, fontSize: 12, color: "transparent" }}> </p>
+                              <p style={{ margin: 0, fontSize: 12, color: "transparent" }}> </p>
                         </div>
                       </div>
                       <div>
@@ -579,7 +579,7 @@ export default function App({ variantId = "main" }) {
                             </div>
                             <div style={{ minHeight: 14, marginTop: 4 }}>
                               <p style={{ margin: 0, fontSize: 12, color: T.warn, opacity: emailError ? 1 : 0 }}>
-                                {emailError || " "}
+                                {emailError || " "}
                               </p>
                         </div>
                       </div>
@@ -592,7 +592,7 @@ export default function App({ variantId = "main" }) {
                           <input type="tel" placeholder="+48 000 000 000" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} style={{ paddingLeft: 40 }} />
                         </div>
                             <div style={{ minHeight: 14, marginTop: 4 }}>
-                              <p style={{ margin: 0, fontSize: 12, color: "transparent" }}> </p>
+                              <p style={{ margin: 0, fontSize: 12, color: "transparent" }}> </p>
                             </div>
                       </div>
                       <label style={{ display: "flex", alignItems: "flex-start", gap: 12, cursor: "pointer", marginTop: 4 }}>
@@ -636,7 +636,7 @@ export default function App({ variantId = "main" }) {
                           </button>
                           <div style={{ minHeight: 18, marginTop: 8 }}>
                             <p style={{ margin: 0, fontSize: 12, color: T.warn, opacity: submitError ? 1 : 0 }}>
-                              {submitError || " "}
+                              {submitError || " "}
                             </p>
                           </div>
                       <p style={{ textAlign: "center", fontSize: 12, color: T.formPrivacy, lineHeight: 1.5 }}>
