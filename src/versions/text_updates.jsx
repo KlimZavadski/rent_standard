@@ -338,9 +338,14 @@ export default function TextUpdates({ variantId = "text_updates" }) {
           {/* HERO */}
           <section style={{ position: "relative", zIndex: 1, padding: "clamp(45px,7.5vw,92px) clamp(16px,4vw,48px) clamp(45px,6vw,76px)", overflow: "hidden" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-              <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 40, color: T.textPrimary, width: "100%", textAlign: "center" }}>
-                <span style={{ color: T.info }}>Ekspercka umowa najmu</span> – ochrona interesów i kontrola na każdym etapie
+              <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 12, color: T.textPrimary, width: "100%", textAlign: "center" }}>
+                <span style={{ color: T.info }}>Ekspercka umowa najmu</span>
               </h1>
+              <p style={{ width: "100%", textAlign: "center", color: T.textSecondary, fontSize: "clamp(16px,2vw,19px)", lineHeight: 1.5, marginBottom: 40, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
+                5 poziomów ochrony Twoich interesów
+                <br />
+                Od podpisania umowy aż po bezpieczne zakończenie najmu
+              </p>
               <div className="hero-grid" style={{ display: "flex", alignItems: "center", gap: "clamp(16px,2.5vw,30px)" }}>
                 <div style={{ flex: "0.7 1 336px" }}>
                   <div
@@ -358,20 +363,22 @@ export default function TextUpdates({ variantId = "text_updates" }) {
                     }}
                   >
                     <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 4, background: `linear-gradient(180deg,${T.info},${T.cta})`, borderRadius: "20px 0 0 20px" }} />
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+                    {/* <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                       <div style={{ background: `${T.cta}18`, border: `1px solid ${T.cta}40`, borderRadius: 10, padding: 8, display: "flex" }}>
                         <Shield size={18} color={T.cta} />
                       </div>
                       <span style={{ fontSize: 12, fontWeight: 700, color: T.cta, letterSpacing: ".06em", textTransform: "uppercase", fontFamily: "Manrope,sans-serif" }}>Od ekspertów</span>
-                    </div>
-                    <p style={{ margin: "0 0 14px", color: T.textSecondary, fontSize: "clamp(16px,2vw,18px)", lineHeight: 1.75 }}>
-                      Korzystasz z rozwiązania opracowanego przez naszych{" "}
-                      <strong style={{ color: T.textPrimary, fontWeight: 700 }}>partnerów prawników</strong>, którzy od{" "}
-                      <strong style={{ color: T.info, fontWeight: 700 }}>11 lat</strong> specjalizują się w sporach o nieruchomości.
-                    </p>
-                    <p style={{ margin: 0, color: T.textPrimary, fontSize: "clamp(18px,2.4vw,22px)", lineHeight: 1.55, fontWeight: 700, fontFamily: "Inter Tight,sans-serif", letterSpacing: "-0.02em" }}>
-                      To nie jest zwykły wzór — to{" "}
-                      <span style={{ background: `linear-gradient(135deg,${T.cta},${isDark ? "#4dd4a8" : "#0B6653"})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>kompletny system ochrony</span> Twojego majątku.
+                    </div> */}
+                    <p style={{ margin: 0, color: T.textSecondary, fontSize: "clamp(16px,2vw,18px)", lineHeight: 1.7 }}>
+                      – opracowana przez prawników z ponad 11-letnim doświadczeniem w sprawach najmu i sporach z najemcami
+                      <br />
+                      – zawiera zapisy, które można skutecznie egzekwować w praktyce (nie tylko na papierze)
+                      <br />
+                      – obejmuje wsparcie prawne, mediację oraz dodatkowe zabezpieczenia dla właściciela w trakcie trwania najmu
+                      <br />
+                      – minimalizuje ryzyko problematycznego najemcy i strat finansowych
+                      <br />
+                      – daje realne narzędzia do działania w sytuacjach spornych
                     </p>
                   </div>
                   <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>

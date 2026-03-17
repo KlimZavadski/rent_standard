@@ -3,12 +3,14 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App.jsx";
 import TextUpdates from "./versions/text_updates.jsx";
+import ShortVariant from "./versions/short_variant.jsx";
 import { LANDING_VARIANTS } from "./landingVariants.js";
 
 const basename = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
 
 const VARIANT_COMPONENTS = {
   text_updates: TextUpdates,
+  short_variant: ShortVariant,
 };
 
 createRoot(document.getElementById("root")).render(
