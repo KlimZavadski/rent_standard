@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Shield, FileText, Zap, CheckCircle, XCircle, ArrowRight,
+  Shield, FileText, CheckCircle, XCircle, ArrowRight,
   Lock, Clock, TrendingUp, Users, AlertTriangle,
   Phone, Mail, User, Award, Building2,
   BadgeCheck, Scale, ChevronRight, Sun, Moon, Check,
@@ -15,7 +15,6 @@ import structureWithTextDarkImg from "../assets/images/structure_with_text_dark.
 import structureWithTextLightImg from "../assets/images/structure_with_text_light.png";
 import shieldDarkImg from "../assets/images/shield_dark.png";
 import shieldLightImg from "../assets/images/shield_light.png";
-import { heroStructureDescriptions } from "../content/heroStructureDescriptions.js";
 
 function useInView(threshold = 0.15) {
   const ref = useRef(null);
