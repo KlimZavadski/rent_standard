@@ -338,12 +338,9 @@ export default function TextUpdates({ variantId = "text_updates" }) {
           {/* HERO */}
           <section style={{ position: "relative", zIndex: 1, padding: "clamp(45px,7.5vw,92px) clamp(16px,4vw,48px) clamp(45px,6vw,76px)", overflow: "hidden" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-              <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 12, color: T.textPrimary, width: "100%", textAlign: "center" }}>
-                <span style={{ color: T.info }}>Ekspercka umowa najmu</span>, która chroni Cię na każdym etapie wynajmu, z pełnym wsparciem
+              <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 40, color: T.textPrimary, width: "100%", textAlign: "center" }}>
+                <span style={{ color: T.info }}>Ekspercka umowa najmu</span> – ochrona interesów i kontrola na każdym etapie
               </h1>
-              <p style={{ width: "100%", textAlign: "center", color: T.textSecondary, fontSize: "clamp(16px,2vw,19px)", lineHeight: 1.5, marginBottom: 40, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
-                Zapomnij o problemach z płatnościami i zniszczonym mieszkaniu.
-              </p>
               <div className="hero-grid" style={{ display: "flex", alignItems: "center", gap: "clamp(16px,2.5vw,30px)" }}>
                 <div style={{ flex: "0.7 1 336px" }}>
                   <div
