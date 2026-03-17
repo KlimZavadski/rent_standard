@@ -143,6 +143,7 @@ export default function TextUpdates({ variantId = "text_updates" }) {
   const [scrolled, setScrolled] = useState(false);
   const [painRef, painInView] = useInView();
   const formRef = useRef(null);
+  const [openFaq, setOpenFaq] = useState(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -337,50 +338,44 @@ export default function TextUpdates({ variantId = "text_updates" }) {
           <section style={{ position: "relative", zIndex: 1, padding: "clamp(45px,7.5vw,92px) clamp(16px,4vw,48px) clamp(45px,6vw,76px)", overflow: "hidden" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
               <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 12, color: T.textPrimary, width: "100%", textAlign: "center" }}>
-                <span style={{ color: T.info }}>Umowa ekspercka</span> - najem bez ryzyka
+                <span style={{ color: T.info }}>Ekspercka umowa najmu</span>, która chroni Cię na każdym etapie wynajmu, z pełnym wsparciem
               </h1>
               <p style={{ width: "100%", textAlign: "center", color: T.textSecondary, fontSize: "clamp(16px,2vw,19px)", lineHeight: 1.5, marginBottom: 40, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
-                Ochrona najmu od umowy po mediację — stworzona przez prawników.
+                Zapomnij o problemach z płatnościami i zniszczonym mieszkaniu.
               </p>
               <div className="hero-grid" style={{ display: "flex", alignItems: "center", gap: "clamp(16px,2.5vw,30px)" }}>
                 <div style={{ flex: "0.7 1 336px" }}>
-                  <ul style={{ listStyle: "none", padding: 0, margin: "0 0 28px", maxWidth: 520 }}>
-                    {(() => {
-                      const items = heroStructureDescriptions.slice(1);
-                      const primary = items.filter(it => it.primary);
-                      const secondary = items.filter(it => !it.primary);
-                      let num = 0;
-                      return [
-                        ...primary.map((item, i) => {
-                          num += 1;
-                          const displayNum = num;
-                          const title = item.title.replace(/^\d+\.\s*/, "");
-                          return (
-                            <li key={`p-${i}`} className="hero-list-item">
-                              <strong style={{ display: "block", color: T.textPrimary, fontSize: 18, marginBottom: 2 }}>{`${displayNum}. ${title}`}</strong>
-                              <span style={{ color: T.textSecondary, fontSize: 16, lineHeight: 1.5 }}>{item.description}</span>
-                            </li>
-                          );
-                        }),
-                        secondary.length > 0 && (
-                          <li key="sec-label" style={{ listStyle: "none", marginTop: 8, marginBottom: 4 }}>
-                            <span style={{ fontSize: 12, fontWeight: 600, color: T.textMuted, letterSpacing: ".04em", textTransform: "uppercase" }}>Dodatkowe zabezpieczenia</span>
-                          </li>
-                        ),
-                        ...secondary.map((item, i) => {
-                          num += 1;
-                          const displayNum = num;
-                          const title = item.title.replace(/^\d+\.\s*/, "");
-                          return (
-                            <li key={`s-${i}`} className="hero-list-item" style={{ marginBottom: 4 }}>
-                              <strong style={{ display: "block", color: T.textSecondary, fontSize: 14, marginBottom: 2 }}>{`${displayNum}. ${title}`}</strong>
-                              <span style={{ color: T.textSecondary, fontSize: 14, lineHeight: 1.5, opacity: 0.9 }}>{item.description}</span>
-                            </li>
-                          );
-                        }),
-                      ];
-                    })()}
-                  </ul>
+                  <div
+                    style={{
+                      margin: "0 0 32px",
+                      maxWidth: 540,
+                      background: T.bentoCtaBg,
+                      border: `1px solid ${T.bentoCtaBorder}`,
+                      borderRadius: 20,
+                      padding: "28px 28px 28px 32px",
+                      position: "relative",
+                      overflow: "hidden",
+                      backdropFilter: "blur(12px)",
+                      boxShadow: `0 8px 40px ${T.bentoGlow}`,
+                    }}
+                  >
+                    <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 4, background: `linear-gradient(180deg,${T.info},${T.cta})`, borderRadius: "20px 0 0 20px" }} />
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+                      <div style={{ background: `${T.cta}18`, border: `1px solid ${T.cta}40`, borderRadius: 10, padding: 8, display: "flex" }}>
+                        <Shield size={18} color={T.cta} />
+                      </div>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: T.cta, letterSpacing: ".06em", textTransform: "uppercase", fontFamily: "Manrope,sans-serif" }}>Od ekspertów</span>
+                    </div>
+                    <p style={{ margin: "0 0 14px", color: T.textSecondary, fontSize: "clamp(16px,2vw,18px)", lineHeight: 1.75 }}>
+                      Korzystasz z rozwiązania opracowanego przez naszych{" "}
+                      <strong style={{ color: T.textPrimary, fontWeight: 700 }}>partnerów prawników</strong>, którzy od{" "}
+                      <strong style={{ color: T.info, fontWeight: 700 }}>11 lat</strong> specjalizują się w sporach o nieruchomości.
+                    </p>
+                    <p style={{ margin: 0, color: T.textPrimary, fontSize: "clamp(18px,2.4vw,22px)", lineHeight: 1.55, fontWeight: 700, fontFamily: "Inter Tight,sans-serif", letterSpacing: "-0.02em" }}>
+                      To nie jest zwykły wzór — to{" "}
+                      <span style={{ background: `linear-gradient(135deg,${T.cta},${isDark ? "#4dd4a8" : "#0B6653"})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>kompletny system ochrony</span> Twojego majątku.
+                    </p>
+                  </div>
                   <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
                     <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "16px 28px", fontSize: 18 }}>
                       Chcę wynajmować bez ryzyka <ArrowRight size={18} />
@@ -477,21 +472,35 @@ export default function TextUpdates({ variantId = "text_updates" }) {
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
               <FadeIn>
                 <div style={{ textAlign: "center", marginBottom: 48 }}>
-                  <div className="tag-info" style={{ marginBottom: 14, display: "inline-flex" }}>Jak działamy</div>
-                  <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,48px)", lineHeight: 1.1, letterSpacing: "-0.03em", color: T.textPrimary }}>Trzy filary Twojego spokoju</h2>
-                  <p style={{ marginTop: 10, whiteSpace: "nowrap", fontSize: "clamp(11px,1.6vw,21px)", color: T.info }}>
-                    Umowa + <span style={{ color: T.cta }}>podpis</span> + mediacja
-                  </p>
+                  <div className="tag-info" style={{ marginBottom: 14, display: "inline-flex" }}>Jak to działa</div>
+                  <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,48px)", lineHeight: 1.1, letterSpacing: "-0.03em", color: T.textPrimary }}>Wynajmij w 3 prostych krokach</h2>
                 </div>
               </FadeIn>
               <div className="bento-3" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
                 {[
-                  { icon: <Shield size={26} />, badge: "01", accent: "cta", iC: T.cta, title: "Pancerna Umowa", sub: "Najem okazjonalny bez stresu", desc: "Klauzule chroniące kaucję i Twoją własność. Umowa przygotowana przez radcę prawnego, dostosowana do polskiego prawa.", features: ["Tryb okazjonalny (art. 692¹ KC)", "Klauzule kaucji", "Ochrona własności", "Audyt prawny"] },
-                  { icon: <Zap size={26} />, badge: "02", accent: "info", iC: T.info, title: "Cyfrowe Podpisanie", sub: "Weryfikacja tożsamości i e-podpis", desc: "eIDAS — bezpiecznie i zdalnie w 5 minut. Pełna weryfikacja tożsamości obu stron przed podpisaniem.", features: ["Kwalifikowany e-podpis", "Weryfikacja BIK", "100% zdalnie", "Archiwum 10 lat"] },
-                  { icon: <Scale size={26} />, badge: "03", accent: "cta", iC: T.cta, title: "Szybka Mediacja", sub: "Rozwiązujemy spory bez sądu", desc: "Profesjonalny mediator na straży Twojego spokoju. Decyzja wiążąca dla obu stron — bez kosztów sądowych.", features: ["14-dniowy tryb", "Certyfik. mediator", "Bez sądu", "Wykonalna ugoda"] },
+                  {
+                    icon: <FileText size={26} />, badge: "01", accent: "cta", iC: T.cta,
+                    title: "Przygotuj bezpieczną umowę online",
+                    desc: "Wypełnij krótki formularz, a nasz system wygeneruje profesjonalną umowę najmu, opracowaną przez prawników. Dokument jest w pełni zgodny z polskimi przepisami.",
+                    cta: "Stwórz umowę online",
+                  },
+                  {
+                    icon: <BadgeCheck size={26} />, badge: "02", accent: "info", iC: T.info,
+                    title: "Zweryfikuj najemcę i podpisz dokument cyfrowo",
+                    desc: "Obie strony przechodzą szybką weryfikację tożsamości. Umowę podpisujecie online, bez wychodzenia z domu, za pomocą bezpiecznego podpisu elektronicznego.",
+                    cta: "Podpisz bezpiecznie online",
+                  },
+                  {
+                    icon: <Shield size={26} />, badge: "03", accent: "cta", iC: T.cta,
+                    title: "Wybierz dodatkową ochronę",
+                    sub: "tylko jeśli jej potrzebujesz",
+                    desc: "To Ty decydujesz, z jakich narzędzi chcesz skorzystać. W dowolnym momencie możesz aktywować dodatkowe usługi:",
+                    features: ["Najem okazjonalny", "Ubezpieczenie czynszu", "Wsparcie mediatora lub prawnika"],
+                    cta: "Wzmocnij ochronę swojego najmu",
+                  },
                 ].map((card, i) => (
                   <FadeIn key={i} delay={i * 0.12}>
-                    <BentoCard accent={card.accent} style={{ height: "100%" }}>
+                    <BentoCard accent={card.accent} style={{ height: "100%", display: "flex", flexDirection: "column" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
                         <div style={{ background: `${card.iC}18`, border: `1px solid ${card.iC}40`, borderRadius: 14, padding: 12, display: "flex" }}>
                           <span style={{ color: card.iC }}>{card.icon}</span>
@@ -499,15 +508,22 @@ export default function TextUpdates({ variantId = "text_updates" }) {
                         <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 40, color: `${card.iC}20`, fontWeight: 700, lineHeight: 1 }}>{card.badge}</span>
                       </div>
                       <h3 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 22, marginBottom: 4, color: T.textPrimary }}>{card.title}</h3>
-                      <p style={{ color: card.iC, fontSize: 13, fontWeight: 600, marginBottom: 14 }}>{card.sub}</p>
-                      <p style={{ color: T.pillarDesc, fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>{card.desc}</p>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                        {card.features.map((f, j) => (
-                          <div key={j} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                            <CheckCircle size={14} color={card.iC} />
-                            <span style={{ fontSize: 13, color: T.pillarFeat, lineHeight: 1.6 }}>{f}</span>
-                          </div>
-                        ))}
+                      {card.sub && <p style={{ color: card.iC, fontSize: 13, fontWeight: 600, marginBottom: 14 }}>{card.sub}</p>}
+                      <p style={{ color: T.pillarDesc, fontSize: 14, lineHeight: 1.6, marginBottom: card.features ? 16 : 0 }}>{card.desc}</p>
+                      {card.features && (
+                        <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 0 }}>
+                          {card.features.map((f, j) => (
+                            <div key={j} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                              <CheckCircle size={14} color={card.iC} />
+                              <span style={{ fontSize: 13, color: T.pillarFeat, lineHeight: 1.6 }}>{f}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      <div style={{ marginTop: "auto", paddingTop: 20 }}>
+                        <button onClick={scrollToForm} style={{ width: "100%", padding: "12px 20px", fontSize: 14, fontWeight: 700, color: card.iC, background: `${card.iC}14`, border: `1px solid ${card.iC}40`, borderRadius: 12, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "all 0.2s", fontFamily: "Manrope,sans-serif" }}>
+                          {card.cta} <ArrowRight size={15} />
+                        </button>
                       </div>
                     </BentoCard>
                   </FadeIn>
@@ -735,6 +751,120 @@ export default function TextUpdates({ variantId = "text_updates" }) {
                   </table>
                 </div>
               </FadeIn>
+            </div>
+          </section>
+
+          {/* FAQ */}
+          <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
+            <div style={{ width: 120, height: 3, margin: "0 auto 48px", background: `linear-gradient(90deg,${T.cta},${T.info})`, borderRadius: 99 }} />
+            <div style={{ maxWidth: 800, margin: "0 auto" }}>
+              <FadeIn>
+                <div style={{ textAlign: "center", marginBottom: 48 }}>
+                  <div className="tag-info" style={{ marginBottom: 14, display: "inline-flex" }}>FAQ</div>
+                  <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,48px)", lineHeight: 1.1, letterSpacing: "-0.03em", color: T.textPrimary }}>Często zadawane pytania</h2>
+                  <p style={{ marginTop: 12, color: T.textSecondary, fontSize: "clamp(14px,1.8vw,16px)" }}>Wszystko, co musisz wiedzieć przed wynajmem</p>
+                </div>
+              </FadeIn>
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {[
+                  {
+                    q: "Czy umowa podpisana online jest ważna w polskim sądzie?",
+                    a: "Tak. Korzystamy ze standardu eIDAS, co oznacza, że podpis elektroniczny ma taką samą moc prawną jak podpis własnoręczny. Polskie sądy w pełni uznają dokumenty podpisane w ten sposób, co znacznie przyspiesza ewentualne postępowanie.",
+                  },
+                  {
+                    q: "Na czym polega ochrona ubezpieczeniowa?",
+                    a: "Współpracujemy z wyspecjalizowanymi firmami ubezpieczeniowymi. Jeśli Twój najemca przestanie płacić czynsz lub zniszczy wyposażenie mieszkania, ubezpieczyciel pokryje Twoje straty finansowe oraz koszty ewentualnych napraw.",
+                  },
+                  {
+                    q: "Jak pomagają mi Wasi partnerzy prawni w razie konfliktu?",
+                    a: "Jeśli najemca łamie warunki umowy, zapewniamy Ci bezpośredni kontakt z wyspecjalizowanymi kancelariami prawnymi i mediatorami. Mediator spróbuje rozwiązać spór polubownie, a jeśli to nie zadziała, prawnicy przeprowadzą Cię przez cały proces eksmisji i windykacji należności.",
+                  },
+                  {
+                    q: "Co to jest najem okazjonalny i dlaczego warto go wybrać?",
+                    a: "To najbezpieczniejsza forma najmu w Polsce. Wymaga ona oświadczenia najemcy o poddaniu się egzekucji. Dzięki temu, w przypadku problemów, proces odzyskania lokalu jest znacznie szybszy i prostszy niż przy zwykłej umowie. Nasi partnerzy pomogą Ci dopełnić wszystkich formalności online.",
+                  },
+                ].map((item, i) => {
+                  const isOpen = openFaq === i;
+                  return (
+                    <FadeIn key={i} delay={i * 0.08}>
+                      <div
+                        style={{
+                          background: T.bentoNoneBg,
+                          border: `1px solid ${isOpen ? T.cta : T.bentoNoneBorder}`,
+                          borderRadius: 20,
+                          overflow: "hidden",
+                          backdropFilter: "blur(12px)",
+                          boxShadow: isOpen ? `0 8px 32px ${T.bentoGlow}` : "0 2px 12px rgba(0,0,0,0.04)",
+                          transition: "all 0.35s cubic-bezier(.4,0,.2,1)",
+                        }}
+                      >
+                        <button
+                          onClick={() => setOpenFaq(isOpen ? null : i)}
+                          style={{
+                            width: "100%",
+                            padding: "22px 28px",
+                            background: "none",
+                            border: "none",
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 18,
+                            textAlign: "left",
+                          }}
+                        >
+                          <span
+                            style={{
+                              flexShrink: 0,
+                              width: 36,
+                              height: 36,
+                              borderRadius: 10,
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              background: isOpen ? `${T.cta}18` : `${T.info}12`,
+                              border: `1px solid ${isOpen ? `${T.cta}40` : `${T.info}25`}`,
+                              fontFamily: "Inter Tight,sans-serif",
+                              fontSize: 14,
+                              fontWeight: 800,
+                              color: isOpen ? T.cta : T.textMuted,
+                              transition: "all 0.3s ease",
+                            }}
+                          >
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <span style={{ flex: 1, fontSize: "clamp(15px,2vw,17px)", fontWeight: 600, color: T.textPrimary, lineHeight: 1.4, fontFamily: "Inter Tight,sans-serif" }}>
+                            {item.q}
+                          </span>
+                          <ChevronRight
+                            size={18}
+                            color={isOpen ? T.cta : T.textMuted}
+                            style={{
+                              flexShrink: 0,
+                              transform: isOpen ? "rotate(90deg)" : "rotate(0deg)",
+                              transition: "transform 0.3s ease, color 0.3s ease",
+                            }}
+                          />
+                        </button>
+                        <div
+                          style={{
+                            maxHeight: isOpen ? 300 : 0,
+                            opacity: isOpen ? 1 : 0,
+                            overflow: "hidden",
+                            transition: "max-height 0.4s cubic-bezier(.4,0,.2,1), opacity 0.3s ease",
+                          }}
+                        >
+                          <div style={{ padding: "0 28px 24px 82px" }}>
+                            <div style={{ width: 40, height: 2, background: `linear-gradient(90deg,${T.cta},transparent)`, borderRadius: 99, marginBottom: 14 }} />
+                            <p style={{ margin: 0, color: T.textSecondary, fontSize: 15, lineHeight: 1.75 }}>
+                              {item.a}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </FadeIn>
+                  );
+                })}
+              </div>
             </div>
           </section>
 

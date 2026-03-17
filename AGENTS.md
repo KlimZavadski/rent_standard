@@ -48,6 +48,7 @@ Run from repo root: `./automation/build.sh`, `./automation/run-local.sh`.
 
 ## Instructions
 - **AGENTS.md is always written in English.** Keep all content and any new sections in English.
+- When working on UI (layout, styles, components, visual design): **use the frontend-design skill** at `.cursor/skills/frontend-design/SKILL.md`.
 - After implementing a feature or making changes to the landing/UI: run the project build via automation, e.g. `./automation/build.sh`.
 - Use Playwright MCP to launch and check the landing page when needed.
 - **Feature planning:** When planning a feature or creating a plan, the agent must add the feature scheme to the **`schemes/`** folder and draw it using **Mermaid** (a `.md` file with a fenced `mermaid` code block). Name the file after the feature, e.g. `schemes/contact-form-flow.md`. After implementing a large feature, always run the Playwright tests and fix any failures before considering the task done.
