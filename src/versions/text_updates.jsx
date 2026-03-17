@@ -4,7 +4,8 @@ import {
   Shield, FileText, Zap, CheckCircle, XCircle, ArrowRight,
   Lock, Clock, TrendingUp, Users, AlertTriangle,
   Phone, Mail, User, Award, Building2,
-  BadgeCheck, Scale, ChevronRight, Sun, Moon, Check
+  BadgeCheck, Scale, ChevronRight, Sun, Moon, Check,
+  Handshake, Briefcase
 } from "lucide-react";
 import { getThemesForVariant, ThemeCtx, useT } from "../theme.js";
 import { LANDING_VARIANTS } from "../landingVariants.js";
@@ -143,6 +144,7 @@ export default function TextUpdates({ variantId = "text_updates" }) {
   const [scrolled, setScrolled] = useState(false);
   const [painRef, painInView] = useInView();
   const formRef = useRef(null);
+  const howItWorksRef = useRef(null);
   const [openFaq, setOpenFaq] = useState(null);
 
   useEffect(() => {
@@ -380,7 +382,7 @@ export default function TextUpdates({ variantId = "text_updates" }) {
                     <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "16px 28px", fontSize: 18 }}>
                       Chcę wynajmować bez ryzyka <ArrowRight size={18} />
                     </button>
-                    <button className="sec-btn" style={{ padding: "16px 24px", fontSize: 15 }}>Dowiedz się więcej</button>
+                    <button onClick={() => howItWorksRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })} className="sec-btn" style={{ padding: "16px 24px", fontSize: 15 }}>Dowiedz się więcej</button>
                   </div>
                   <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12, alignItems: "flex-start" }} className="hero-trust-wrap">
                     <div style={{ display: "flex", alignItems: "center", gap: 10, background: T.ctaDim, border: `1px solid ${T.ctaBorder}`, borderRadius: 99, padding: "8px 20px" }}>
@@ -751,6 +753,71 @@ export default function TextUpdates({ variantId = "text_updates" }) {
                   </table>
                 </div>
               </FadeIn>
+            </div>
+          </section>
+
+          {/* HOW IT WORKS */}
+          <section ref={howItWorksRef} style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)", scrollMarginTop: 80 }}>
+            <div style={{ width: 120, height: 3, margin: "0 auto 48px", background: `linear-gradient(90deg,${T.cta},${T.info})`, borderRadius: 99 }} />
+            <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+              <FadeIn>
+                <div style={{ textAlign: "center", marginBottom: 48 }}>
+                  <div className="tag-info" style={{ marginBottom: 14, display: "inline-flex" }}>Szczegóły</div>
+                  <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,48px)", lineHeight: 1.1, letterSpacing: "-0.03em", color: T.textPrimary }}>Jak to działa</h2>
+                  <p style={{ marginTop: 12, color: T.textSecondary, fontSize: "clamp(14px,1.8vw,16px)" }}>Każdy element zaprojektowany, by chronić Twój majątek</p>
+                </div>
+              </FadeIn>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 20 }}>
+                {[
+                  {
+                    icon: <BadgeCheck size={26} />, badge: "01", accent: "info", iC: T.info,
+                    title: "Weryfikacja i bezpieczny podpis elektroniczny",
+                    desc: "Weryfikujemy tożsamość najemcy i podpisujemy umowę w standardzie eIDAS. Masz 100% pewności, komu przekazujesz klucze.",
+                  },
+                  {
+                    icon: <Scale size={26} />, badge: "02", accent: "cta", iC: T.cta,
+                    title: "Skuteczna ochrona Twoich interesów – sprawdzona w sądzie",
+                    desc: "Zapisy opracowane przez ekspertów gwarantują pełną zgodność z przepisami. Zyskujesz silną pozycję prawną, która realnie chroni Cię w przypadku jakiegokolwiek sporu.",
+                  },
+                  {
+                    icon: <Shield size={26} />, badge: "03", accent: "info", iC: T.info,
+                    title: "Aktywna ochrona finansowa (Polisa)",
+                    desc: "W momencie podpisania umowy aktywujemy polisę ubezpieczeniową. Jeśli najemca przestanie płacić lub wyrządzi szkody — koszty pokryje ubezpieczyciel.",
+                  },
+                  {
+                    icon: <Handshake size={26} />, badge: "04", accent: "cta", iC: T.cta,
+                    title: "Wsparcie wyspecjalizowanych partnerów",
+                    desc: "Gdy pojawi się konflikt, nie zostajesz sam. Zapewniamy kontakt z ekspertami:",
+                    bullets: [
+                      { icon: <Briefcase size={14} />, text: "Profesjonalni mediatorzy — pomogą rozwiązać spór polubownie, oszczędzając Twój czas i nerwy." },
+                      { icon: <Scale size={14} />, text: "Doświadczeni prawnicy — jeśli porozumienie nie będzie możliwe, partnerzy prawni przejmą proces eksmisji oraz odzyskiwania należności." },
+                    ],
+                  },
+                ].map((card, i) => (
+                  <FadeIn key={i} delay={i * 0.1}>
+                    <BentoCard accent={card.accent} style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
+                        <div style={{ background: `${card.iC}18`, border: `1px solid ${card.iC}40`, borderRadius: 14, padding: 12, display: "flex" }}>
+                          <span style={{ color: card.iC }}>{card.icon}</span>
+                        </div>
+                        <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 40, color: `${card.iC}20`, fontWeight: 700, lineHeight: 1 }}>{card.badge}</span>
+                      </div>
+                      <h3 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 20, marginBottom: 12, color: T.textPrimary, lineHeight: 1.3 }}>{card.title}</h3>
+                      <p style={{ color: T.pillarDesc, fontSize: 14, lineHeight: 1.7, marginBottom: card.bullets ? 16 : 0 }}>{card.desc}</p>
+                      {card.bullets && (
+                        <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: "auto" }}>
+                          {card.bullets.map((b, j) => (
+                            <div key={j} style={{ display: "flex", gap: 10, alignItems: "flex-start", background: `${card.iC}08`, border: `1px solid ${card.iC}18`, borderRadius: 12, padding: "12px 14px" }}>
+                              <span style={{ color: card.iC, flexShrink: 0, marginTop: 2 }}>{b.icon}</span>
+                              <span style={{ fontSize: 13, color: T.textSecondary, lineHeight: 1.6 }}>{b.text}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </BentoCard>
+                  </FadeIn>
+                ))}
+              </div>
             </div>
           </section>
 
