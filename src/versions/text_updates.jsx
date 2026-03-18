@@ -211,6 +211,12 @@ export default function TextUpdates({ variantId = "text_updates" }) {
     return true;
   };
 
+  const formatPhone = (raw) => {
+    const digits = (raw || "").replace(/\D/g, "").slice(0, 9);
+    const groups = digits.match(/.{1,3}/g) || [];
+    return groups.join(" ");
+  };
+
   const LEADS_ENDPOINT = (import.meta.env.VITE_LEADS_ENDPOINT || "").trim();
 
   const handleSubmit = async () => {
@@ -233,7 +239,7 @@ export default function TextUpdates({ variantId = "text_updates" }) {
       const payload = {
         name: (formData.name || "").trim(),
         email: (formData.email || "").trim(),
-        phone: (formData.phone || "").trim(),
+        phone: (formData.phone || "").replace(/\D/g, ""),
         variant_id: variantId,
         utm,
         userAgent: navigator.userAgent,
@@ -611,7 +617,15 @@ export default function TextUpdates({ variantId = "text_updates" }) {
                             </label>
                             <div style={{ position: "relative" }}>
                               <Phone size={16} color={T.inputPlaceholder} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)" }} />
-                              <input type="tel" placeholder="+48 000 000 000" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} style={{ paddingLeft: 40 }} />
+                              <input
+                                type="tel"
+                                inputMode="numeric"
+                                pattern="[0-9 ]*"
+                                placeholder="516 123 456"
+                                value={formData.phone}
+                                onChange={e => setFormData({ ...formData, phone: formatPhone(e.target.value) })}
+                                style={{ paddingLeft: 40 }}
+                              />
                             </div>
                             <div style={{ minHeight: 14, marginTop: 4 }}>
                               <p style={{ margin: 0, fontSize: 12, color: "transparent" }}> </p>
