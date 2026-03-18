@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   Shield, ShieldCheck, CheckCircle, ArrowRight, Lock,
   Phone, Mail, User, Home,
-  BadgeCheck, Scale, ChevronRight, Sun, Moon, Check,
+  Scale, ChevronRight, Sun, Moon, Check,
   FileText, Handshake, Award, Users
 } from "lucide-react";
 import { getThemesForVariant, ThemeCtx, useT } from "../theme.js";
