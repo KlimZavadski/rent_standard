@@ -290,8 +290,26 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                       "daje realne narzędzia do działania w sytuacjach spornych",
                     ].map((text, i) => (
                       <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "8px 0" }}>
-                        <CheckCircle size={18} color={T.cta} style={{ flexShrink: 0, marginTop: 2 }} />
-                        <span style={{ color: T.textSecondary, fontSize: "clamp(14px,1.6vw,16px)", lineHeight: 1.6 }}>{text}</span>
+                        <span
+                          style={{
+                            flexShrink: 0,
+                            width: 22,
+                            height: 22,
+                            borderRadius: "999px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: 12,
+                            fontWeight: 700,
+                            color: isDark ? T.textSecondary : T.cta,
+                            background: isDark ? "rgba(15,118,110,0.25)" : "rgba(15,118,110,0.08)",
+                            border: `1px solid ${T.ctaBorder}`,
+                            marginTop: 2,
+                          }}
+                        >
+                          {i + 1}
+                        </span>
+                        <span style={{ color: isDark ? T.cardLineHi : T.textPrimary, fontSize: "clamp(14px,1.6vw,16px)", lineHeight: 1.6 }}>{text}</span>
                       </div>
                     ))}
                   </div>
