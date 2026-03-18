@@ -441,8 +441,8 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                               Zabezpiecz swój najem
                             </h2>
                             <p className="form-sub-desktop" style={{ color: T.textSecondary, fontSize: 15, lineHeight: 1.6 }}>
-                              <strong style={{ color: T.info }}>Dołącz</strong> do pilotażowej wersji serwisu, który pomaga właścicielom mieszkań{" "}
-                              <strong style={{ color: T.cta }}>chronić się przed problemami z najemcami</strong>
+                              Uruchomienie serwisu planowane jest na <strong style={{ color: T.cta }}>2026</strong> rok.{" "}
+                              <strong style={{ color: T.cta }}>Pierwsi użytkownicy</strong> zyskają specjalne warunki i realny wpływ na jego rozwój
                             </p>
                             <p className="form-sub-mobile" style={{ color: T.textSecondary, fontSize: 15, lineHeight: 1.6 }}>
                               <strong style={{ color: T.info }}>Dołącz</strong> do pilotażu serwisu{" "}
