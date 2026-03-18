@@ -251,7 +251,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                 {isDark ? <><Sun size={15} color="#f59e0b" /><span className="toggle-label" style={{ color: "#f59e0b" }}>Jasny</span></> : <><Moon size={15} color={T.info} /><span className="toggle-label" style={{ color: T.info }}>Ciemny</span></>}
               </button>
               <button onClick={scrollToForm} className="cta-btn" style={{ padding: "10px 20px", fontSize: 15 }}>
-                <span className="nav-cta-text">Zabezpiecz najem</span>
+                <span className="nav-cta-text">Dołącz do pilotażu</span>
                 <ChevronRight size={16} />
               </button>
             </div>
@@ -260,14 +260,14 @@ export default function ShortVariant({ variantId = "short_variant" }) {
 
         <main style={{ overflowX: "hidden" }}>
           {/* HERO */}
-          <section style={{ position: "relative", zIndex: 1, padding: "clamp(48px,8vw,100px) clamp(16px,4vw,48px) clamp(40px,5vw,64px)", overflow: "hidden" }}>
+          <section style={{ position: "relative", zIndex: 1, padding: "clamp(24px,4.5vw,64px) clamp(16px,4vw,48px) clamp(40px,5vw,64px)", overflow: "hidden" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
               <div style={{ textAlign: "center", marginBottom: 40 }}>
                 <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5.5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 16, color: T.textPrimary }}>
-                  <span style={{ color: T.info }}>Ekspercka</span> ochrona najmu
+                  <span style={{ color: T.info }}>Service</span> ochrony umowy najmu
                 </h1>
                 <p style={{ color: T.textSecondary, fontSize: "clamp(16px,2vw,20px)", lineHeight: 1.55, maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
-                  Kompleksowy system zabezpieczeń dla właścicieli mieszkań — od umowy po mediację.
+                  Kompleksowa ochrona w 5 elementach - w specjalnej cenie
                 </p>
               </div>
 
@@ -283,12 +283,27 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                   }}>
                     <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 4, background: `linear-gradient(180deg,${T.info},${T.cta})`, borderRadius: "20px 0 0 20px" }} />
                     {[
-                      "opracowana przez prawników z ponad 11-letnim doświadczeniem w sprawach najmu i sporach z najemcami",
-                      "zawiera zapisy, które można skutecznie egzekwować w praktyce (nie tylko na papierze)",
-                      "obejmuje wsparcie prawne, mediację oraz dodatkowe zabezpieczenia dla właściciela w trakcie trwania najmu",
-                      "minimalizuje ryzyko problematycznego najemcy i strat finansowych",
-                      "daje realne narzędzia do działania w sytuacjach spornych",
-                    ].map((text, i) => (
+                      {
+                        title: "Umowa najmu i podpis elektroniczny",
+                        text: "opracowana przez prawników z 11+ lat doświadczenia w najmie",
+                      },
+                      {
+                        title: "Ubezpieczenie",
+                        text: "zawiera zapisy skuteczne w egzekwowaniu, nie tylko na papierze",
+                      },
+                      {
+                        title: "Okazjonalny najem",
+                        text: "obejmuje wsparcie prawne, mediację i dodatkowe zabezpieczenia właściciela",
+                      },
+                      {
+                        title: "Mediacja",
+                        text: "minimalizuje ryzyko problematycznego najemcy i strat finansowych",
+                      },
+                      {
+                        title: "Wsparcie prawne",
+                        text: "daje realne narzędzia do działania w sytuacjach spornych",
+                      },
+                    ].map((item, i) => (
                       <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "8px 0" }}>
                         <span
                           style={{
@@ -309,7 +324,14 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                         >
                           {i + 1}
                         </span>
-                        <span style={{ color: isDark ? T.cardLineHi : T.textPrimary, fontSize: "clamp(14px,1.6vw,16px)", lineHeight: 1.6 }}>{text}</span>
+                        <span style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                          <span style={{ color: isDark ? T.cardLineHi : T.textPrimary, fontSize: "clamp(14px,1.4vw,16px)", fontWeight: 800, lineHeight: 1.2 }}>
+                            {item.title}
+                          </span>
+                          <span style={{ color: isDark ? T.cardLineHi : T.textPrimary, fontSize: "clamp(14px,1.6vw,16px)", lineHeight: 1.6 }}>
+                            {item.text}
+                          </span>
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -324,7 +346,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
 
               <div style={{ textAlign: "center" }}>
                 <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "18px 32px", fontSize: 18 }}>
-                  Chcę wynajmować bez ryzyka <ArrowRight size={18} />
+                  Dołącz do pilotażu <ArrowRight size={18} />
                 </button>
 
                 {/* Trust badges */}
@@ -344,12 +366,11 @@ export default function ShortVariant({ variantId = "short_variant" }) {
           </section>
 
           {/* VALUE CARDS */}
-          <section style={{ position: "relative", zIndex: 1, padding: "clamp(32px,4.8vw,64px) clamp(16px,4vw,48px)" }}>
+          <section style={{ position: "relative", zIndex: 1, padding: "clamp(32px,4.8vw,64px) clamp(16px,4vw,48px)", paddingTop: "clamp(26px,3.8vw,52px)" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
               <FadeIn>
                 <div style={{ textAlign: "center", marginBottom: 48 }}>
-                  <div className="tag-info" style={{ marginBottom: 14, display: "inline-flex" }}>Co kupujesz</div>
-                  <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,44px)", lineHeight: 1.1, letterSpacing: "-0.03em", color: T.textPrimary }}>Trzy filary Twojego spokoju</h2>
+                  <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,44px)", lineHeight: 1.1, letterSpacing: "-0.03em", color: T.textPrimary }}>Pięć filarów Twojego spokoju</h2>
                 </div>
               </FadeIn>
               <div className="short-cards">
