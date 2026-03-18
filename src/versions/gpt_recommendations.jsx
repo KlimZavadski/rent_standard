@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Shield, FileText, Zap, CheckCircle, XCircle, ArrowRight,
-  // eslint-disable-next-line no-unused-vars -- Star used in JSX (reviews section)
-  Star, Lock, Clock, TrendingUp, Users, AlertTriangle,
+  Shield, Zap, CheckCircle, XCircle, ArrowRight,
+  Lock, Clock, TrendingUp, Users, AlertTriangle,
   Phone, Mail, User, Award, Building2,
   BadgeCheck, Scale, Sun, Moon, Check
 } from "lucide-react";
@@ -26,60 +25,6 @@ function useInView(threshold = 0.15) {
     return () => obs.disconnect();
   }, [threshold]);
   return [ref, inView];
-}
-
-// eslint-disable-next-line no-unused-vars -- reserved for future use
-function ContractCard() {
-  const T = useT();
-  return (
-    <div style={{ position: "relative", width: "100%", maxWidth: 420, margin: "0 auto", border: `2px solid ${T.cardOuterBorder}`, borderRadius: 24, padding: 10, background: T.cardOuterBg }}>
-      <div style={{ position: "absolute", top: -30, right: -30, width: 260, height: 260, background: `radial-gradient(ellipse,${T.meshGreen} 0%,transparent 70%)`, borderRadius: "50%", filter: "blur(10px)", zIndex: 0 }} />
-      <div style={{ position: "absolute", bottom: -20, left: -20, width: 200, height: 200, background: `radial-gradient(ellipse,${T.meshBlue} 0%,transparent 70%)`, borderRadius: "50%", filter: "blur(10px)", zIndex: 0 }} />
-      <div style={{ background: T.cardBg, border: `1px solid ${T.cardBorder}`, borderRadius: 20, padding: 28, backdropFilter: "blur(16px)", boxShadow: T.cardShadow, position: "relative", zIndex: 1, minWidth: 0, overflow: "hidden" }}>
-        <div style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 20 }}>
-          <div style={{ background: T.cardIconBg, borderRadius: 10, padding: 8, display: "flex", flexShrink: 0 }}>
-            <FileText size={18} color="rgba(255,255,255,0.85)" />
-          </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ color: "#FFFFFF", fontWeight: 700, fontSize: 14, marginBottom: 2 }}>Umowa Najmu Okazjonalnego</div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-              <div style={{ color: "rgba(255,255,255,0.55)", fontSize: 11 }}>Wersja cyfrowa · eIDAS</div>
-              <div style={{ background: T.ctaGlow, border: `1px solid ${T.cta}`, borderRadius: 20, padding: "2px 8px", display: "flex", alignItems: "center", gap: 4 }}>
-                <BadgeCheck size={11} color={T.cta} />
-                <span style={{ color: T.cta, fontSize: 10, fontWeight: 700 }}>ZWERYFIKOWANO</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        {[
-          { text: "Strona wynajmująca: Jan Kowalski", dot: T.cta },
-          { text: "Strona najemcy: Anna Nowak", dot: T.cta },
-          { text: "Okres: 12 miesięcy", dot: "rgba(255,255,255,0.35)" },
-          { text: "Kaucja: 3 000 PLN", dot: "rgba(255,255,255,0.35)" },
-        ].map((line, i) => (
-          <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 0", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-            <div style={{ width: 6, height: 6, borderRadius: "50%", flexShrink: 0, background: line.dot }} />
-            <span style={{ color: i < 2 ? "#FFFFFF" : "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: i < 2 ? 600 : 400 }}>{line.text}</span>
-          </div>
-        ))}
-        <div style={{ marginTop: 18, display: "flex", gap: 10 }}>
-          {[
-            { label: "PODPIS WYNAJMUJĄCY", sig: "Jan K.", color: T.cta, rgb: T.sigRgbGreen },
-            { label: "PODPIS NAJEMCY", sig: "Anna N.", color: "#FFFFFF", rgb: "255,255,255" },
-          ].map((s, i) => (
-            <div key={i} style={{ flex: 1, background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 10, padding: "10px 12px" }}>
-              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 10, marginBottom: 4 }}>{s.label}</div>
-              <div style={{ fontFamily: "cursive", color: s.color, fontSize: 18, lineHeight: 1 }}>{s.sig}</div>
-            </div>
-          ))}
-        </div>
-        <div style={{ marginTop: 14, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 10, padding: "8px 12px", display: "flex", alignItems: "center", gap: 8 }}>
-          <Lock size={13} color="rgba(255,255,255,0.6)" />
-          <span style={{ color: "rgba(255,255,255,0.6)", fontSize: 12, fontWeight: 600 }}>Zabezpieczono · 256-bit SSL · RODO</span>
-        </div>
-      </div>
-    </div>
-  );
 }
 
 function ComparisonBars({ inView }) {

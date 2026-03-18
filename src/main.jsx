@@ -9,8 +9,8 @@ import { LANDING_VARIANTS } from "./landingVariants.js";
 const basename = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
 
 const VARIANT_COMPONENTS = {
-  text_updates: TextUpdates,
-  short_variant: ShortVariant,
+  v1: TextUpdates,
+  s1: ShortVariant,
 };
 
 createRoot(document.getElementById("root")).render(
