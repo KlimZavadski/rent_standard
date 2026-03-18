@@ -10,6 +10,8 @@ import { getThemesForVariant, ThemeCtx, useT } from "../theme.js";
 import { LANDING_VARIANTS } from "../landingVariants.js";
 import shieldDarkImg from "../assets/images/shield_dark.png";
 import shieldLightImg from "../assets/images/shield_light.png";
+import structureDarkImg from "../assets/images/structure_dark.png";
+import structureLightImg from "../assets/images/structure_light.png";
 
 function useInView(threshold = 0.15) {
   const ref = useRef(null);
@@ -86,8 +88,12 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     input::placeholder{color:${T.inputPlaceholder};}
     .tag-info{display:inline-flex;align-items:center;gap:6px;background:${T.tagInfoBg};border:1px solid ${T.tagInfoBorder};border-radius:99px;padding:4px 12px;color:${T.tagInfoColor};font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
     .short-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-    @media(max-width:850px){.short-cards{grid-template-columns:1fr!important;}}
-    @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}.hero-trust-wrap{flex-direction:column;}}
+    .hero-split{display:flex;align-items:stretch;gap:clamp(20px,3vw,40px);max-width:1100px;margin:0 auto 40px;}
+    .hero-split-left{flex:1 1 55%;min-width:0;}
+    .hero-split-right{flex:0 0 auto;display:flex;align-items:center;justify-content:center;}
+    .hero-split-right img{height:100%;width:auto;max-width:420px;object-fit:contain;border-radius:12px;}
+    @media(max-width:850px){.short-cards{grid-template-columns:1fr!important;}.hero-split{flex-direction:column;align-items:center;}.hero-split-right{display:none;}.hero-theses-card{padding:18px 18px!important;}}
+    @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}.hero-trust-wrap{flex-direction:column;}.hero-theses-card{padding:14px 14px!important;}}
     .form-shield-img{flex-shrink:0;}
     .form-header-row{gap:40px;}
     .form-fields{display:flex;flex-direction:column;gap:16px;}
@@ -255,50 +261,65 @@ export default function ShortVariant({ variantId = "short_variant" }) {
         <main style={{ overflowX: "hidden" }}>
           {/* HERO */}
           <section style={{ position: "relative", zIndex: 1, padding: "clamp(48px,8vw,100px) clamp(16px,4vw,48px) clamp(40px,5vw,64px)", overflow: "hidden" }}>
-            <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
-              <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5.5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 16, color: T.textPrimary }}>
-                <span style={{ color: T.info }}>Ekspercka</span> ochrona najmu
-              </h1>
-              <p style={{ color: T.textSecondary, fontSize: "clamp(16px,2vw,20px)", lineHeight: 1.55, marginBottom: 40, maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
-                Kompleksowy system zabezpieczeń dla właścicieli mieszkań — od umowy po mediację.
-              </p>
-
-              {/* 5 theses card */}
-              <div style={{
-                maxWidth: 620, margin: "0 auto 40px", textAlign: "left",
-                background: T.bentoCtaBg, border: `1px solid ${T.bentoCtaBorder}`,
-                borderRadius: 20, padding: "28px 32px", position: "relative", overflow: "hidden",
-                backdropFilter: "blur(12px)", boxShadow: `0 8px 40px ${T.bentoGlow}`,
-              }}>
-                <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 4, background: `linear-gradient(180deg,${T.info},${T.cta})`, borderRadius: "20px 0 0 20px" }} />
-                {[
-                  "opracowana przez prawników z ponad 11-letnim doświadczeniem w sprawach najmu i sporach z najemcami",
-                  "zawiera zapisy, które można skutecznie egzekwować w praktyce (nie tylko na papierze)",
-                  "obejmuje wsparcie prawne, mediację oraz dodatkowe zabezpieczenia dla właściciela w trakcie trwania najmu",
-                  "minimalizuje ryzyko problematycznego najemcy i strat finansowych",
-                  "daje realne narzędzia do działania w sytuacjach spornych",
-                ].map((text, i) => (
-                  <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "8px 0" }}>
-                    <CheckCircle size={18} color={T.cta} style={{ flexShrink: 0, marginTop: 2 }} />
-                    <span style={{ color: T.textSecondary, fontSize: "clamp(14px,1.6vw,16px)", lineHeight: 1.6 }}>{text}</span>
-                  </div>
-                ))}
+            <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+              <div style={{ textAlign: "center", marginBottom: 40 }}>
+                <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5.5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 16, color: T.textPrimary }}>
+                  <span style={{ color: T.info }}>Ekspercka</span> ochrona najmu
+                </h1>
+                <p style={{ color: T.textSecondary, fontSize: "clamp(16px,2vw,20px)", lineHeight: 1.55, maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
+                  Kompleksowy system zabezpieczeń dla właścicieli mieszkań — od umowy po mediację.
+                </p>
               </div>
 
-              <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "18px 32px", fontSize: 18, margin: "0 auto" }}>
-                Chcę wynajmować bez ryzyka <ArrowRight size={18} />
-              </button>
-
-              {/* Trust badges */}
-              <div style={{ marginTop: 28, display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }} className="hero-trust-wrap">
-                <div style={{ display: "flex", alignItems: "center", gap: 10, background: T.ctaDim, border: `1px solid ${T.ctaBorder}`, borderRadius: 99, padding: "8px 20px" }}>
-                  <Users size={18} color={T.cta} />
-                  <span style={{ fontSize: 20, fontWeight: 800, color: T.cta, fontFamily: "Inter Tight,sans-serif" }}>2 400+</span>
-                  <span style={{ fontSize: 14, color: T.textSecondary }}>chronionych właścicieli</span>
+              {/* Two-column: theses + infographic */}
+              <div className="hero-split">
+                <div className="hero-split-left">
+                  <div className="hero-theses-card" style={{
+                    textAlign: "left", height: "100%",
+                    background: T.bentoCtaBg, border: `1px solid ${T.bentoCtaBorder}`,
+                    borderRadius: 20, padding: "28px 32px", position: "relative", overflow: "hidden",
+                    backdropFilter: "blur(12px)", boxShadow: `0 8px 40px ${T.bentoGlow}`,
+                    display: "flex", flexDirection: "column", justifyContent: "center",
+                  }}>
+                    <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 4, background: `linear-gradient(180deg,${T.info},${T.cta})`, borderRadius: "20px 0 0 20px" }} />
+                    {[
+                      "opracowana przez prawników z ponad 11-letnim doświadczeniem w sprawach najmu i sporach z najemcami",
+                      "zawiera zapisy, które można skutecznie egzekwować w praktyce (nie tylko na papierze)",
+                      "obejmuje wsparcie prawne, mediację oraz dodatkowe zabezpieczenia dla właściciela w trakcie trwania najmu",
+                      "minimalizuje ryzyko problematycznego najemcy i strat finansowych",
+                      "daje realne narzędzia do działania w sytuacjach spornych",
+                    ].map((text, i) => (
+                      <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "8px 0" }}>
+                        <CheckCircle size={18} color={T.cta} style={{ flexShrink: 0, marginTop: 2 }} />
+                        <span style={{ color: T.textSecondary, fontSize: "clamp(14px,1.6vw,16px)", lineHeight: 1.6 }}>{text}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center", color: T.badgesColor, fontSize: 12 }}>
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Award size={12} /> Zgodność z eIDAS</span>
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Scale size={12} /> RODO 100%</span>
+                <div className="hero-split-right">
+                  <img
+                    src={isDark ? structureDarkImg : structureLightImg}
+                    alt="6 poziomów ochrony najmu — umowa, weryfikacja, podpis, mediacja, wsparcie prawne, ubezpieczenie"
+                  />
+                </div>
+              </div>
+
+              <div style={{ textAlign: "center" }}>
+                <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "18px 32px", fontSize: 18 }}>
+                  Chcę wynajmować bez ryzyka <ArrowRight size={18} />
+                </button>
+
+                {/* Trust badges */}
+                <div style={{ marginTop: 28, display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }} className="hero-trust-wrap">
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, background: T.ctaDim, border: `1px solid ${T.ctaBorder}`, borderRadius: 99, padding: "8px 20px" }}>
+                    <Users size={18} color={T.cta} />
+                    <span style={{ fontSize: 20, fontWeight: 800, color: T.cta, fontFamily: "Inter Tight,sans-serif" }}>2 400+</span>
+                    <span style={{ fontSize: 14, color: T.textSecondary }}>chronionych właścicieli</span>
+                  </div>
+                  <div style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center", color: T.badgesColor, fontSize: 12 }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Award size={12} /> Zgodność z eIDAS</span>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Scale size={12} /> RODO 100%</span>
+                  </div>
                 </div>
               </div>
             </div>
