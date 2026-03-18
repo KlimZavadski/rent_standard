@@ -293,7 +293,7 @@ export default function App({ variantId = "main" }) {
                 <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 20, fontWeight: 700, letterSpacing: "-0.03em", color: T.textPrimary }}>Rent Standard</span>
               </Link>
               {LANDING_VARIANTS.length > 1 && (
-                <div style={{ display: "flex", alignItems: "center", gap: 4, marginLeft: 16 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 0, marginLeft: 0 }}>
                   {LANDING_VARIANTS.map(({ path, label, variantId: id }) => {
                     const isActive = location.pathname === path || (path !== "/" && location.pathname.startsWith(path));
                     return (
@@ -301,7 +301,7 @@ export default function App({ variantId = "main" }) {
                         key={id}
                         to={path}
                         style={{
-                          padding: "6px 12px",
+                          padding: "4px 4px",
                           borderRadius: 8,
                           fontSize: 14,
                           fontWeight: isActive ? 700 : 600,
