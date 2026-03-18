@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Shield, CheckCircle, ArrowRight, Lock,
-  Phone, Mail, User,
+  Shield, ShieldCheck, CheckCircle, ArrowRight, Lock,
+  Phone, Mail, User, Home,
   BadgeCheck, Scale, ChevronRight, Sun, Moon, Check,
   FileText, Handshake, Award, Users
 } from "lucide-react";
@@ -87,7 +87,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     input:focus{border-color:${T.info};background:${T.inputFocusBg};}
     input::placeholder{color:${T.inputPlaceholder};}
     .tag-info{display:inline-flex;align-items:center;gap:6px;background:${T.tagInfoBg};border:1px solid ${T.tagInfoBorder};border-radius:99px;padding:4px 12px;color:${T.tagInfoColor};font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
-    .short-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+    .short-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
     .hero-split{display:flex;align-items:stretch;gap:clamp(20px,3vw,40px);max-width:1100px;margin:0 auto 40px;}
     .hero-split-left{flex:1 1 55%;min-width:0;}
     .hero-split-right{flex:0 0 auto;display:flex;align-items:center;justify-content:center;}
@@ -172,21 +172,33 @@ export default function ShortVariant({ variantId = "short_variant" }) {
   const VALUE_CARDS = [
     {
       icon: <FileText size={26} />, badge: "01", accent: "cta", iC: T.cta,
-      title: "Ekspercka umowa najmu",
-      desc: "Opracowana przez prawników z ponad 11-letnim doświadczeniem w sporach o najem. Zawiera zapisy egzekwowalne w praktyce — nie tylko na papierze.",
-      features: ["Tryb okazjonalny (art. 19a)", "Klauzule chroniące kaucję", "Pełna zgodność z przepisami"],
+      title: "Umowa najmu",
+      desc: "opracowana przez prawników z ponad 11-letnim doświadczeniem w sprawach najmu i sporach z najemcami.",
+      features: ["Klauzule chroniące kaucję i własność", "Podpis elektroniczny eIDAS", "Weryfikacja tożsamości najemcy", "Archiwum dokumentów 10 lat"],
     },
     {
-      icon: <BadgeCheck size={26} />, badge: "02", accent: "info", iC: T.info,
-      title: "Weryfikacja i podpis cyfrowy",
-      desc: "Potwierdzamy tożsamość najemcy i podpisujemy umowę online w standardzie eIDAS. Masz pewność, komu oddajesz klucze.",
-      features: ["Podpis elektroniczny eIDAS", "Weryfikacja tożsamości", "Archiwum dokumentów 10 lat"],
+      icon: <ShieldCheck size={26} />, badge: "02", accent: "info", iC: T.info,
+      title: "Ubezpieczenie",
+      desc: "Specjalny polisa ubezpieczeniowa chroni Twoje mienie i minimalizuje straty finansowe wynikające z najmu — od zniszczeń po brak płatności.",
+      features: ["Ochrona mienia właściciela", "Pokrycie strat z tytułu zaległości", "Polisa dopasowana do umowy"],
     },
     {
-      icon: <Handshake size={26} />, badge: "03", accent: "cta", iC: T.cta,
-      title: "Mediacja i wsparcie prawne",
-      desc: "Gdy pojawia się spór, nie zostajesz sam. Profesjonalny mediator lub prawnik działają w Twoim interesie — bez sądu, w 14 dni.",
-      features: ["Certyfikowany mediator", "Partner prawny na wypadek eksmisji", "Ugoda z mocą prawną"],
+      icon: <Home size={26} />, badge: "03", accent: "cta", iC: T.cta,
+      title: "Najem okazjonalny online",
+      desc: "Pełne oformienie najmu okazjonalnego bez wizyty u notariusza. Wszystkie dokumenty przygotowane i podpisane elektronicznie — szybciej i wygodniej.",
+      features: ["Tryb okazjonalny (art. 19a)", "Oświadczenie najemcy online", "Komplet dokumentów w jednym miejscu"],
+    },
+    {
+      icon: <Handshake size={26} />, badge: "04", accent: "info", iC: T.info,
+      title: "Mediacja sporów",
+      desc: "Profesjonalny mediator pomaga rozwiązać konflikt z najemcą bez sądu — szybko, poufnie i ze skutkiem prawnym. Ugoda jest wiążąca dla obu stron.",
+      features: ["Certyfikowany mediator", "Rozwiązanie sporu w 14 dni", "Ugoda z mocą wyroku sądowego"],
+    },
+    {
+      icon: <Scale size={26} />, badge: "05", accent: "cta", iC: T.cta,
+      title: "Wsparcie prawne",
+      desc: "Gdy mediacja nie wystarczy — partnerski zespół prawników prowadzi sprawę w sądzie lub postępowaniu egzekucyjnym. Nie zostajesz sam z problemem.",
+      features: ["Partner prawny na wypadek eksmisji", "Prowadzenie sprawy sądowej", "Doradztwo na każdym etapie najmu"],
     },
   ];
 
@@ -324,11 +336,11 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                         >
                           {i + 1}
                         </span>
-                        <span style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                          <span style={{ color: isDark ? T.cardLineHi : T.textPrimary, fontSize: "clamp(14px,1.4vw,16px)", fontWeight: 800, lineHeight: 1.2 }}>
+                        <span style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                          <span style={{ color: isDark ? T.cardLineHi : T.textPrimary, fontSize: "clamp(16px,1.4vw,20px)", fontWeight: 800, lineHeight: 1.2 }}>
                             {item.title}
                           </span>
-                          <span style={{ color: isDark ? T.cardLineHi : T.textPrimary, fontSize: "clamp(14px,1.6vw,16px)", lineHeight: 1.6 }}>
+                          <span style={{ color: isDark ? T.cardLineHi : T.textPrimary, fontSize: "clamp(12px,1.6vw,15px)", lineHeight: 1.6 }}>
                             {item.text}
                           </span>
                         </span>
