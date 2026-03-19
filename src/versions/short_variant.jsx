@@ -357,7 +357,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                 <div className="hero-split-right">
                   <img
                     src={isDark ? structureDarkImg : structureLightImg}
-                    alt="6 poziomów ochrony najmu — umowa, weryfikacja, podpis, mediacja, wsparcie prawne, ubezpieczenie"
+                    alt="Infografika przedstawiająca 6 poziomów ochrony najmu: umowa, weryfikacja, podpis, mediacja, wsparcie prawne i ubezpieczenie"
                   />
                 </div>
               </div>
@@ -431,7 +431,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                           <div style={{ flexShrink: 0, borderRadius: 18, background: T.formIconBg, border: `1px solid ${T.formIconBorder}`, padding: 14 }}>
                             <img
                               src={isDark ? shieldDarkImg : shieldLightImg}
-                              alt=""
+                              alt="Ikona tarczy symbolizująca ochronę najmu"
                               style={{ width: 80, height: "auto", maxWidth: "100%", objectFit: "contain" }}
                               className="form-shield-img"
                             />
