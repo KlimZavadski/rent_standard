@@ -306,7 +306,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                     <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 4, background: `linear-gradient(180deg,${T.info},${T.cta})`, borderRadius: "20px 0 0 20px" }} />
                     {[
                       {
-                        title: "Ekspercka i wykonalna umowa najmu oraz podpis elektroniczny",
+                        title: "Ekspercka umowa najmu i podpis elektroniczny",
                         text: "Zweryfikowana w praktyce sądowej, opracowana przez prawników z 11-letnim doświadczeniem w najmie",
                       },
                       {
@@ -408,7 +408,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                       </div>
                       <h3 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 24, marginBottom: 12, color: T.textPrimary, lineHeight: 1.25 }}>{card.title}</h3>
                       <p style={{ color: T.pillarDesc, fontSize: 15, lineHeight: 1.7, marginBottom: 20, whiteSpace: "pre-line" }}>{card.desc}</p>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: "auto" }}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                         {card.features.map((f, j) => (
                           <div key={j} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                             <CheckCircle size={14} color={card.iC} />
