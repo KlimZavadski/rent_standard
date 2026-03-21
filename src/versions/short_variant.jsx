@@ -306,7 +306,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                     <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 4, background: `linear-gradient(180deg,${T.info},${T.cta})`, borderRadius: "20px 0 0 20px" }} />
                     {[
                       {
-                        title: "Ekspercka umowa najmu i podpis elektroniczny",
+                        title: "Ekspercka i wykonalna umowa najmu oraz podpis elektroniczny",
                         text: "Zweryfikowana w praktyce sądowej, opracowana przez prawników z 11-letnim doświadczeniem w najmie",
                       },
                       {
