@@ -406,13 +406,13 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                         </div>
                         <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 40, color: `${card.iC}20`, fontWeight: 700, lineHeight: 1 }}>{card.badge}</span>
                       </div>
-                      <h3 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 22, marginBottom: 12, color: T.textPrimary, lineHeight: 1.25 }}>{card.title}</h3>
-                      <p style={{ color: T.pillarDesc, fontSize: 14, lineHeight: 1.7, marginBottom: 20, whiteSpace: "pre-line" }}>{card.desc}</p>
+                      <h3 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 24, marginBottom: 12, color: T.textPrimary, lineHeight: 1.25 }}>{card.title}</h3>
+                      <p style={{ color: T.pillarDesc, fontSize: 15, lineHeight: 1.7, marginBottom: 20, whiteSpace: "pre-line" }}>{card.desc}</p>
                       <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: "auto" }}>
                         {card.features.map((f, j) => (
                           <div key={j} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                             <CheckCircle size={14} color={card.iC} />
-                            <span style={{ fontSize: 13, color: T.pillarFeat, lineHeight: 1.6 }}>{f}</span>
+                            <span style={{ fontSize: 14, color: T.pillarFeat, lineHeight: 1.6 }}>{f}</span>
                           </div>
                         ))}
                       </div>
