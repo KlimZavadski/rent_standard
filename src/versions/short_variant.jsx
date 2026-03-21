@@ -183,19 +183,19 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     {
       icon: <FileText size={26} />, badge: "01", accent: "cta", iC: T.cta,
       title: "Umowa najmu",
-      desc: "Nasza umowa najmu to nie zwykły szablon, lecz realne narzędzie ochrony, bez niejasnych i ogólnych zapisów.Została opracowana na podstawie rzeczywistych sporów i zabezpiecza kluczowe ryzyka, zanim jeszcze się pojawią.Jeśli warunki umowy zostaną naruszone, istnieją konkretne mechanizmy ich egzekwowania, w tym mediacja i procedury sądowe. Jasne sankcje. Przejrzysty tryb powiadomień.Dokumentowanie naruszeń.",
+      desc: "Nasza umowa najmu to nie zwykły szablon, lecz realne narzędzie ochrony, bez niejasnych i ogólnych zapisów. Została opracowana na podstawie rzeczywistych sporów i zabezpiecza kluczowe ryzyka, zanim jeszcze się pojawią. Jeśli warunki umowy zostaną naruszone, istnieją konkretne mechanizmy ich egzekwowania, w tym mediacja i procedury sądowe.\nJasne sankcje. Przejrzysty tryb powiadomień. Dokumentowanie naruszeń.",
       features: ["Klauzule chroniące kaucję i własność", "Podpis elektroniczny eIDAS", "Weryfikacja tożsamości najemcy", "Archiwum dokumentów 10 lat"],
     },
     {
       icon: <ShieldCheck size={26} />, badge: "02", accent: "info", iC: T.info,
       title: "Ubezpieczenie",
-      desc: "Specjalna polisa ubezpieczeniowa chroni Twoje mienie i ogranicza straty finansowe związane z najmem.",
-      features: ["uszkodzenie mienia", "straty wynikające z zaległości w płatnościach"],
+      desc: "Specjalna polisa ubezpieczeniowa chroni Twoje mienie i ogranicza straty finansowe związane z najmem. Ochrona obejmuje:\n - uszkodzenie mienia\n - straty wynikające z zaległości w płatnościach",
+      features: ["Ochrona mienia właściciela", "Pokrycie strat z tytułu zaległości", "Polisa dopasowana do umowy"],
     },
     {
       icon: <Home size={26} />, badge: "03", accent: "cta", iC: T.cta,
       title: "Najem okazjonalny online",
-      desc: "Pełne oformienie najmu okazjonalnego bez wizyty u notariusza. Wszystkie dokumenty przygotowane i podpisane elektronicznie — szybciej i wygodniej.",
+      desc: "Adres do najmu okazjonalnego z gwarancją.\nZadbaj o większe bezpieczeństwo wynajmu okazjonalnego i chroń się przed sytuacją, w której lokator odmawia opuszczenia mieszkania.",
       features: ["Tryb okazjonalny (art. 19a)", "Oświadczenie najemcy online", "Komplet dokumentów w jednym miejscu"],
     },
     {
@@ -207,7 +207,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     {
       icon: <Scale size={26} />, badge: "05", accent: "cta", iC: T.cta,
       title: "Wsparcie prawne",
-      desc: "Gdy mediacja nie wystarczy — partnerski zespół prawników prowadzi sprawę w sądzie lub postępowaniu egzekucyjnym. Nie zostajesz sam z problemem.",
+      desc: "Wsparcie prawne. Nasi doświadczeni prawnicy w możliwie najkrótszym czasie przeprowadzą procedury sądowe dotyczące dochodzenia odszkodowania, windykacji należności oraz eksmisji z lokalu, na specjalnych i korzystnych warunkach.",
       features: ["Partner prawny na wypadek eksmisji", "Prowadzenie sprawy sądowej", "Doradztwo na każdym etapie najmu"],
     },
   ];
@@ -407,7 +407,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                         <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 40, color: `${card.iC}20`, fontWeight: 700, lineHeight: 1 }}>{card.badge}</span>
                       </div>
                       <h3 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 22, marginBottom: 12, color: T.textPrimary, lineHeight: 1.25 }}>{card.title}</h3>
-                      <p style={{ color: T.pillarDesc, fontSize: 14, lineHeight: 1.7, marginBottom: 20 }}>{card.desc}</p>
+                      <p style={{ color: T.pillarDesc, fontSize: 14, lineHeight: 1.7, marginBottom: 20, whiteSpace: "pre-line" }}>{card.desc}</p>
                       <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: "auto" }}>
                         {card.features.map((f, j) => (
                           <div key={j} style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -572,7 +572,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
             <div style={{ width: 120, height: 3, margin: "0 auto 48px", background: `linear-gradient(90deg,${T.cta},${T.info})`, borderRadius: 99 }} />
             <div style={{ maxWidth: 800, margin: "0 auto" }}>
               <FadeIn>
-                <div style={{ textAlign: "center", marginBottom: 48 }}>
+                <div className="value-section-heading">
                   <div className="tag-info" style={{ marginBottom: 14, display: "inline-flex" }}>FAQ</div>
                   <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,44px)", lineHeight: 1.1, letterSpacing: "-0.03em", color: T.textPrimary }}>Najczęstsze pytania</h2>
                 </div>
