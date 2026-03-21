@@ -88,12 +88,16 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     input::placeholder{color:${T.inputPlaceholder};}
     .tag-info{display:inline-flex;align-items:center;gap:6px;background:${T.tagInfoBg};border:1px solid ${T.tagInfoBorder};border-radius:99px;padding:4px 12px;color:${T.tagInfoColor};font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
     .short-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
+    .hero-heading-wrap{text-align:center;margin-bottom:40px;}
+    @media(max-width:850px){.hero-heading-wrap{margin-bottom:20px;}}
+    .value-section-heading{text-align:center;margin-bottom:48px;}
+    @media(max-width:850px){.value-section-heading{margin-bottom:28px;}}
     .hero-split{display:flex;align-items:stretch;gap:clamp(20px,3vw,40px);max-width:1100px;margin:0 auto 40px;}
     .hero-split-left{flex:1 1 55%;min-width:0;}
     .hero-split-right{flex:0 0 auto;display:flex;align-items:center;justify-content:center;}
     .hero-split-right img{height:100%;width:auto;max-width:420px;object-fit:contain;border-radius:12px;}
     @media(max-width:850px){.short-cards{grid-template-columns:1fr!important;}.hero-split{flex-direction:column;align-items:center;}.hero-split-right{display:none;}.hero-theses-card{padding:18px 18px!important;}}
-    @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}.hero-trust-wrap{flex-direction:column;}.hero-theses-card{padding:14px 14px!important;}}
+    @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}.hero-trust-wrap{flex-direction:column;}.hero-theses-card{padding:8px 14px!important;}}
     .form-shield-img{flex-shrink:0;}
     .form-header-row{gap:40px;}
     .form-fields{display:flex;flex-direction:column;gap:16px;}
@@ -179,14 +183,14 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     {
       icon: <FileText size={26} />, badge: "01", accent: "cta", iC: T.cta,
       title: "Umowa najmu",
-      desc: "opracowana przez prawników z ponad 11-letnim doświadczeniem w sprawach najmu i sporach z najemcami.",
+      desc: "Nasza umowa najmu to nie zwykły szablon, lecz realne narzędzie ochrony, bez niejasnych i ogólnych zapisów.Została opracowana na podstawie rzeczywistych sporów i zabezpiecza kluczowe ryzyka, zanim jeszcze się pojawią.Jeśli warunki umowy zostaną naruszone, istnieją konkretne mechanizmy ich egzekwowania, w tym mediacja i procedury sądowe. Jasne sankcje. Przejrzysty tryb powiadomień.Dokumentowanie naruszeń.",
       features: ["Klauzule chroniące kaucję i własność", "Podpis elektroniczny eIDAS", "Weryfikacja tożsamości najemcy", "Archiwum dokumentów 10 lat"],
     },
     {
       icon: <ShieldCheck size={26} />, badge: "02", accent: "info", iC: T.info,
       title: "Ubezpieczenie",
-      desc: "Specjalny polisa ubezpieczeniowa chroni Twoje mienie i minimalizuje straty finansowe wynikające z najmu — od zniszczeń po brak płatności.",
-      features: ["Ochrona mienia właściciela", "Pokrycie strat z tytułu zaległości", "Polisa dopasowana do umowy"],
+      desc: "Specjalna polisa ubezpieczeniowa chroni Twoje mienie i ogranicza straty finansowe związane z najmem.",
+      features: ["uszkodzenie mienia", "straty wynikające z zaległości w płatnościach"],
     },
     {
       icon: <Home size={26} />, badge: "03", accent: "cta", iC: T.cta,
@@ -280,12 +284,12 @@ export default function ShortVariant({ variantId = "short_variant" }) {
           {/* HERO */}
           <section style={{ position: "relative", zIndex: 1, padding: "clamp(24px,4.5vw,64px) clamp(16px,4vw,48px) clamp(40px,5vw,64px)", overflow: "hidden" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-              <div style={{ textAlign: "center", marginBottom: 40 }}>
+              <div className="hero-heading-wrap">
                 <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5.5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 16, color: T.textPrimary }}>
-                  <span style={{ color: T.info }}>Service</span> ochrony umowy najmu
+                  <span style={{ color: T.info }}>Serwis</span> ochrony umowy najmu
                 </h1>
-                <p style={{ color: T.textSecondary, fontSize: "clamp(16px,2vw,20px)", lineHeight: 1.55, maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
-                  Kompleksowa ochrona w 5 elementach - w specjalnej cenie
+                <p style={{ color: T.textSecondary, fontSize: "clamp(15px,2vw,20px)", lineHeight: 1.55, maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
+                  Podpisz ekspercką umowę najmu z RentStandard i zyskaj dostęp do 5 poziomów ochrony najmu na korzystnych warunkach
                 </p>
               </div>
 
@@ -302,24 +306,24 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                     <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 4, background: `linear-gradient(180deg,${T.info},${T.cta})`, borderRadius: "20px 0 0 20px" }} />
                     {[
                       {
-                        title: "Umowa najmu i podpis elektroniczny",
-                        text: "opracowana przez prawników z 11+ lat doświadczenia w najmie",
+                        title: "Ekspercka i wykonalna umowa najmu oraz podpis elektroniczny",
+                        text: "Zweryfikowana w praktyce sądowej, opracowana przez prawników z 11-letnim doświadczeniem w najmie",
                       },
                       {
                         title: "Ubezpieczenie",
-                        text: "zawiera zapisy skuteczne w egzekwowaniu, nie tylko na papierze",
+                        text: "Specjalne polisy ubezpieczeniowe dla najmu na korzystnych warunkach",
                       },
                       {
-                        title: "Okazjonalny najem",
-                        text: "obejmuje wsparcie prawne, mediację i dodatkowe zabezpieczenia właściciela",
+                        title: "Najem okazjonalny",
+                        text: "Szybkie przygotowanie dokumentów do zawarcia najmu okazjonalnego online",
                       },
                       {
                         title: "Mediacja",
-                        text: "minimalizuje ryzyko problematycznego najemcy i strat finansowych",
+                        text: "W przypadku konfliktu nasi profesjonalni mediatorzy pomogą polubownie rozwiązać spór bez sądu, w możliwie najkrótszym czasie",
                       },
                       {
                         title: "Wsparcie prawne",
-                        text: "daje realne narzędzia do działania w sytuacjach spornych",
+                        text: "Nasi doświadczeni prawnicy w możliwie najkrótszym czasie przeprowadzą niezbędne procedury sądowe",
                       },
                     ].map((item, i) => (
                       <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "8px 0" }}>
@@ -332,7 +336,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            fontSize: 12,
+                            fontSize: 14,
                             fontWeight: 700,
                             color: isDark ? T.textSecondary : T.cta,
                             background: isDark ? "rgba(15,118,110,0.25)" : "rgba(15,118,110,0.08)",
@@ -346,7 +350,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                           <span style={{ color: isDark ? T.cardLineHi : T.textPrimary, fontSize: "clamp(16px,1.4vw,20px)", fontWeight: 800, lineHeight: 1.2 }}>
                             {item.title}
                           </span>
-                          <span style={{ color: isDark ? T.cardLineHi : T.textPrimary, fontSize: "clamp(12px,1.6vw,15px)", lineHeight: 1.6 }}>
+                          <span style={{ color: isDark ? T.cardLineHi : T.textPrimary, fontSize: "clamp(13px,1.6vw,15px)", lineHeight: 1.6 }}>
                             {item.text}
                           </span>
                         </span>
@@ -387,8 +391,9 @@ export default function ShortVariant({ variantId = "short_variant" }) {
           <section style={{ position: "relative", zIndex: 1, padding: "clamp(32px,4.8vw,64px) clamp(16px,4vw,48px)", paddingTop: "clamp(26px,3.8vw,52px)" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
               <FadeIn>
-                <div style={{ textAlign: "center", marginBottom: 48 }}>
-                  <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,44px)", lineHeight: 1.1, letterSpacing: "-0.03em", color: T.textPrimary }}>Pięć filarów Twojego spokoju</h2>
+                <div className="value-section-heading">
+                  <div className="tag-info" style={{ marginBottom: 14, display: "inline-flex" }}>Jak to działa</div>
+                  <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,44px)", lineHeight: 1.1, letterSpacing: "-0.03em", color: T.textPrimary }}>Pięć poziomów Twojej ochrony</h2>
                 </div>
               </FadeIn>
               <div className="short-cards">
