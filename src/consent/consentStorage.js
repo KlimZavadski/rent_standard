@@ -18,6 +18,8 @@ export function readConsentSync() {
 }
 
 /**
+ * Persists to localStorage only. DOM sync is done by `CookieConsentProvider`
+ * (`syncConsentToDom` on consent state) and `hydrateConsentGlobals` on startup.
  * @param {import('./consentModel.js').ConsentRecord|null} record
  */
 export function writeConsentSync(record) {
@@ -31,7 +33,6 @@ export function writeConsentSync(record) {
   } catch {
     /* ignore quota */
   }
-  syncConsentToDom(record);
 }
 
 /** Call early from main.jsx so non-React code can read consent. */

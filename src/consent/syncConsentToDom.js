@@ -15,11 +15,18 @@ export function syncConsentToDom(record) {
   const root = document.documentElement;
   const analytics = hasConsentFor(record, "analytics") ? "1" : "0";
   const marketing = hasConsentFor(record, "marketing") ? "1" : "0";
+  const ready = record ? "1" : "0";
+
+  const consentChanged =
+    root.dataset.rsConsentAnalytics !== analytics ||
+    root.dataset.rsConsentMarketing !== marketing ||
+    root.dataset.rsConsentReady !== ready;
+
   root.dataset.rsConsentAnalytics = analytics;
   root.dataset.rsConsentMarketing = marketing;
-  root.dataset.rsConsentReady = record ? "1" : "0";
+  root.dataset.rsConsentReady = ready;
 
-  if (typeof window !== "undefined") {
+  if (typeof window !== "undefined" && consentChanged) {
     window.dispatchEvent(
       new CustomEvent(EVENT, {
         detail: { consent: record },
