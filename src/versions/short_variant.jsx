@@ -220,16 +220,30 @@ export default function ShortVariant({ variantId = "short_variant" }) {
 
   const FAQ_ITEMS = [
     {
-      q: "Czy umowa podpisana online jest ważna w polskim sądzie?",
-      a: "Tak. Korzystamy ze standardu eIDAS — podpis elektroniczny ma taką samą moc prawną jak podpis własnoręczny. Polskie sądy w pełni uznają tak podpisane dokumenty.",
+      q: "Jakie poziomy ochrony najmu obejmuje usługa RentStandard?",
+      a: `Oferujemy 5 poziomów ochrony:
+
+· Ubezpieczenie – specjalne polisy dla najmu na korzystnych warunkach.
+· Najem okazjonalny – szybkie przygotowanie dokumentów, które pozwalają przyspieszyć eksmisję nierzetelnych najemców.
+· Mediacja – profesjonalni mediatorzy pomagają rozwiązać konflikt bez udziału sądu.
+· Wsparcie prawne – prowadzimy niezbędne procedury sądowe w możliwie najkrótszym czasie.
+· Kompleksowa obsługa na wszystkich etapach najmu (piąty poziom dostępny po aktywacji usługi).`,
     },
     {
-      q: "Co się stanie, jeśli najemca przestanie płacić?",
-      a: "Aktywujemy wsparcie: mediator podejmuje kontakt z najemcą w celu polubownego rozwiązania. Jeśli to nie zadziała — partner prawny przeprowadzi Cię przez proces eksmisji i windykacji należności.",
+      q: "Czym jest najem okazjonalny i dlaczego warto go stosować?",
+      a: "Najem okazjonalny to szczególna forma najmu zgodna z polskim prawem. Jej główną zaletą jest możliwość eksmisji nierzetelnego najemcy w uproszczonym trybie, bez długotrwałego procesu sądowego. RentStandard pomaga szybko przygotować wszystkie wymagane dokumenty oraz zapewnia adresy niezbędne do zawarcia takiej umowy.",
     },
     {
-      q: "Czy mogę skorzystać tylko z wybranej usługi?",
-      a: "Tak. Możesz zacząć od samej umowy, a dodatkowe zabezpieczenia (mediacja, ubezpieczenie, najem okazjonalny) aktywować w dowolnym momencie trwania najmu.",
+      q: "Czy oferujecie pomoc prawną, jeśli konflikt z najemcą trafił już do sądu?",
+      a: "Tak. Zapewniamy pełne wsparcie prawne w postępowaniu sądowym. Nasi specjaliści prowadzą wszystkie niezbędne procedury, aby skutecznie zabezpieczyć prawa właściciela w możliwie najkrótszym czasie.",
+    },
+    {
+      q: "Czy mogę skorzystać z mediacji przed skierowaniem sprawy do sądu?",
+      a: "Tak. Mediacja stanowi osobny poziom ochrony. W przypadku konfliktu nasi profesjonalni mediatorzy pomagają wypracować rozwiązanie bez udziału sądu, szybko i efektywnie, co pozwala oszczędzić czas, nerwy i koszty.",
+    },
+    {
+      q: "Czy moje dane są bezpieczne i jak wygląda testowy etap działania usługi?",
+      a: "Tak. Gwarantujemy wysoki poziom bezpieczeństwa danych, pełną zgodność z wymaganiami eIDAS (elektroniczne potwierdzenie podpisów i dokumentów) oraz RODO.\n\nObecnie usługa działa w trybie testowym – stopniowo wdrażamy pierwszych użytkowników, kładąc szczególny nacisk na ochronę danych osobowych oraz transparentność ich przetwarzania.",
     },
   ];
 
@@ -627,12 +641,12 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                           />
                         </button>
                         <div style={{
-                          maxHeight: isOpen ? 300 : 0, opacity: isOpen ? 1 : 0,
+                          maxHeight: isOpen ? 2000 : 0, opacity: isOpen ? 1 : 0,
                           overflow: "hidden", transition: "max-height 0.4s cubic-bezier(.4,0,.2,1), opacity 0.3s ease",
                         }}>
                           <div style={{ padding: "0 28px 24px 82px" }}>
                             <div style={{ width: 40, height: 2, background: `linear-gradient(90deg,${T.cta},transparent)`, borderRadius: 99, marginBottom: 14 }} />
-                            <p style={{ margin: 0, color: T.textSecondary, fontSize: 15, lineHeight: 1.75 }}>{item.a}</p>
+                            <p style={{ margin: 0, color: T.textSecondary, fontSize: 15, lineHeight: 1.75, whiteSpace: "pre-line" }}>{item.a}</p>
                           </div>
                         </div>
                       </div>
