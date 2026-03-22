@@ -34,6 +34,20 @@ export function CookieBanner() {
     >
       <style>{COOKIE_DOCK_CSS}</style>
       <style>{`
+        .rs-cookie-banner-card {
+          background: var(--rs-cookie-banner-bg-sm);
+          box-shadow: var(--rs-cookie-banner-shadow-sm);
+          backdrop-filter: none;
+          -webkit-backdrop-filter: none;
+        }
+        @media (min-width: 851px) {
+          .rs-cookie-banner-card {
+            background: var(--rs-cookie-banner-bg-lg);
+            box-shadow: var(--rs-cookie-banner-shadow-lg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+          }
+        }
         .rs-cookie-banner-icon {
           flex-shrink: 0;
           width: 24px;
@@ -104,16 +118,17 @@ export function CookieBanner() {
         }
       `}</style>
       <div
-        className="rs-cookie-dock-card rs-cookie-dock-animate"
+        className="rs-cookie-dock-card rs-cookie-dock-animate rs-cookie-banner-card"
         style={{
           pointerEvents: "auto",
           width: "100%",
-          background: T.formCardBg,
           border: `1px solid ${T.formCardBorder}`,
           borderRadius: 20,
           padding: "clamp(18px,3vw,26px)",
-          boxShadow: T.formCardShadow,
-          backdropFilter: "blur(20px)",
+          ["--rs-cookie-banner-bg-sm"]: T.cookieModalPanel,
+          ["--rs-cookie-banner-shadow-sm"]: T.cookieModalShadow,
+          ["--rs-cookie-banner-bg-lg"]: T.formCardBg,
+          ["--rs-cookie-banner-shadow-lg"]: T.formCardShadow,
         }}
       >
         <div
