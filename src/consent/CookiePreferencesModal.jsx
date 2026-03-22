@@ -187,7 +187,15 @@ export function CookiePreferencesModal() {
 
         <p style={{ fontSize: 14, lineHeight: 1.55, color: T.textSecondary, marginBottom: 12 }}>
           Niezbędne pliki cookie są zawsze aktywne — zapewniają podstawowe działanie i
-          bezpieczeństwo. Pozostałe kategorie włączysz dobrowolnie.
+          bezpieczeństwo. Pozostałe kategorie włączysz dobrowolnie.{" "}
+          <a
+            href={`${import.meta.env.BASE_URL}polityka_cookies.pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: T.info, fontWeight: 600 }}
+          >
+            polityka cookies
+          </a>
         </p>
 
         <div
