@@ -87,6 +87,25 @@ function resume() {
 }
 
 /**
+ * Privacy Record API — only runs after analytics consent (caller ensures that).
+ * @see https://web.developer.smartlook.com/docs/consent-and-sensitive-data
+ */
+function applyRecordApiWithConsent() {
+  try {
+    if (typeof window !== "undefined" && window.smartlook) {
+      window.smartlook("record", {
+        forms: true,
+        ips: true,
+        emails: true,
+        numbers: true,
+      });
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
+/**
  * Start / pause Smartlook from current `window.__RS_CONSENT__` (analytics).
  */
 export function syncSmartlookWithConsent() {
@@ -118,6 +137,7 @@ export function syncSmartlookWithConsent() {
       const args =
         Object.keys(opts).length > 0 ? [KEY.trim(), opts] : [KEY.trim()];
       window.smartlook("init", ...args);
+      applyRecordApiWithConsent();
       initDone = true;
     })
     .catch((err) => {
