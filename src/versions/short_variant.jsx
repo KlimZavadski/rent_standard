@@ -13,6 +13,7 @@ import {
   CookieBanner,
   CookiePreferencesModal,
   CookieFooterButton,
+  identifySmartlookLead,
 } from "../consent/index.js";
 import shieldDarkImg from "../assets/images/shield_dark.png";
 import shieldLightImg from "../assets/images/shield_light.png";
@@ -176,6 +177,11 @@ export default function ShortVariant({ variantId = "short_variant" }) {
         const hint = json?.error || raw?.slice?.(0, 140) || "Submit failed";
         throw new Error(hint);
       }
+      identifySmartlookLead({
+        email: payload.email,
+        name: payload.name,
+        phone: payload.phone,
+      });
       setSubmitted(true);
     } catch (e) {
       const msg = (e && typeof e === "object" && "message" in e) ? e.message : String(e || "");

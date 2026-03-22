@@ -146,3 +146,30 @@ export function syncSmartlookWithConsent() {
       }
     });
 }
+
+/**
+ * Bind submitted lead to the current Smartlook visitor (after successful form send).
+ * @see https://web.developer.smartlook.com/docs/identify-visitor
+ * @param {{ email: string, name?: string, phone?: string }} lead
+ */
+export function identifySmartlookLead(lead) {
+  if (typeof window === "undefined") return;
+  if (!KEY?.trim()) return;
+  if (!hasConsentFor(window.__RS_CONSENT__, "analytics")) return;
+
+  const email = (lead.email || "").trim();
+  if (!email) return;
+
+  const props = { email };
+  const name = (lead.name || "").trim();
+  if (name) props.name = name;
+
+  const phone = (lead.phone || "").replace(/\D/g, "");
+  if (phone) props.phone = phone;
+
+  try {
+    window.smartlook?.("identify", email, props);
+  } catch {
+    /* ignore */
+  }
+}

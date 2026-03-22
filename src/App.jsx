@@ -13,6 +13,7 @@ import {
   CookieBanner,
   CookiePreferencesModal,
   CookieFooterButton,
+  identifySmartlookLead,
 } from "./consent/index.js";
 import structureDarkImg from "./assets/images/structure_dark.png";
 import structureLightImg from "./assets/images/structure_light.png";
@@ -273,6 +274,11 @@ export default function App({ variantId = "main" }) {
         throw new Error(hint);
       }
 
+      identifySmartlookLead({
+        email: payload.email,
+        name: payload.name,
+        phone: payload.phone,
+      });
       setSubmitted(true);
     } catch (e) {
       const msg = (e && typeof e === "object" && "message" in e) ? e.message : String(e || "");

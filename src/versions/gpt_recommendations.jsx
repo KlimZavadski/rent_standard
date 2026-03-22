@@ -13,6 +13,7 @@ import {
   CookieBanner,
   CookiePreferencesModal,
   CookieFooterButton,
+  identifySmartlookLead,
 } from "../consent/index.js";
 import structureDarkImg from "./assets/images/structure_dark.png";
 import structureLightImg from "./assets/images/structure_light.png";
@@ -184,6 +185,11 @@ export default function App({ variantId = "gpt_recommendations" }) {
   const handleSubmit = () => {
     if (!rodoChecked || !formData.name) return;
     if (!validateEmail()) return;
+    identifySmartlookLead({
+      email: (formData.email || "").trim(),
+      name: (formData.name || "").trim(),
+      phone: (formData.phone || "").replace(/\D/g, ""),
+    });
     setSubmitted(true);
   };
 
