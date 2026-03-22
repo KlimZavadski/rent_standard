@@ -638,7 +638,7 @@ export default function App({ variantId = "main" }) {
                               {rodoChecked && <Check size={14} color="#fff" strokeWidth={3} />}
                         </div>
                         <span style={{ color: T.consentText, fontSize: 13, lineHeight: 1.5 }}>
-                          Wyrażam zgodę na przetwarzanie moich danych osobowych przez Klim Zavadski, prowadzący działalność gospodarczą pod firmą KZ, w celu otrzymania materiałów i kontaktu handlowego zgodnie z{" "}
+                                Wyrażam zgodę na przetwarzanie moich danych osobowych przez Klim Zavadski, prowadzący działalność gospodarczą pod firmą KZ, w celu kontaktu handlowego zgodnie z{" "}
                           <a href={`${import.meta.env.BASE_URL}polityka_prywatnosci.pdf`} target="_blank" rel="noopener noreferrer" style={{ color: T.info, fontWeight: 600 }}>Polityką prywatności</a>. Mogę cofnąć zgodę w każdej chwili.
                         </span>
                       </label>
@@ -664,7 +664,7 @@ export default function App({ variantId = "main" }) {
                           </div>
                       <p style={{ textAlign: "center", fontSize: 12, color: T.formPrivacy, lineHeight: 1.5 }}>
                         <Lock size={11} style={{ verticalAlign: "middle", marginRight: 4 }} />
-                        Administratorem Twoich danych jest Klim Zavadski (KZ). Szczegóły w{" "}
+                              Administratorem Twoich danych jest Klim Zavadski (KZ), NIP 6751776885, REGON 524256395. <br /> Szczegóły w{" "}
                         <a href={`${import.meta.env.BASE_URL}polityka_prywatnosci.pdf`} target="_blank" rel="noopener noreferrer" style={{ color: T.info, fontWeight: 600 }}>Polityce prywatności</a> i{" "}
                         <a href={`${import.meta.env.BASE_URL}regulamin_serwisu.pdf`} target="_blank" rel="noopener noreferrer" style={{ color: T.info, fontWeight: 600 }}>Regulaminie</a>.
                       </p>
