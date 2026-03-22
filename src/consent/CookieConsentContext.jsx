@@ -56,6 +56,9 @@ export function CookieConsentProvider({ children }) {
 
   const rejectNonEssential = useCallback(
     (source) => {
+      if (import.meta.env.DEV) {
+        console.info("[consent] optional categories rejected");
+      }
       persist(rejectNonEssentialConsent(source));
       setPreferencesOpen(false);
     },
