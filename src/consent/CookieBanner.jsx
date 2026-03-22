@@ -34,10 +34,64 @@ export function CookieBanner() {
     >
       <style>{COOKIE_DOCK_CSS}</style>
       <style>{`
+        .rs-cookie-banner-icon {
+          flex-shrink: 0;
+          width: 24px;
+          height: 24px;
+          border-radius: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .rs-cookie-banner-icon svg {
+          width: 14px;
+          height: 14px;
+        }
+        .rs-cookie-banner-inner {
+          gap: 8px;
+        }
+        .rs-cookie-banner-btns {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          width: 100%;
+        }
+        .rs-cookie-banner-btns-pair {
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+          width: 100%;
+        }
+        .rs-cookie-banner-btns-pair button {
+          flex: 1 1 0;
+          min-width: 0;
+        }
+        @media (max-width: 850px) {
+          .rs-cookie-banner-btns-pair button {
+            min-height: 40px !important;
+            padding: 9px 12px !important;
+            font-size: 13px !important;
+          }
+          .rs-cookie-banner-btns > button {
+            min-height: 46px !important;
+            padding: 11px 16px !important;
+            font-size: 15px !important;
+          }
+        }
         @media (min-width: 851px) {
+          .rs-cookie-banner-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+          }
+          .rs-cookie-banner-icon svg {
+            width: 22px;
+            height: 22px;
+          }
           .rs-cookie-banner-inner {
             flex-direction: column;
             align-items: stretch;
+            gap: 12px;
           }
           .rs-cookie-banner-header {
             width: 100%;
@@ -46,16 +100,6 @@ export function CookieBanner() {
             flex: none !important;
             width: 100%;
             max-width: none;
-          }
-          .rs-cookie-banner-btns {
-            flex-direction: column;
-            flex: none !important;
-            width: 100%;
-            justify-content: stretch;
-          }
-          .rs-cookie-banner-btns button {
-            width: 100%;
-            flex: none !important;
           }
         }
       `}</style>
@@ -77,7 +121,6 @@ export function CookieBanner() {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: 12,
             alignItems: "stretch",
           }}
         >
@@ -92,16 +135,10 @@ export function CookieBanner() {
             }}
           >
             <div
+              className="rs-cookie-banner-icon"
               style={{
-                flexShrink: 0,
-                width: 44,
-                height: 44,
-                borderRadius: 12,
                 background: T.ctaDim,
                 border: `1px solid ${T.ctaBorder}`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
                 color: T.cta,
               }}
             >
@@ -110,7 +147,7 @@ export function CookieBanner() {
             <p
               style={{
                 fontFamily: "Inter Tight,system-ui,sans-serif",
-                fontSize: 17,
+                fontSize: 16,
                 fontWeight: 700,
                 letterSpacing: "-0.02em",
                 color: T.textPrimary,
@@ -140,55 +177,57 @@ export function CookieBanner() {
               </a>
             </p>
           </div>
-          <div
-            className="rs-cookie-banner-btns"
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 10,
-              justifyContent: "stretch",
-              width: "100%",
-            }}
-          >
+          <div className="rs-cookie-banner-btns">
+            <div className="rs-cookie-banner-btns-pair">
+              <button
+                type="button"
+                onClick={() => rejectNonEssential("banner")}
+                style={{
+                  ...btnBase,
+                  flex: "1 1 0",
+                  minWidth: 0,
+                  background: "transparent",
+                  color: T.textPrimary,
+                  border: `1px solid ${T.secBtnBorder}`,
+                  fontWeight: 700,
+                }}
+              >
+                Odrzuć opcjonalne
+              </button>
+              <button
+                type="button"
+                onClick={() => openPreferences()}
+                style={{
+                  ...btnBase,
+                  flex: "1 1 0",
+                  minWidth: 0,
+                  background: T.toggleBg,
+                  color: T.textPrimary,
+                  border: `1px solid ${T.toggleBorder}`,
+                  fontWeight: 700,
+                }}
+              >
+                Ustawienia
+              </button>
+            </div>
             <button
               type="button"
               onClick={() => acceptAll("banner")}
               style={{
                 ...btnBase,
+                width: "100%",
+                flex: "none",
+                minHeight: 52,
+                fontSize: 16,
+                fontWeight: 800,
+                padding: "14px 20px",
                 background: `linear-gradient(135deg,${T.cta},${T.ctaHover})`,
                 color: "#fff",
                 border: "none",
                 boxShadow: `0 8px 28px ${T.ctaGlow}`,
-                fontWeight: 800,
               }}
             >
               Akceptuję wszystkie
-            </button>
-            <button
-              type="button"
-              onClick={() => rejectNonEssential("banner")}
-              style={{
-                ...btnBase,
-                background: "transparent",
-                color: T.textPrimary,
-                border: `1px solid ${T.secBtnBorder}`,
-                fontWeight: 700,
-              }}
-            >
-              Odrzuć opcjonalne
-            </button>
-            <button
-              type="button"
-              onClick={() => openPreferences()}
-              style={{
-                ...btnBase,
-                background: T.toggleBg,
-                color: T.textPrimary,
-                border: `1px solid ${T.toggleBorder}`,
-                fontWeight: 700,
-              }}
-            >
-              Ustawienia
             </button>
           </div>
         </div>
