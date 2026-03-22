@@ -1,6 +1,11 @@
 import { onConsentGranted, RS_CONSENT_CHANGE_EVENT } from "./syncConsentToDom.js";
 import { syncSmartlookWithConsent } from "./smartlook.js";
 
+/** Re-run Smartlook (and future tags) from `window.__RS_CONSENT__`. */
+export function syncOptionalScriptsWithConsent() {
+  syncSmartlookWithConsent();
+}
+
 /**
  * Hook optional third-party scripts (analytics, marketing pixels) here.
  * Callbacks run when consent is granted and on later consent updates.
@@ -10,10 +15,13 @@ import { syncSmartlookWithConsent } from "./smartlook.js";
  * when analytics consent is revoked / restored (via this listener + initial sync).
  */
 export function registerOptionalConsentHooks() {
-  const syncSmartlook = () => syncSmartlookWithConsent();
+  const syncSmartlook = () => syncOptionalScriptsWithConsent();
   syncSmartlook();
   if (typeof window !== "undefined") {
     window.addEventListener(RS_CONSENT_CHANGE_EVENT, syncSmartlook);
+    window.addEventListener("pageshow", (e) => {
+      if (e.persisted) syncSmartlook();
+    });
   }
 
   onConsentGranted("analytics", () => {

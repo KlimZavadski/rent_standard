@@ -6,4 +6,7 @@ export { readConsentSync, writeConsentSync, hydrateConsentGlobals } from "./cons
 export { hasConsentFor } from "./consentModel.js";
 export { onConsentGranted } from "./syncConsentToDom.js";
 export { CONSENT_POLICY_VERSION, CONSENT_SCHEMA_VERSION } from "./consentConstants.js";
-export { registerOptionalConsentHooks } from "./optionalScripts.js";
+export {
+  registerOptionalConsentHooks,
+  syncOptionalScriptsWithConsent,
+} from "./optionalScripts.js";

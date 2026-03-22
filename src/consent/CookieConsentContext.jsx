@@ -15,6 +15,7 @@ import {
 import { readConsentSync, writeConsentSync } from "./consentStorage.js";
 import { STORAGE_KEY } from "./consentConstants.js";
 import { syncConsentToDom } from "./syncConsentToDom.js";
+import { syncOptionalScriptsWithConsent } from "./optionalScripts.js";
 
 const Ctx = createContext(null);
 
@@ -27,6 +28,7 @@ export function CookieConsentProvider({ children }) {
 
   useEffect(() => {
     syncConsentToDom(consent);
+    syncOptionalScriptsWithConsent();
   }, [consent]);
 
   const persist = useCallback((next) => {
