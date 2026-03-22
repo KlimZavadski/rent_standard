@@ -190,6 +190,14 @@ export function CookieBanner() {
                 style={{ color: T.info, fontWeight: 600 }}
               >
                 Polityka plików cookie
+              </a>{" · "}
+              <a
+                href={`${import.meta.env.BASE_URL}polityka_prywatnosci.pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: T.info, fontWeight: 600 }}
+              >
+                Polityka prywatności
               </a>
             </p>
           </div>

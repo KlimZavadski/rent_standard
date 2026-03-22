@@ -194,7 +194,15 @@ export function CookiePreferencesModal() {
             rel="noopener noreferrer"
             style={{ color: T.info, fontWeight: 600 }}
           >
-            polityka cookies
+            Polityka cookies
+          </a>{" · "}
+          <a
+            href={`${import.meta.env.BASE_URL}polityka_prywatnosci.pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: T.info, fontWeight: 600 }}
+          >
+            Polityka prywatności
           </a>
         </p>
 

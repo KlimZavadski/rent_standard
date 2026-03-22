@@ -549,7 +549,8 @@ export default function App({ variantId = "gpt_recommendations" }) {
                               {rodoChecked && <Check size={14} color="#fff" strokeWidth={3} />}
                             </div>
                         <span id="rodo-consent-text" style={{ color: T.consentText, fontSize: 15, lineHeight: 1.5 }}>
-                          Wyrażam zgodę na przetwarzanie moich danych osobowych przez Rent Standard Polska sp. z o.o. w celu otrzymania materiałów i kontaktu handlowego. Mogę cofnąć zgodę w każdej chwili.
+                          Wyrażam zgodę na przetwarzanie moich danych osobowych przez Klim Zavadski, prowadzący działalność gospodarczą pod firmą KZ, w celu otrzymania materiałów i kontaktu handlowego zgodnie z{" "}
+                          <a href={`${import.meta.env.BASE_URL}polityka_prywatnosci.pdf`} target="_blank" rel="noopener noreferrer" style={{ color: T.info, fontWeight: 600 }}>Polityką prywatności</a>. Mogę cofnąć zgodę w każdej chwili.
                         </span>
                       </label>
                           <button onClick={handleSubmit} className="cta-btn" disabled={!rodoChecked || !formData.email || !formData.name || !!emailError} style={{ padding: "18px 28px", fontSize: 18, justifyContent: "center", marginTop: 8, opacity: !rodoChecked || !formData.email || !formData.name || !!emailError ? 0.45 : 1, cursor: !rodoChecked || !formData.email || !formData.name || !!emailError ? "not-allowed" : "pointer" }}>
@@ -557,7 +558,9 @@ export default function App({ variantId = "gpt_recommendations" }) {
                       </button>
                       <p style={{ textAlign: "center", fontSize: 12, color: T.formPrivacy, lineHeight: 1.5 }}>
                         <Lock size={11} style={{ verticalAlign: "middle", marginRight: 4 }} />
-                        Administratorem Twoich danych jest Rent Standard Polska. Zgodne z RODO. Nie spamujemy — gwarantujemy.
+                        Administratorem Twoich danych jest Klim Zavadski (KZ). Szczegóły w{" "}
+                        <a href={`${import.meta.env.BASE_URL}polityka_prywatnosci.pdf`} target="_blank" rel="noopener noreferrer" style={{ color: T.info, fontWeight: 600 }}>Polityce prywatności</a> i{" "}
+                        <a href={`${import.meta.env.BASE_URL}regulamin_serwisu.pdf`} target="_blank" rel="noopener noreferrer" style={{ color: T.info, fontWeight: 600 }}>Regulaminie</a>.
                       </p>
                     </div>
                   </>
@@ -738,13 +741,17 @@ export default function App({ variantId = "gpt_recommendations" }) {
               </div>
               <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 16, fontWeight: 700, color: T.textPrimary }}>Rent Standard</span>
             </div>
-            <p style={{ color: T.footerText, fontSize: 14 }}>© 2026 Rent Standard Polska sp. z o.o. · KRS 0000000000 · RODO · Polityka prywatności</p>
+            <p style={{ color: T.footerText, fontSize: 14 }}>© 2026 Klim Zavadski, firma KZ · info@rentstandard.pl</p>
             <div style={{ display: "flex", gap: 20, flexWrap: "wrap", alignItems: "center" }}>
-              {["Regulamin", "RODO", "Kontakt"].map((link) => (
-                <a key={link} href="#" style={{ color: T.footerLink, fontSize: 14, textDecoration: "none", transition: "color 0.2s" }}
+              {[
+                { label: "Regulamin", href: `${import.meta.env.BASE_URL}regulamin_serwisu.pdf`, external: true },
+                { label: "Polityka prywatności", href: `${import.meta.env.BASE_URL}polityka_prywatnosci.pdf`, external: true },
+                { label: "Kontakt", href: "mailto:info@rentstandard.pl", external: false },
+              ].map(({ label, href, external }) => (
+                <a key={label} href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})} style={{ color: T.footerLink, fontSize: 14, textDecoration: "none", transition: "color 0.2s" }}
                   onMouseEnter={e => e.target.style.color = T.cta}
                   onMouseLeave={e => e.target.style.color = T.footerLink}
-                >{link}</a>
+                >{label}</a>
               ))}
               <CookieFooterButton style={{ fontSize: 14 }} />
             </div>
