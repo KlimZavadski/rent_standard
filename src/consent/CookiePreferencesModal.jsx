@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { useT } from "../theme.js";
+import { COOKIE_DOCK_CSS } from "./cookieDockSharedCss.js";
 import { defaultCategories } from "./consentModel.js";
 import { useCookieConsent } from "./CookieConsentContext.jsx";
 
@@ -104,69 +105,55 @@ export function CookiePreferencesModal() {
 
   return (
     <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 220,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 16,
-        background: T.cookieModalOverlay,
-        backdropFilter: "blur(8px)",
-      }}
+      className="rs-cookie-dock-root rs-cookie-prefs-dock"
       role="presentation"
-      onMouseDown={(e) => {
-        if (e.target === e.currentTarget) closePreferences();
-      }}
     >
+      <style>{COOKIE_DOCK_CSS}</style>
+      <style>{`
+        .rs-cookie-modal-panel {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          max-height: min(72vh, 560px);
+          overflow: auto;
+        }
+        @media (min-width: 851px) {
+          .rs-cookie-modal-panel {
+            max-height: min(calc(100dvh - 28px), 920px);
+          }
+        }
+        .rs-cookie-modal-panel::-webkit-scrollbar {
+          display: none;
+          width: 0;
+          height: 0;
+        }
+      `}</style>
       <div
-        className="rs-cookie-modal-panel"
+        className="rs-cookie-dock-card rs-cookie-dock-animate rs-cookie-modal-panel"
         role="dialog"
         aria-modal="true"
         aria-labelledby="rs-cookie-modal-title"
         style={{
-          width: "100%",
-          maxWidth: 520,
-          maxHeight: "min(90vh, 720px)",
-          overflow: "auto",
           background: T.cookieModalPanel,
           border: `1px solid ${T.formCardBorder}`,
-          borderRadius: 24,
+          borderRadius: 20,
           boxShadow: T.cookieModalShadow,
-          padding: "clamp(20px,4vw,32px)",
-          animation: "rs-modal-in 0.35s cubic-bezier(.4,0,.2,1) both",
+          padding: "clamp(18px,3vw,26px)",
         }}
       >
-        <style>{`
-          @keyframes rs-modal-in {
-            from { opacity: 0; transform: scale(0.97) translateY(8px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-          }
-          .rs-cookie-modal-panel {
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-          }
-          .rs-cookie-modal-panel::-webkit-scrollbar {
-            display: none;
-            width: 0;
-            height: 0;
-          }
-        `}</style>
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "flex-start",
+            alignItems: "center",
             gap: 12,
-            marginBottom: 20,
+            marginBottom: 10,
           }}
         >
           <h2
             id="rs-cookie-modal-title"
             style={{
               fontFamily: "Inter Tight,system-ui,sans-serif",
-              fontSize: 22,
+              fontSize: 20,
               fontWeight: 800,
               letterSpacing: "-0.03em",
               color: T.textPrimary,
@@ -198,7 +185,7 @@ export function CookiePreferencesModal() {
           </button>
         </div>
 
-        <p style={{ fontSize: 14, lineHeight: 1.55, color: T.textSecondary, marginBottom: 22 }}>
+        <p style={{ fontSize: 14, lineHeight: 1.55, color: T.textSecondary, marginBottom: 12 }}>
           Niezbędne pliki cookie są zawsze aktywne — zapewniają podstawowe działanie i
           bezpieczeństwo. Pozostałe kategorie włączysz dobrowolnie.
         </p>
@@ -208,12 +195,12 @@ export function CookiePreferencesModal() {
             background: T.cookieModalRow,
             border: `1px solid ${T.cookieModalRowBorder}`,
             borderRadius: 16,
-            padding: "16px 18px",
+            padding: "10px 14px",
             marginBottom: 14,
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            gap: 12,
+            gap: 10,
           }}
         >
           <div>
@@ -231,10 +218,13 @@ export function CookiePreferencesModal() {
               letterSpacing: ".06em",
               textTransform: "uppercase",
               color: T.cta,
-              whiteSpace: "nowrap",
+              textAlign: "left",
+              lineHeight: 1.25,
             }}
           >
-            Zawsze włączone
+            Zawsze
+            <br />
+            włączone
           </span>
         </div>
 
@@ -245,7 +235,7 @@ export function CookiePreferencesModal() {
               background: T.cookieModalRow,
               border: `1px solid ${T.cookieModalRowBorder}`,
               borderRadius: 16,
-              padding: "16px 18px",
+              padding: "10px 14px",
               marginBottom: 12,
               display: "flex",
               justifyContent: "space-between",
@@ -270,11 +260,12 @@ export function CookiePreferencesModal() {
         ))}
 
         <div
+          className="rs-cookie-prefs-actions"
           style={{
             display: "flex",
             flexWrap: "wrap",
             gap: 10,
-            marginTop: 24,
+            marginTop: 14,
             justifyContent: "stretch",
           }}
         >

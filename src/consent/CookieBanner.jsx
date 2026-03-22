@@ -1,5 +1,6 @@
 import { Cookie } from "lucide-react";
 import { useT } from "../theme.js";
+import { COOKIE_DOCK_CSS } from "./cookieDockSharedCss.js";
 import { useCookieConsent } from "./CookieConsentContext.jsx";
 
 export function CookieBanner() {
@@ -29,44 +30,11 @@ export function CookieBanner() {
     <div
       role="region"
       aria-label="Zgoda na pliki cookie"
-      className="rs-cookie-banner-root"
-      style={{
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 200,
-        padding: "clamp(12px,3vw,20px)",
-        pointerEvents: "none",
-        display: "flex",
-        justifyContent: "center",
-      }}
+      className="rs-cookie-dock-root"
     >
+      <style>{COOKIE_DOCK_CSS}</style>
       <style>{`
-        @keyframes rs-cookie-rise {
-          from { opacity: 0; transform: translateY(18px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .rs-cookie-banner-card {
-          animation: rs-cookie-rise 0.45s cubic-bezier(.4,0,.2,1) both;
-        }
-        .rs-cookie-banner-card {
-          max-width: min(1100px, 100%);
-          margin-left: auto;
-          margin-right: auto;
-        }
         @media (min-width: 851px) {
-          .rs-cookie-banner-root {
-            justify-content: flex-end;
-            padding-left: clamp(16px, 3vw, 48px);
-            padding-right: clamp(16px, 3vw, 48px);
-          }
-          .rs-cookie-banner-card {
-            max-width: 400px;
-            width: 100%;
-            margin-left: auto;
-            margin-right: 0;
-          }
           .rs-cookie-banner-inner {
             flex-direction: column;
             align-items: stretch;
@@ -92,7 +60,7 @@ export function CookieBanner() {
         }
       `}</style>
       <div
-        className="rs-cookie-banner-card"
+        className="rs-cookie-dock-card rs-cookie-dock-animate"
         style={{
           pointerEvents: "auto",
           width: "100%",
