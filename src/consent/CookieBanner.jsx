@@ -184,8 +184,9 @@ export function CookieBanner() {
             >
               Niezbędne cookie zapewniają działanie strony; za zgodą — analitykę i marketing.{" "}
               <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href={`${import.meta.env.BASE_URL}polityka_cookies.pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{ color: T.info, fontWeight: 600 }}
               >
                 Polityka plików cookie
