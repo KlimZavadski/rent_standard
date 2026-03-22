@@ -104,6 +104,13 @@ export const DARK = {
   toggleBorder: "rgba(255,255,255,0.14)",
   cardOuterBorder: "rgba(255,255,255,0.06)",
   cardOuterBg: "rgba(255,255,255,0.02)",
+  /** Solid surfaces for cookie preferences modal (readability over busy backgrounds) */
+  cookieModalPanel: "#102536",
+  cookieModalRow: "rgba(255,255,255,0.07)",
+  cookieModalRowBorder: "rgba(255,255,255,0.12)",
+  cookieModalMutedBtn: "rgba(255,255,255,0.1)",
+  cookieModalOverlay: "rgba(5,12,20,0.78)",
+  cookieModalShadow: "0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06)",
 };
 
 export const LIGHT = {
@@ -197,6 +204,12 @@ export const LIGHT = {
   toggleBorder: "rgba(21,54,136,0.18)",
   cardOuterBorder: "rgb(29,59,136)",
   cardOuterBg: "rgb(31,58,137)",
+  cookieModalPanel: "#FFFFFF",
+  cookieModalRow: "#F1F5F9",
+  cookieModalRowBorder: "rgba(21,54,136,0.14)",
+  cookieModalMutedBtn: "#F1F5F9",
+  cookieModalOverlay: "rgba(15,23,42,0.45)",
+  cookieModalShadow: "0 25px 50px -12px rgba(21,54,136,0.18), 0 0 0 1px rgba(21,54,136,0.08)",
 };
 
 /** Core brand palette (theme-agnostic) */

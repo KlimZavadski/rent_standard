@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "npm run lint && vite build",
     "preview": "vite preview",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test:unit": "node --test src/consent/consentModel.test.js"
   },
   "dependencies": {
     "lucide-react": "^0.460.0",

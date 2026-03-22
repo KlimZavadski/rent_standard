@@ -8,6 +8,12 @@ import {
 } from "lucide-react";
 import { getThemesForVariant, ThemeCtx, useT } from "../theme.js";
 import { LANDING_VARIANTS } from "../landingVariants.js";
+import {
+  CookieConsentProvider,
+  CookieBanner,
+  CookiePreferencesModal,
+  CookieFooterButton,
+} from "../consent/index.js";
 import shieldDarkImg from "../assets/images/shield_dark.png";
 import shieldLightImg from "../assets/images/shield_light.png";
 import structureDarkImg from "../assets/images/structure_dark.png";
@@ -229,6 +235,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
 
   return (
     <ThemeCtx.Provider value={T}>
+      <CookieConsentProvider>
       <div style={{ background: T.bg, minHeight: "100vh", fontFamily: "Manrope,system-ui,sans-serif", color: T.textPrimary, transition: "background 0.4s,color 0.4s" }}>
         <style dangerouslySetInnerHTML={{ __html: css }} />
 
@@ -643,18 +650,22 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                 <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 16, fontWeight: 700, color: T.textPrimary }}>Rent Standard</span>
               </div>
               <p style={{ color: T.footerText, fontSize: 13 }}>© 2026 Rent Standard Polska sp. z o.o. · KRS 0000000000 · RODO · Polityka prywatności</p>
-              <div style={{ display: "flex", gap: 20 }}>
+              <div style={{ display: "flex", gap: 20, flexWrap: "wrap", alignItems: "center" }}>
                 {["Regulamin", "RODO", "Kontakt"].map((link) => (
                   <a key={link} href="#" style={{ color: T.footerLink, fontSize: 13, textDecoration: "none", transition: "color 0.2s" }}
                     onMouseEnter={e => e.target.style.color = T.cta}
                     onMouseLeave={e => e.target.style.color = T.footerLink}
                   >{link}</a>
                 ))}
+                <CookieFooterButton />
               </div>
             </div>
           </footer>
         </main>
+        <CookieBanner />
+        <CookiePreferencesModal />
       </div>
+      </CookieConsentProvider>
     </ThemeCtx.Provider>
   );
 }

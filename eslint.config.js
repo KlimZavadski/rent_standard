@@ -36,6 +36,8 @@ export default [
         JSX: "readonly",
         IntersectionObserver: "readonly",
         navigator: "readonly",
+        CustomEvent: "readonly",
+        localStorage: "readonly",
       },
     },
     settings: {

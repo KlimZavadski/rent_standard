@@ -8,6 +8,12 @@ import {
 } from "lucide-react";
 import { getThemesForVariant, ThemeCtx, useT } from "../theme.js";
 import { LANDING_VARIANTS } from "../landingVariants.js";
+import {
+  CookieConsentProvider,
+  CookieBanner,
+  CookiePreferencesModal,
+  CookieFooterButton,
+} from "../consent/index.js";
 import structureDarkImg from "./assets/images/structure_dark.png";
 import structureLightImg from "./assets/images/structure_light.png";
 import structureWithTextDarkImg from "./assets/images/structure_with_text_dark.png";
@@ -183,6 +189,7 @@ export default function App({ variantId = "gpt_recommendations" }) {
 
   return (
     <ThemeCtx.Provider value={T}>
+      <CookieConsentProvider>
       <div style={{ background: T.bg, minHeight: "100vh", fontFamily: "Manrope,system-ui,sans-serif", color: T.textPrimary, transition: "background 0.4s,color 0.4s" }}>
         <style dangerouslySetInnerHTML={{ __html: css }} />
 
@@ -732,18 +739,22 @@ export default function App({ variantId = "gpt_recommendations" }) {
               <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 16, fontWeight: 700, color: T.textPrimary }}>Rent Standard</span>
             </div>
             <p style={{ color: T.footerText, fontSize: 14 }}>© 2026 Rent Standard Polska sp. z o.o. · KRS 0000000000 · RODO · Polityka prywatności</p>
-            <div style={{ display: "flex", gap: 20 }}>
+            <div style={{ display: "flex", gap: 20, flexWrap: "wrap", alignItems: "center" }}>
               {["Regulamin", "RODO", "Kontakt"].map((link) => (
                 <a key={link} href="#" style={{ color: T.footerLink, fontSize: 14, textDecoration: "none", transition: "color 0.2s" }}
                   onMouseEnter={e => e.target.style.color = T.cta}
                   onMouseLeave={e => e.target.style.color = T.footerLink}
                 >{link}</a>
               ))}
+              <CookieFooterButton style={{ fontSize: 14 }} />
             </div>
           </div>
         </footer>
         </main>
+        <CookieBanner />
+        <CookiePreferencesModal />
       </div>
+      </CookieConsentProvider>
     </ThemeCtx.Provider>
   );
 }
