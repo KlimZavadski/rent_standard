@@ -7,8 +7,8 @@ import { hasConsentFor } from "./consentModel.js";
 export function isGoogleAnalyticsEnabled() {
   const raw =
     typeof import.meta.env !== "undefined" ? import.meta.env.VITE_USE_GA : undefined;
-  const v = raw == null || String(raw).trim() === "" ? "true" : String(raw);
-  return v.toLowerCase() !== "false";
+  if (raw == null || String(raw).trim() === "") return true;
+  return String(raw).toLowerCase().trim() !== "false";
 }
 
 const MEASUREMENT_ID =
