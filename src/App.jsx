@@ -14,6 +14,7 @@ import {
   CookiePreferencesModal,
   CookieFooterButton,
   identifySmartlookLead,
+  trackSmartlookEvent,
 } from "./consent/index.js";
 import structureDarkImg from "./assets/images/structure_dark.png";
 import structureLightImg from "./assets/images/structure_light.png";
@@ -201,7 +202,10 @@ export default function App({ variantId = "main" }) {
     }
   `;
 
-  const scrollToForm = () => formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  const scrollToForm = (placement) => {
+    trackSmartlookEvent("cta_click", { placement, variant_id: variantId });
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
   const isValidEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((s || "").trim());
   const validateEmail = () => {
     if (!formData.email) {
@@ -340,10 +344,10 @@ export default function App({ variantId = "main" }) {
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               {/* Theme toggle */}
-              <button onClick={() => setIsDark(!isDark)} style={{ background: T.toggleBg, border: `1px solid ${T.toggleBorder}`, borderRadius: 99, padding: "7px 10px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, color: T.textSecondary, fontSize: 13, fontWeight: 600, fontFamily: "Manrope,sans-serif", transition: "all 0.25s", flexShrink: 0 }}>
+              <button onClick={() => { const next = !isDark; setIsDark(next); trackSmartlookEvent("theme_change", { theme: next ? "dark" : "light", variant_id: variantId }); }} style={{ background: T.toggleBg, border: `1px solid ${T.toggleBorder}`, borderRadius: 99, padding: "7px 10px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, color: T.textSecondary, fontSize: 13, fontWeight: 600, fontFamily: "Manrope,sans-serif", transition: "all 0.25s", flexShrink: 0 }}>
                 {isDark ? <><Sun size={15} color="#f59e0b" /><span className="toggle-label" style={{ color: "#f59e0b" }}>Jasny</span></> : <><Moon size={15} color={T.info} /><span className="toggle-label" style={{ color: T.info }}>Ciemny</span></>}
               </button>
-              <button onClick={scrollToForm} className="cta-btn" style={{ padding: "10px 20px", fontSize: 15 }}>
+              <button onClick={() => scrollToForm("nav")} className="cta-btn" style={{ padding: "10px 20px", fontSize: 15 }}>
                 <span className="nav-cta-text">Zabezpiecz najem</span>
                 <ChevronRight size={16} />
               </button>
@@ -401,7 +405,7 @@ export default function App({ variantId = "main" }) {
                   })()}
                 </ul>
                 <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-                  <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "16px 28px", fontSize: 18 }}>
+                  <button onClick={() => scrollToForm("hero")} className="cta-btn pulse-btn" style={{ padding: "16px 28px", fontSize: 18 }}>
                     Chcę wynajmować bez ryzyka <ArrowRight size={18} />
                   </button>
                   <button className="sec-btn" style={{ padding: "16px 24px", fontSize: 15 }}>Dowiedz się więcej</button>
@@ -828,7 +832,7 @@ export default function App({ variantId = "main" }) {
               <p style={{ color: T.finalSubtext, fontSize: "clamp(15px,2vw,18px)", maxWidth: 560, margin: "0 auto 36px" }}>
                 Dołącz do 2 400+ właścicieli, którzy śpią spokojnie dzięki Rent Standard Polska.
               </p>
-              <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "18px 36px", fontSize: 19, margin: "0 auto" }}>
+              <button onClick={() => scrollToForm("final")} className="cta-btn pulse-btn" style={{ padding: "18px 36px", fontSize: 19, margin: "0 auto" }}>
                 Chcę ochrony — zaczynam teraz <ArrowRight size={20} />
               </button>
             </FadeIn>

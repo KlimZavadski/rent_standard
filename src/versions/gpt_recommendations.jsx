@@ -14,6 +14,7 @@ import {
   CookiePreferencesModal,
   CookieFooterButton,
   identifySmartlookLead,
+  trackSmartlookEvent,
 } from "../consent/index.js";
 import structureDarkImg from "./assets/images/structure_dark.png";
 import structureLightImg from "./assets/images/structure_light.png";
@@ -162,7 +163,10 @@ export default function App({ variantId = "gpt_recommendations" }) {
     }
   `;
 
-  const scrollToForm = () => formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  const scrollToForm = (placement) => {
+    trackSmartlookEvent("cta_click", { placement, variant_id: variantId });
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
   const isValidEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((s || "").trim());
   const validateEmail = () => {
     if (!formData.email) {
@@ -245,7 +249,7 @@ export default function App({ variantId = "gpt_recommendations" }) {
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               {/* Theme toggle */}
-              <button onClick={() => setIsDark(!isDark)} style={{ background: T.toggleBg, border: `1px solid ${T.toggleBorder}`, borderRadius: 99, padding: "7px 10px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, color: T.textSecondary, fontSize: 14, fontWeight: 600, fontFamily: "Manrope,sans-serif", transition: "all 0.25s", flexShrink: 0 }} aria-label={isDark ? "Przełącz na jasny motyw" : "Przełącz na ciemny motyw"}>
+              <button onClick={() => { const next = !isDark; setIsDark(next); trackSmartlookEvent("theme_change", { theme: next ? "dark" : "light", variant_id: variantId }); }} style={{ background: T.toggleBg, border: `1px solid ${T.toggleBorder}`, borderRadius: 99, padding: "7px 10px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, color: T.textSecondary, fontSize: 14, fontWeight: 600, fontFamily: "Manrope,sans-serif", transition: "all 0.25s", flexShrink: 0 }} aria-label={isDark ? "Przełącz na jasny motyw" : "Przełącz na ciemny motyw"}>
                 {isDark ? <><Sun size={15} color="#f59e0b" /><span className="toggle-label" style={{ color: "#f59e0b" }}>Jasny</span></> : <><Moon size={15} color={T.info} /><span className="toggle-label" style={{ color: T.info }}>Ciemny</span></>}
               </button>
             </div>
@@ -302,7 +306,7 @@ export default function App({ variantId = "gpt_recommendations" }) {
                   })()}
                 </ul>
                 <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-                  <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "16px 28px", fontSize: 18 }}>
+                  <button onClick={() => scrollToForm("hero")} className="cta-btn pulse-btn" style={{ padding: "16px 28px", fontSize: 18 }}>
                     Chcę wynajmować bez ryzyka <ArrowRight size={18} />
                   </button>
                   <button className="sec-btn" style={{ padding: "16px 24px", fontSize: 15 }}>Dowiedz się więcej</button>
@@ -722,7 +726,7 @@ export default function App({ variantId = "gpt_recommendations" }) {
               <p style={{ color: T.finalSubtext, fontSize: "clamp(15px,2vw,18px)", maxWidth: 560, margin: "0 auto 36px" }}>
                 Dołącz do 2 400+ właścicieli, którzy śpią spokojnie dzięki Rent Standard Polska.
               </p>
-              <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "18px 36px", fontSize: 19, margin: "0 auto" }}>
+              <button onClick={() => scrollToForm("final")} className="cta-btn pulse-btn" style={{ padding: "18px 36px", fontSize: 19, margin: "0 auto" }}>
                 Chcę ochrony — zaczynam teraz <ArrowRight size={20} />
               </button>
             </FadeIn>
@@ -732,7 +736,7 @@ export default function App({ variantId = "gpt_recommendations" }) {
         {/* Sticky CTA (mobile only) */}
         <div className={`sticky-cta-bar ${stickyCtaVisible ? "is-visible" : ""}`} aria-hidden={!stickyCtaVisible}>
           <div className="sticky-cta-bar-inner">
-            <button type="button" onClick={scrollToForm} className="cta-btn" style={{ width: "100%", justifyContent: "center", padding: "14px 20px", fontSize: 16 }}>
+            <button type="button" onClick={() => scrollToForm("sticky")} className="cta-btn" style={{ width: "100%", justifyContent: "center", padding: "14px 20px", fontSize: 16 }}>
               Zabezpiecz swój najem <ArrowRight size={18} />
             </button>
           </div>

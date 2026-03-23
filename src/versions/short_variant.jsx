@@ -14,6 +14,7 @@ import {
   CookiePreferencesModal,
   CookieFooterButton,
   identifySmartlookLead,
+  trackSmartlookEvent,
 } from "../consent/index.js";
 import shieldDarkImg from "../assets/images/shield_dark.png";
 import shieldLightImg from "../assets/images/shield_light.png";
@@ -122,7 +123,10 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     }
   `;
 
-  const scrollToForm = () => formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  const scrollToForm = (placement) => {
+    trackSmartlookEvent("cta_click", { placement, variant_id: variantId });
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
   const isValidEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((s || "").trim());
   const validateEmail = () => {
     if (!formData.email) { setEmailError("Podaj adres e-mail."); return false; }
@@ -144,6 +148,8 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     if (!rodoChecked || !formData.name) return;
     if (!validateEmail()) return;
     if (!LEADS_ENDPOINT) { setSubmitError("Brak konfiguracji wysyłki."); return; }
+
+    trackSmartlookEvent("cta_click", { placement: "form_submit", variant_id: variantId });
 
     setIsSubmitting(true);
     setSubmitError(null);
@@ -296,10 +302,10 @@ export default function ShortVariant({ variantId = "short_variant" }) {
               )}
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <button onClick={() => setIsDark(!isDark)} style={{ background: T.toggleBg, border: `1px solid ${T.toggleBorder}`, borderRadius: 99, padding: "7px 10px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, color: T.textSecondary, fontSize: 13, fontWeight: 600, fontFamily: "Manrope,sans-serif", transition: "all 0.25s", flexShrink: 0 }}>
+              <button onClick={() => { const next = !isDark; setIsDark(next); trackSmartlookEvent("theme_change", { theme: next ? "dark" : "light", variant_id: variantId }); }} style={{ background: T.toggleBg, border: `1px solid ${T.toggleBorder}`, borderRadius: 99, padding: "7px 10px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, color: T.textSecondary, fontSize: 13, fontWeight: 600, fontFamily: "Manrope,sans-serif", transition: "all 0.25s", flexShrink: 0 }}>
                 {isDark ? <><Sun size={15} color="#f59e0b" /><span className="toggle-label" style={{ color: "#f59e0b" }}>Jasny</span></> : <><Moon size={15} color={T.info} /><span className="toggle-label" style={{ color: T.info }}>Ciemny</span></>}
               </button>
-              <button onClick={scrollToForm} className="cta-btn" style={{ padding: "10px 20px", fontSize: 15 }}>
+              <button onClick={() => scrollToForm("nav")} className="cta-btn" style={{ padding: "10px 20px", fontSize: 15 }}>
                 <span className="nav-cta-text">Dołącz do pilotażu</span>
                 <ChevronRight size={16} />
               </button>
@@ -394,7 +400,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
               </div>
 
               <div style={{ textAlign: "center" }}>
-                <button onClick={scrollToForm} className="cta-btn pulse-btn" style={{ padding: "18px 32px", fontSize: 18 }}>
+                <button onClick={() => scrollToForm("hero")} className="cta-btn pulse-btn" style={{ padding: "18px 32px", fontSize: 18 }}>
                   Dołącz do pilotażu <ArrowRight size={18} />
                 </button>
 
@@ -620,7 +626,12 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                         transition: "all 0.35s cubic-bezier(.4,0,.2,1)",
                       }}>
                         <button
-                          onClick={() => setOpenFaq(isOpen ? null : i)}
+                          onClick={() => {
+                            if (!isOpen) {
+                              trackSmartlookEvent("faq_open", { variant_id: variantId, faq_index: i });
+                            }
+                            setOpenFaq(isOpen ? null : i);
+                          }}
                           style={{
                             width: "100%", padding: "22px 28px", background: "none",
                             border: "none", cursor: "pointer", display: "flex",

@@ -173,3 +173,21 @@ export function identifySmartlookLead(lead) {
     /* ignore */
   }
 }
+
+/**
+ * Custom event for Smartlook dashboards.
+ * @see https://web.developer.smartlook.com/docs/custom-events
+ * @param {string} eventName
+ * @param {Record<string, unknown>} [props]
+ */
+export function trackSmartlookEvent(eventName, props) {
+  if (typeof window === "undefined") return;
+  if (!KEY?.trim()) return;
+  if (!hasConsentFor(window.__RS_CONSENT__, "analytics")) return;
+  if (!eventName) return;
+  try {
+    window.smartlook?.("track", eventName, props && typeof props === "object" ? props : {});
+  } catch {
+    /* ignore */
+  }
+}
