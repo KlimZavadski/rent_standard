@@ -1,5 +1,18 @@
 import { hasConsentFor } from "./consentModel.js";
 
+/**
+ * `VITE_USE_SMARTLOOK=false` turns Smartlook off. Unset or any other value → on.
+ * @returns {boolean}
+ */
+export function isSmartlookEnabled() {
+  const v =
+    typeof import.meta.env !== "undefined"
+      ? import.meta.env.VITE_USE_SMARTLOOK
+      : undefined;
+  if (v === undefined || v === "") return true;
+  return String(v).toLowerCase() !== "false";
+}
+
 const KEY =
   typeof import.meta.env !== "undefined"
     ? import.meta.env.VITE_SMARTLOOK_KEY
@@ -110,6 +123,7 @@ function applyRecordApiWithConsent() {
  */
 export function syncSmartlookWithConsent() {
   if (typeof window === "undefined") return;
+  if (!isSmartlookEnabled()) return;
 
   if (!KEY?.trim()) {
     if (import.meta.env.DEV) {
@@ -154,6 +168,7 @@ export function syncSmartlookWithConsent() {
  */
 export function identifySmartlookLead(lead) {
   if (typeof window === "undefined") return;
+  if (!isSmartlookEnabled()) return;
   if (!KEY?.trim()) return;
   if (!hasConsentFor(window.__RS_CONSENT__, "analytics")) return;
 
@@ -182,6 +197,7 @@ export function identifySmartlookLead(lead) {
  */
 export function trackSmartlookEvent(eventName, props) {
   if (typeof window === "undefined") return;
+  if (!isSmartlookEnabled()) return;
   if (!KEY?.trim()) return;
   if (!hasConsentFor(window.__RS_CONSENT__, "analytics")) return;
   if (!eventName) return;

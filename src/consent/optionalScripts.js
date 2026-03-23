@@ -1,8 +1,9 @@
 import { onConsentGranted, RS_CONSENT_CHANGE_EVENT } from "./syncConsentToDom.js";
-import { syncSmartlookWithConsent } from "./smartlook.js";
+import { isSmartlookEnabled, syncSmartlookWithConsent } from "./smartlook.js";
 
 /** Re-run Smartlook (and future tags) from `window.__RS_CONSENT__`. */
 export function syncOptionalScriptsWithConsent() {
+  if (!isSmartlookEnabled()) return;
   syncSmartlookWithConsent();
 }
 
@@ -15,13 +16,15 @@ export function syncOptionalScriptsWithConsent() {
  * when analytics consent is revoked / restored (via this listener + initial sync).
  */
 export function registerOptionalConsentHooks() {
-  const syncSmartlook = () => syncOptionalScriptsWithConsent();
-  syncSmartlook();
-  if (typeof window !== "undefined") {
-    window.addEventListener(RS_CONSENT_CHANGE_EVENT, syncSmartlook);
-    window.addEventListener("pageshow", (e) => {
-      if (e.persisted) syncSmartlook();
-    });
+  if (isSmartlookEnabled()) {
+    const syncSmartlook = () => syncOptionalScriptsWithConsent();
+    syncSmartlook();
+    if (typeof window !== "undefined") {
+      window.addEventListener(RS_CONSENT_CHANGE_EVENT, syncSmartlook);
+      window.addEventListener("pageshow", (e) => {
+        if (e.persisted) syncSmartlook();
+      });
+    }
   }
 
   onConsentGranted("analytics", () => {

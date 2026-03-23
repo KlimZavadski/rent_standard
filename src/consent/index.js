@@ -10,4 +10,8 @@ export {
   registerOptionalConsentHooks,
   syncOptionalScriptsWithConsent,
 } from "./optionalScripts.js";
-export { identifySmartlookLead, trackSmartlookEvent } from "./smartlook.js";
+export {
+  identifySmartlookLead,
+  isSmartlookEnabled,
+  trackSmartlookEvent,
+} from "./smartlook.js";
