@@ -44,7 +44,9 @@ In the `automation/` folder:
 Run from repo root: `./automation/build.sh`, `./automation/run-local.sh`.
 
 ## Deployment
-- **GitHub Pages**: workflow `.github/workflows/deploy-pages.yml` builds the project and deploys the `dist/` output to GitHub Pages (typically on push to the default branch or on release).
+- **GitHub Pages**: workflow `.github/workflows/deploy-pages.yml` builds the project with `--base=/<repo>/` and deploys the `dist/` output to GitHub Pages (typically on push to the default branch or on `workflow_dispatch`). The workflow sets `VITE_PUBLIC_SITE_ORIGIN` to the Pages URL so Open Graph / Twitter meta match that host.
+- **Vercel**: connect the repo; framework **Vite**, build `npm run build`, output `dist`. **`vercel.json`** adds SPA rewrites so client routes work at the domain root (no repo subpath). In the Vercel project, set **`VITE_PUBLIC_SITE_ORIGIN`** to your production origin (e.g. `https://<project>.vercel.app` or your custom domain, no trailing slash) so social meta point at Vercel. Reuse the same **`VITE_*`** secrets as in GitHub Actions where applicable.
+- **Both hosts**: Pages uses a subpath base URL; Vercel uses `/`. Each platform runs its own build with the correct `base` and `VITE_PUBLIC_SITE_ORIGIN`; no shared artifact is required.
 
 ## Instructions
 - **AGENTS.md is always written in English.** Keep all content and any new sections in English.
