@@ -28,6 +28,18 @@ test("cookie banner: reject optional, then open footer preferences", async ({ pa
   const pageErrors = [];
   page.on("pageerror", (err) => pageErrors.push(err.message));
 
+  const analyticsHosts = [];
+  page.on("request", (req) => {
+    const u = req.url();
+    if (
+      u.includes("googletagmanager.com") ||
+      u.includes("google-analytics.com") ||
+      u.includes("analytics.google.com")
+    ) {
+      analyticsHosts.push(u);
+    }
+  });
+
   await page.goto("", { waitUntil: "networkidle" });
   await page.evaluate((key) => localStorage.removeItem(key), STORAGE_KEY);
   await page.reload({ waitUntil: "networkidle" });
@@ -40,6 +52,11 @@ test("cookie banner: reject optional, then open footer preferences", async ({ pa
 
   await expect(page.locator("html")).toHaveAttribute("data-rs-consent-ready", "1");
   await expect(page.locator("html")).toHaveAttribute("data-rs-consent-analytics", "0");
+
+  expect(
+    analyticsHosts,
+    `GA/gtag must not load when analytics consent is off: ${analyticsHosts.join("; ")}`,
+  ).toEqual([]);
 
   await page.getByRole("button", { name: "Ustawienia plików cookie" }).click();
   await expect(page.getByRole("dialog", { name: /Ustawienia plików cookie/i })).toBeVisible();
