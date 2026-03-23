@@ -37,7 +37,7 @@ flowchart LR
 
 1. **`src/landingVariants.js`**
    - Read `import.meta.env.VITE_USE_VARIANTS === 'true'`.
-   - Export **`LANDING_VARIANTS`**: if false, only `[{ path: "/", label: "Main", variantId: "main" }]`.
+   - Export **`LANDING_VARIANTS`**: if false, only the default route (short variant at `/`, `variantId: "s1"`).
    - Optionally export **`SHOW_VARIANT_NAV`** = flag is true and `LANDING_VARIANTS.length > 1` (or keep a single condition `length > 1` if the list is always trimmed).
 
 2. **`src/main.jsx`**
