@@ -36,6 +36,7 @@ jobs:
           npm run build -- --base=/${{ github.event.repository.name }}/
           cp dist/index.html dist/404.html
         env:
+          VITE_PUBLIC_SITE_ORIGIN: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
           VITE_LEADS_ENDPOINT: ${{ secrets.VITE_LEADS_ENDPOINT }}
           VITE_USE_SMARTLOOK: ${{ secrets.VITE_USE_SMARTLOOK }}
           VITE_SMARTLOOK_KEY: ${{ secrets.VITE_SMARTLOOK_KEY }}
