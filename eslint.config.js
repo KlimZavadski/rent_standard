@@ -35,6 +35,7 @@ export default [
         React: "readonly",
         JSX: "readonly",
         IntersectionObserver: "readonly",
+        Element: "readonly",
         navigator: "readonly",
         CustomEvent: "readonly",
         localStorage: "readonly",

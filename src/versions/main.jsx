@@ -15,6 +15,7 @@ import {
   CookieFooterButton,
   identifySmartlookLead,
   trackSmartlookEvent,
+  trackGaUiClick,
 } from "../consent/index.js";
 import shieldDarkImg from "../assets/images/shield_dark.png";
 import shieldLightImg from "../assets/images/shield_light.png";
@@ -71,6 +72,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
   const [submitError, setSubmitError] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const formRef = useRef(null);
+  const layoutRootRef = useRef(null);
   const [openFaq, setOpenFaq] = useState(null);
 
   useEffect(() => {
@@ -78,6 +80,39 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const root = layoutRootRef.current;
+    if (!root) return;
+    const selector = 'button, a[href], [role="button"], [role="switch"]';
+    const onClickCapture = (e) => {
+      const raw = e.target;
+      if (!(raw instanceof Element)) return;
+      const node = raw.closest(selector);
+      if (!node || !root.contains(node)) return;
+
+      if (node.matches("a[href]")) {
+        const href = node.getAttribute("href") || "";
+        const elementText = (node.textContent || "").trim().replace(/\s+/g, " ").slice(0, 120);
+        trackGaUiClick({
+          variant_id: variantId,
+          click_type: "link",
+          element_text: elementText,
+          link_url: href,
+        });
+        return;
+      }
+
+      const elementText = (node.textContent || "").trim().replace(/\s+/g, " ").slice(0, 120);
+      trackGaUiClick({
+        variant_id: variantId,
+        click_type: "button",
+        element_text: elementText,
+      });
+    };
+    root.addEventListener("click", onClickCapture, true);
+    return () => root.removeEventListener("click", onClickCapture, true);
+  }, [variantId]);
 
   const css = `
     *{box-sizing:border-box;margin:0;}
@@ -262,7 +297,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
   return (
     <ThemeCtx.Provider value={T}>
       <CookieConsentProvider>
-      <div style={{ background: T.bg, minHeight: "100vh", fontFamily: "Manrope,system-ui,sans-serif", color: T.textPrimary, transition: "background 0.4s,color 0.4s" }}>
+      <div ref={layoutRootRef} style={{ background: T.bg, minHeight: "100vh", fontFamily: "Manrope,system-ui,sans-serif", color: T.textPrimary, transition: "background 0.4s,color 0.4s" }}>
         <style dangerouslySetInnerHTML={{ __html: css }} />
 
         {/* BG mesh */}

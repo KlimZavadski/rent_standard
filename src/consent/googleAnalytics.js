@@ -208,3 +208,27 @@ export function sendGaPageView() {
     /* ignore */
   }
 }
+
+/**
+ * Custom GA4 event for UI clicks (buttons, links). No-op without analytics consent / ready gtag.
+ * @param {{ variant_id?: string, click_type: 'button'|'link', element_text: string, link_url?: string }} payload
+ */
+export function trackGaUiClick(payload) {
+  if (typeof window === "undefined") return;
+  if (!isGoogleAnalyticsEnabled()) return;
+  if (!measurementIdTrimmed()) return;
+  if (!hasConsentFor(window.__RS_CONSENT__, "analytics")) return;
+  if (!isGaTagReady()) return;
+
+  const text = (payload.element_text || "").trim().replace(/\s+/g, " ").slice(0, 120);
+  try {
+    window.gtag("event", "rs_ui_click", {
+      variant_id: payload.variant_id || "",
+      click_type: payload.click_type,
+      element_text: text,
+      link_url: payload.link_url || "",
+    });
+  } catch {
+    /* ignore */
+  }
+}

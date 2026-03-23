@@ -15,3 +15,4 @@ export {
   isSmartlookEnabled,
   trackSmartlookEvent,
 } from "./smartlook.js";
+export { trackGaUiClick } from "./googleAnalytics.js";
