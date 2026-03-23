@@ -40,6 +40,8 @@ jobs:
           VITE_USE_SMARTLOOK: ${{ secrets.VITE_USE_SMARTLOOK }}
           VITE_SMARTLOOK_KEY: ${{ secrets.VITE_SMARTLOOK_KEY }}
           VITE_SMARTLOOK_REGION: ${{ secrets.VITE_SMARTLOOK_REGION }}
+          VITE_USE_GA: ${{ secrets.VITE_USE_GA }}
+          VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
 
       - name: Serve built site for testing
         run: |
