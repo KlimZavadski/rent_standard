@@ -4,7 +4,7 @@ import {
   Shield, Zap, CheckCircle, XCircle, ArrowRight,
   Lock, Clock, TrendingUp, Users, AlertTriangle,
   Phone, Mail, User, Award, Building2,
-  BadgeCheck, Scale, Sun, Moon, Check
+  BadgeCheck, Scale, Sun, Moon, Check, ChevronRight
 } from "lucide-react";
 import { getThemesForVariant, ThemeCtx, useT } from "../theme.js";
 import { LANDING_VARIANTS } from "../landingVariants.js";
@@ -16,12 +16,12 @@ import {
   identifySmartlookLead,
   trackSmartlookEvent,
 } from "../consent/index.js";
-import structureDarkImg from "./assets/images/structure_dark.png";
-import structureLightImg from "./assets/images/structure_light.png";
-import structureWithTextDarkImg from "./assets/images/structure_with_text_dark.png";
-import structureWithTextLightImg from "./assets/images/structure_with_text_light.png";
-import shieldDarkImg from "./assets/images/shield_dark.png";
-import shieldLightImg from "./assets/images/shield_light.png";
+import structureDarkImg from "../assets/images/structure_dark.png";
+import structureLightImg from "../assets/images/structure_light.png";
+import structureWithTextDarkImg from "../assets/images/structure_with_text_dark.png";
+import structureWithTextLightImg from "../assets/images/structure_with_text_light.png";
+import shieldDarkImg from "../assets/images/shield_dark.png";
+import shieldLightImg from "../assets/images/shield_light.png";
 import { heroStructureDescriptions } from "../content/heroStructureDescriptions.js";
 
 function useInView(threshold = 0.15) {
@@ -83,7 +83,7 @@ function FadeIn({ children, delay = 0 }) {
   );
 }
 
-export default function App({ variantId = "gpt_recommendations" }) {
+export default function App({ variantId = "gpt_colors" }) {
   const location = useLocation();
   const [isDark, setIsDark] = useState(false); // false = Light default
   const variantThemes = getThemesForVariant(variantId);
@@ -140,7 +140,7 @@ export default function App({ variantId = "gpt_recommendations" }) {
     .hero-structure-mobile{display:none;}
     .hero-grid>.hero-structure-col{align-self:flex-start;}
     @media(max-width:850px){html,body{font-size:15px;}.hero-structure-desktop{display:none;}.hero-structure-mobile{display:block;}.hero-structure-badge{display:none;}.hero-grid{flex-direction:column!important;gap:28px!important;}.hero-grid>:first-child{order:1}.hero-grid>:last-child{order:-1}.bento-3{grid-template-columns:1fr!important;}.proof-grid{flex-direction:column!important;}.compare-table td,.compare-table th{padding:10px 8px!important;font-size:14px!important;}.partner-logos{flex-wrap:wrap!important;justify-content:center!important;}}
-    @media(max-width:500px){.toggle-label{display:none;}.hero-trust-wrap{flex-direction:column;}}
+    @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}.hero-trust-wrap{flex-direction:column;}}
     .sticky-cta-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:90;padding:20px clamp(16px,4vw,48px);padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));min-height:76px;background:${T.navBg};backdrop-filter:blur(20px);border-top:1px solid ${T.surfBorder};box-shadow:0 -8px 32px rgba(0,0,0,0.2);}
     .sticky-cta-bar-inner{max-width:700px;margin:0 auto;width:100%;padding:0 clamp(28px,5vw,52px);box-sizing:border-box;}
     .sticky-cta-bar.is-visible{display:block;}
@@ -223,7 +223,9 @@ export default function App({ variantId = "gpt_recommendations" }) {
               {LANDING_VARIANTS.length > 1 && (
                 <div style={{ display: "flex", alignItems: "center", gap: 0, marginLeft: 0 }}>
                   {LANDING_VARIANTS.map(({ path, label, variantId: id }) => {
-                    const isActive = location.pathname === path || (path !== "/" && location.pathname.startsWith(path));
+                    const isActive =
+                      location.pathname === path
+                      || (path !== "/" && location.pathname.startsWith(`${path}/`));
                     return (
                       <Link
                         key={id}
@@ -251,6 +253,10 @@ export default function App({ variantId = "gpt_recommendations" }) {
               {/* Theme toggle */}
               <button onClick={() => { const next = !isDark; setIsDark(next); trackSmartlookEvent("theme_change", { theme: next ? "dark" : "light", variant_id: variantId }); }} style={{ background: T.toggleBg, border: `1px solid ${T.toggleBorder}`, borderRadius: 99, padding: "7px 10px", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, color: T.textSecondary, fontSize: 14, fontWeight: 600, fontFamily: "Manrope,sans-serif", transition: "all 0.25s", flexShrink: 0 }} aria-label={isDark ? "Przełącz na jasny motyw" : "Przełącz na ciemny motyw"}>
                 {isDark ? <><Sun size={15} color="#f59e0b" /><span className="toggle-label" style={{ color: "#f59e0b" }}>Jasny</span></> : <><Moon size={15} color={T.info} /><span className="toggle-label" style={{ color: T.info }}>Ciemny</span></>}
+              </button>
+              <button onClick={() => scrollToForm("nav")} className="cta-btn" style={{ padding: "10px 20px", fontSize: 15 }}>
+                <span className="nav-cta-text">Zabezpiecz najem</span>
+                <ChevronRight size={16} />
               </button>
             </div>
           </div>

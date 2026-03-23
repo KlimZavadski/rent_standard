@@ -9,12 +9,12 @@
 export const useVariantsEnabled = import.meta.env.VITE_USE_VARIANTS === "true";
 
 const ALL_LANDING_VARIANTS = [
-  { path: "/", label: "S1", variantId: "s1" },
-  { path: "/main", label: "Main", variantId: "main" },
-  { path: "/gpt_recommendations", label: "GPT", variantId: "gpt" },
-  { path: "/text_updates", label: "V1", variantId: "v1" },
+  { path: "/", label: "Main", variantId: "main" },
+  { path: "/first", label: "First", variantId: "v1" },
+  { path: "/first_with_gpt_colors", label: "GPT", variantId: "gpt_colors" },
+  { path: "/text_updates", label: "V2", variantId: "v2" },
 ];
 
 export const LANDING_VARIANTS = useVariantsEnabled
   ? ALL_LANDING_VARIANTS
-  : [{ path: "/", label: "S1", variantId: "s1" }];
+  : [{ path: "/", label: "Main", variantId: "main" }];

@@ -9,4 +9,4 @@ import * as mainTheme from "./main.js";
 import * as gpt_recommendationsTheme from "./gpt_recommendations.js";
 
 registerVariantTheme("main", mainTheme);
-registerVariantTheme("gpt_recommendations", gpt_recommendationsTheme);
+registerVariantTheme("gpt_colors", gpt_recommendationsTheme);

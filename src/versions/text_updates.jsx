@@ -324,7 +324,9 @@ export default function TextUpdates({ variantId = "text_updates" }) {
               {LANDING_VARIANTS.length > 1 && (
                 <div style={{ display: "flex", alignItems: "center", gap: 0, marginLeft: 0 }}>
                   {LANDING_VARIANTS.map(({ path, label, variantId: id }) => {
-                    const isActive = location.pathname === path || (path !== "/" && location.pathname.startsWith(path));
+                    const isActive =
+                      location.pathname === path
+                      || (path !== "/" && location.pathname.startsWith(`${path}/`));
                     return (
                       <Link
                         key={id}

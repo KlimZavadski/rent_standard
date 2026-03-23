@@ -4,8 +4,10 @@ import { registerOptionalConsentHooks } from "./consent/optionalScripts.js";
 import { createRoot } from "react-dom/client";
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import App from "./App.jsx";
-import ShortVariant from "./versions/short_variant.jsx";
+import MainVariant from "./versions/main.jsx";
+import FirstVariant from "./versions/first.jsx";
+import FirstWithGptColorsVariant from "./versions/first_with_gpt_colors.jsx";
+import TextUpdatesVariant from "./versions/text_updates.jsx";
 import { LANDING_VARIANTS } from "./landingVariants.js";
 
 hydrateConsentGlobals();
@@ -23,10 +25,14 @@ function createLazyOptionalVariants() {
 const LAZY_OPTIONAL_VARIANTS = createLazyOptionalVariants();
 
 function resolveVariantComponent(variantId) {
-  if (variantId === "s1") return ShortVariant;
+  if (variantId === "v1") return FirstVariant;
+  if (variantId === "gpt_colors") return FirstWithGptColorsVariant;
+  if (variantId === "v2") return TextUpdatesVariant;
+
   const LazyCmp = LAZY_OPTIONAL_VARIANTS[variantId];
   if (LazyCmp) return LazyCmp;
-  return App;
+
+  return MainVariant;
 }
 
 createRoot(document.getElementById("root")).render(

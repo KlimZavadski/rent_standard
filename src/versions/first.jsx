@@ -6,8 +6,8 @@ import {
   Phone, Mail, User, Award, Building2,
   BadgeCheck, Scale, ChevronRight, Sun, Moon, Check
 } from "lucide-react";
-import { getThemesForVariant, ThemeCtx, useT } from "./theme.js";
-import { LANDING_VARIANTS } from "./landingVariants.js";
+import { getThemesForVariant, ThemeCtx, useT } from "../theme.js";
+import { LANDING_VARIANTS } from "../landingVariants.js";
 import {
   CookieConsentProvider,
   CookieBanner,
@@ -15,14 +15,14 @@ import {
   CookieFooterButton,
   identifySmartlookLead,
   trackSmartlookEvent,
-} from "./consent/index.js";
-import structureDarkImg from "./assets/images/structure_dark.png";
-import structureLightImg from "./assets/images/structure_light.png";
-import structureWithTextDarkImg from "./assets/images/structure_with_text_dark.png";
-import structureWithTextLightImg from "./assets/images/structure_with_text_light.png";
-import shieldDarkImg from "./assets/images/shield_dark.png";
-import shieldLightImg from "./assets/images/shield_light.png";
-import { heroStructureDescriptions } from "./content/heroStructureDescriptions.js";
+} from "../consent/index.js";
+import structureDarkImg from "../assets/images/structure_dark.png";
+import structureLightImg from "../assets/images/structure_light.png";
+import structureWithTextDarkImg from "../assets/images/structure_with_text_dark.png";
+import structureWithTextLightImg from "../assets/images/structure_with_text_light.png";
+import shieldDarkImg from "../assets/images/shield_dark.png";
+import shieldLightImg from "../assets/images/shield_light.png";
+import { heroStructureDescriptions } from "../content/heroStructureDescriptions.js";
 
 function useInView(threshold = 0.15) {
   const ref = useRef(null);
@@ -318,7 +318,9 @@ export default function App({ variantId = "main" }) {
               {LANDING_VARIANTS.length > 1 && (
                 <div style={{ display: "flex", alignItems: "center", gap: 0, marginLeft: 0 }}>
                   {LANDING_VARIANTS.map(({ path, label, variantId: id }) => {
-                    const isActive = location.pathname === path || (path !== "/" && location.pathname.startsWith(path));
+                    const isActive =
+                      location.pathname === path
+                      || (path !== "/" && location.pathname.startsWith(`${path}/`));
                     return (
                       <Link
                         key={id}
