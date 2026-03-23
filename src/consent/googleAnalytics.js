@@ -1,14 +1,14 @@
 import { hasConsentFor } from "./consentModel.js";
 
 /**
- * `VITE_USE_GA=false` turns GA off. Unset or any other value → on (if measurement ID set).
+ * Default: GA on. Set `VITE_USE_GA=false` to disable. Empty/unset → treated as true (if measurement ID set).
  * @returns {boolean}
  */
 export function isGoogleAnalyticsEnabled() {
-  const v =
+  const raw =
     typeof import.meta.env !== "undefined" ? import.meta.env.VITE_USE_GA : undefined;
-  if (v === undefined || v === "") return true;
-  return String(v).toLowerCase() !== "false";
+  const v = raw == null || String(raw).trim() === "" ? "true" : String(raw);
+  return v.toLowerCase() !== "false";
 }
 
 const MEASUREMENT_ID =
