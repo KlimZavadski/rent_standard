@@ -317,7 +317,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
 
         <main style={{ overflowX: "hidden" }}>
           {/* HERO */}
-          <section style={{ position: "relative", zIndex: 1, padding: "clamp(24px,4.5vw,64px) clamp(16px,4vw,48px) clamp(40px,5vw,64px)", overflow: "hidden" }}>
+            <section style={{ position: "relative", zIndex: 1, padding: "clamp(15px,2.78vw,40px) clamp(16px,4vw,48px) clamp(40px,5vw,64px)", overflow: "hidden" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
               <div className="hero-heading-wrap">
                 <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5.5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 16, color: T.textPrimary }}>
