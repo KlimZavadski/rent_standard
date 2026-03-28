@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { GaRouteTracker } from "./GaRouteTracker.jsx";
+import { SpeedInsightsRoute } from "./SpeedInsightsRoute.jsx";
 import MainVariant from "./versions/main.jsx";
 import FirstVariant from "./versions/first.jsx";
 import FirstWithGptColorsVariant from "./versions/first_with_gpt_colors.jsx";
@@ -32,6 +33,7 @@ function resolveVariantComponent(variantId) {
 export default function App() {
   return (
     <BrowserRouter basename={basename}>
+      <SpeedInsightsRoute />
       <GaRouteTracker />
       <Routes>
         <Route path="/short" element={<Navigate to="/" replace />} />
