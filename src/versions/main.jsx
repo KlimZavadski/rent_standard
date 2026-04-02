@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Shield, ShieldCheck, CheckCircle, ArrowRight, Lock,
-  Phone, Mail, User, Home,
+  Phone, Mail, User, Home, X,
   Scale, ChevronRight, Sun, Moon, Check,
   FileText, Handshake, Award, Users
 } from "lucide-react";
@@ -19,8 +19,6 @@ import {
 } from "../consent/index.js";
 import shieldDarkImg from "../assets/images/shield_dark.png";
 import shieldLightImg from "../assets/images/shield_light.png";
-import structureDarkImg from "../assets/images/structure_dark.png";
-import structureLightImg from "../assets/images/structure_light.png";
 
 function useInView(threshold = 0.15) {
   const ref = useRef(null);
@@ -49,6 +47,65 @@ function BentoCard({ children, style = {}, accent = "none" }) {
       transform: hovered ? "translateY(-4px) scale(1.01)" : "translateY(0) scale(1)",
       transition: "all 0.35s cubic-bezier(.4,0,.2,1)", ...style
     }}>{children}</div>
+  );
+}
+
+function ProblemCloud() {
+  const T = useT();
+  const [hovered, setHovered] = useState(null);
+  const ALL_PROBLEMS = [
+    "Po najemcy musisz robić remont za własne pieniądze?",
+    "Najemca nie płaci, a Ty nic nie możesz zrobić?",
+    "Umowa jest, ale eksmisja w praktyce niemożliwa?",
+    "Konflikt = sąd, koszty i miesiące czekania?",
+    "Szkody są, ale trudno je udowodnić?",
+    "Kaucja nie pokrywa realnych strat?",
+    "Wynajem mieszkania zamienia się w drugą pracę?",
+    "Umowa z internetu nie chroni Cię przed stratami?",
+  ];
+  const [items] = useState(() => {
+    const a = [...ALL_PROBLEMS];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  });
+  const getPush = (idx, hovIdx) => {
+    const diff = idx - hovIdx;
+    const xSign = diff % 2 === 0 ? -1 : 1;
+    const ySign = diff > 0 ? 1 : -1;
+    const dist = Math.max(8, 18 - Math.abs(diff) * 2);
+    return { x: xSign * dist, y: ySign * (dist * 0.7) };
+  };
+  return (
+    <div className="tag-cloud">
+      {items.map((text, i) => {
+        const isActive = hovered === i;
+        const isOther = hovered !== null && !isActive;
+        const push = isOther ? getPush(i, hovered) : null;
+        return (
+          <div key={text} className={`tag-drift-${i % 3}`} style={{ animationPlayState: hovered !== null ? "paused" : "running" }}>
+            <div
+              onMouseEnter={() => setHovered(i)}
+              onMouseLeave={() => setHovered(null)}
+              className="problem-pill"
+              style={{
+                background: T.warnBg,
+                border: `1.5px solid ${isActive ? T.warn : T.warnBorder}`,
+                color: T.warn,
+                transform: isActive ? "scale(1.08)" : push ? `translate(${push.x}px,${push.y}px) scale(0.96)` : "scale(1)",
+                opacity: isOther ? 0.4 : 1,
+                boxShadow: isActive ? `0 8px 28px ${T.warnBorder}` : "0 2px 8px rgba(0,0,0,0.04)",
+              }}
+            >
+              <X size={14} strokeWidth={2.5} style={{ flexShrink: 0 }} />
+              {text}
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
@@ -135,12 +192,30 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     @media(max-width:850px){.hero-heading-wrap{margin-bottom:20px;}}
     .value-section-heading{text-align:center;margin-bottom:48px;}
     @media(max-width:850px){.value-section-heading{margin-bottom:28px;}}
-    .hero-split{display:flex;align-items:stretch;gap:clamp(20px,3vw,40px);max-width:1100px;margin:0 auto 40px;}
-    .hero-split-left{flex:1 1 55%;min-width:0;}
-    .hero-split-right{flex:0 0 auto;display:flex;align-items:center;justify-content:center;}
-    .hero-split-right img{height:100%;width:auto;max-width:420px;object-fit:contain;border-radius:12px;}
-    @media(max-width:850px){.short-cards{grid-template-columns:1fr!important;}.hero-split{flex-direction:column;align-items:center;}.hero-split-right{display:none;}.hero-theses-card{padding:18px 18px!important;}}
-    @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}.hero-trust-wrap{flex-direction:column;}.hero-theses-card{padding:8px 14px!important;}}
+    .hero-columns{display:flex;gap:clamp(24px,3vw,40px);max-width:1100px;margin:0 auto 40px;align-items:flex-start;}
+    .hero-col-left{flex:1 1 55%;min-width:0;}
+    .hero-col-right{flex:1 1 40%;min-width:0;display:flex;flex-direction:column;gap:12px;}
+    .hero-problems{display:flex;flex-direction:column;gap:12px;}
+    .hero-problem-card{display:flex;align-items:center;gap:10px;background:${T.warnBg};border:1px solid ${T.warnBorder};border-radius:14px;padding:14px 20px;color:${T.warn};font-size:15px;font-weight:400;line-height:1.35;}
+    .tag-cloud{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding:10px 0;}
+    .tag-drift-0{animation:drift0 6s ease-in-out infinite;}
+    .tag-drift-1{animation:drift1 7.2s ease-in-out infinite;}
+    .tag-drift-2{animation:drift2 5.5s ease-in-out infinite;}
+    @keyframes drift0{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(5px,-6px) rotate(0.7deg);}66%{transform:translate(-3px,4px) rotate(-0.4deg);}}
+    @keyframes drift1{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(-5px,4px) rotate(-0.5deg);}66%{transform:translate(4px,-4px) rotate(0.3deg);}}
+    @keyframes drift2{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(3px,5px) rotate(0.4deg);}66%{transform:translate(-4px,-3px) rotate(-0.6deg);}}
+    .problem-pill{display:inline-flex;align-items:center;gap:8px;border-radius:99px;padding:10px 18px;font-size:13.5px;font-weight:500;line-height:1.3;cursor:default;user-select:none;transition:transform 0.5s cubic-bezier(.4,0,.2,1),opacity 0.4s ease,box-shadow 0.35s ease,border-color 0.3s ease;}
+    .hero-levels{display:flex;flex-direction:column;gap:0;position:relative;padding-left:0;}
+    .hero-levels::before{content:'';position:absolute;left:33px;top:28px;bottom:28px;width:2px;background:${T.ctaBorder};z-index:0;}
+    .hero-level-item{position:relative;display:flex;align-items:center;gap:14px;padding:8px 14px;border-radius:14px;cursor:default;transition:background 0.25s,transform 0.25s,box-shadow 0.25s;z-index:1;min-height:calc(22px * 1.3 * 2 + 16px);}
+    .hero-level-item:hover{background:${T.bentoCtaBg};transform:translateX(4px);box-shadow:0 8px 24px rgba(0,0,0,0.08);z-index:2;}
+    .hero-level-num{position:relative;z-index:1;width:40px;height:40px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;flex-shrink:0;color:${T.cta};background:color-mix(in srgb,${T.cta} 14%,${T.bg});border:1.5px solid ${T.ctaBorder};transition:all 0.25s;}
+    .hero-level-item:hover .hero-level-num{background:${T.cta};color:#fff;border-color:${T.cta};}
+    .hero-level-label{font-size:22px;font-weight:700;color:${T.textPrimary};line-height:1.3;}
+    .hero-level-tooltip{position:absolute;right:0;top:calc(100% + 4px);transform:translateY(-4px);opacity:0;pointer-events:none;transition:opacity 0.22s,transform 0.22s;background:${T.bg};border:1px solid ${T.bentoNoneBorder};border-radius:12px;padding:12px 16px;font-size:13px;line-height:1.5;color:${T.textSecondary};width:50%;box-shadow:0 12px 32px rgba(0,0,0,0.14);z-index:20;text-align:left;font-weight:400;}
+    .hero-level-item:hover .hero-level-tooltip{opacity:1;transform:translateY(0);pointer-events:auto;}
+    @media(max-width:850px){.short-cards{grid-template-columns:1fr!important;}.hero-columns{flex-direction:column;}}
+    @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}.hero-trust-wrap{flex-direction:column;}}
     .form-shield-img{flex-shrink:0;}
     .form-header-row{gap:40px;}
     .form-fields{display:flex;flex-direction:column;gap:16px;}
@@ -352,91 +427,49 @@ export default function ShortVariant({ variantId = "short_variant" }) {
 
         <main style={{ overflowX: "hidden" }}>
           {/* HERO */}
-            <section style={{ position: "relative", zIndex: 1, padding: "clamp(15px,2.78vw,40px) clamp(16px,4vw,48px) clamp(40px,5vw,64px)", overflow: "hidden" }}>
+            <section style={{ position: "relative", zIndex: 1, padding: "clamp(15px,2.78vw,40px) clamp(16px,4vw,48px) clamp(40px,5vw,64px)" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
               <div className="hero-heading-wrap">
-                <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: T.tagInfoBg, border: `1px solid ${T.tagInfoBorder}`, borderRadius: 99, padding: "8px 20px", marginBottom: 18, fontSize: 13, fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase", color: T.tagInfoColor }}>
+                  {/* <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: T.tagInfoBg, border: `1px solid ${T.tagInfoBorder}`, borderRadius: 99, padding: "8px 20px", marginBottom: 18, fontSize: 13, fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase", color: T.tagInfoColor }}>
                   <Home size={16} strokeWidth={2.2} />
                   Platforma dla ubezpieczenia wynajmującego
-                </div>
+                </div> */}
                 <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5.5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 16, color: T.textPrimary }}>
                     <span style={{ color: T.info }}>Serwis</span> ochrony najmu mieszkań
                 </h1>
-                <p style={{ color: T.textSecondary, fontSize: "clamp(15px,2vw,20px)", lineHeight: 1.55, maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
-                  Podpisz ekspercką umowę najmu z RentStandard i zyskaj dostęp do 5 poziomów ochrony najmu na korzystnych warunkach
+                  <p style={{ color: T.textSecondary, fontSize: "clamp(15px,2vw,20px)", lineHeight: 1.55, maxWidth: 700, marginLeft: "auto", marginRight: "auto" }}>
+                    Zyskaj dostęp do ekspercką umowę najmu z RentStandard i dołącz sie do 5 poziomów ochrony najmu na korzystnych warunkach
                 </p>
               </div>
 
-              {/* Two-column: theses + infographic */}
-              <div className="hero-split">
-                <div className="hero-split-left">
-                  <div className="hero-theses-card" style={{
-                    textAlign: "left", height: "100%",
-                    background: T.bentoCtaBg, border: `1px solid ${T.bentoCtaBorder}`,
-                    borderRadius: 20, padding: "28px 32px", position: "relative", overflow: "hidden",
-                    backdropFilter: "blur(12px)", boxShadow: `0 8px 40px ${T.bentoGlow}`,
-                    display: "flex", flexDirection: "column", justifyContent: "center",
-                  }}>
-                    <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 4, background: `linear-gradient(180deg,${T.info},${T.cta})`, borderRadius: "20px 0 0 20px" }} />
+                <div className="hero-columns">
+                  {/* Left — 5 levels */}
+                  <div className="hero-col-left">
+                    <div style={{ marginBottom: 20, paddingLeft: 68 }}>
+                      <div className="tag-info" style={{ display: "inline-flex", fontSize: 18, padding: "8px 18px", gap: 10 }}>
+                        <Shield size={20} /> 5 poziomów ochrony wynajmującego
+                      </div>
+                    </div>
+                    <div className="hero-levels">
                     {[
-                      {
-                        title: "Ekspercka i wykonalna umowa najmu oraz podpis elektroniczny",
-                        text: "Zweryfikowana w praktyce sądowej, opracowana przez prawników z 11-letnim doświadczeniem w najmie",
-                      },
-                      {
-                        title: "Ubezpieczenie",
-                        text: "Specjalne polisy ubezpieczeniowe dla najmu na korzystnych warunkach",
-                      },
-                      {
-                        title: "Najem okazjonalny",
-                        text: "Szybkie przygotowanie dokumentów do zawarcia najmu okazjonalnego online",
-                      },
-                      {
-                        title: "Mediacja",
-                        text: "W przypadku konfliktu nasi profesjonalni mediatorzy pomogą polubownie rozwiązać spór bez sądu, w możliwie najkrótszym czasie",
-                      },
-                      {
-                        title: "Wsparcie prawne",
-                        text: "Nasi doświadczeni prawnicy w możliwie najkrótszym czasie przeprowadzą niezbędne procedury sądowe",
-                      },
+                        { title: "Ekspercka i wykonalna umowa najmu oraz podpis elektroniczny", desc: "Zweryfikowana w praktyce sądowej, opracowana przez prawników z 11-letnim doświadczeniem w najmie. Podpis elektroniczny." },
+                        { title: "Ubezpieczenie", desc: "Specjalne polisy ubezpieczeniowe dla najmu na korzystnych warunkach — ochrona przed szkodami i brakiem płatności." },
+                        { title: "Najem okazjonalny", desc: "Szybkie przygotowanie dokumentów do zawarcia najmu okazjonalnego online — uproszczona eksmisja nierzetelnego najemcy." },
+                        { title: "Mediacja", desc: "Profesjonalni mediatorzy pomogą polubownie rozwiązać spór bez sądu, w możliwie najkrótszym czasie." },
+                        { title: "Wsparcie prawne", desc: "Doświadczeni prawnicy przeprowadzą niezbędne procedury sądowe, chroniąc Twoje interesy." },
                     ].map((item, i) => (
-                      <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "8px 0" }}>
-                        <span
-                          style={{
-                            flexShrink: 0,
-                            width: 22,
-                            height: 22,
-                            borderRadius: "999px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            fontSize: 14,
-                            fontWeight: 700,
-                            color: isDark ? T.textSecondary : T.cta,
-                            background: isDark ? "rgba(15,118,110,0.25)" : "rgba(15,118,110,0.08)",
-                            border: `1px solid ${T.ctaBorder}`,
-                            marginTop: 2,
-                          }}
-                        >
-                          {i + 1}
-                        </span>
-                        <span style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                          <span style={{ color: isDark ? T.cardLineHi : T.textPrimary, fontSize: "clamp(16px,1.4vw,20px)", fontWeight: 800, lineHeight: 1.2 }}>
-                            {item.title}
-                          </span>
-                          <span style={{ color: isDark ? T.cardLineHi : T.textPrimary, fontSize: "clamp(13px,1.6vw,15px)", lineHeight: 1.6 }}>
-                            {item.text}
-                          </span>
-                        </span>
+                      <div key={i} className="hero-level-item">
+                        <div className="hero-level-num">{i + 1}</div>
+                        <div className="hero-level-label">{item.title}</div>
+                        <div className="hero-level-tooltip">{item.desc}</div>
                       </div>
                     ))}
                   </div>
                 </div>
-                <div className="hero-split-right">
-                  <img
-                    src={isDark ? structureDarkImg : structureLightImg}
-                    alt="Infografika przedstawiająca 6 poziomów ochrony najmu: umowa, weryfikacja, podpis, mediacja, wsparcie prawne i ubezpieczenie"
-                  />
+
+                  {/* Right — problem cloud */}
+                  <div className="hero-col-right">
+                    <ProblemCloud />
                 </div>
               </div>
 
