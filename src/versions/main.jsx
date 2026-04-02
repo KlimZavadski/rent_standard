@@ -173,7 +173,7 @@ function ProblemCloud() {
     const dx = p.left - h.left;
     const dy = p.top - h.top;
     const d = Math.sqrt(dx * dx + dy * dy) || 1;
-    const mag = Math.min(22, 400 / d);
+    const mag = Math.min(52, 920 / d);
     return { x: Math.round((dx / d) * mag), y: Math.round((dy / d) * mag) };
   };
 
@@ -186,7 +186,7 @@ function ProblemCloud() {
         const push = isOther ? getPush(i, hovered) : null;
         const a = cloudAccentStyle(T, accent, isActive);
         const zBase = tier === "center" ? 12 : tier === "ring" ? 6 : 2;
-        const scale = isActive ? 1.08 : push ? 0.94 : 1;
+        const scale = isActive ? 1.08 : push ? 0.88 : 1;
         const driftClass = tier === "fringe" ? `tag-drift-sm-${drift}` : `tag-drift-${drift}`;
 
         return (
@@ -335,8 +335,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     .hero-level-label{font-size:22px;font-weight:700;color:${T.textPrimary};line-height:1.3;}
     .hero-level-tooltip{position:absolute;right:0;top:calc(100% + 4px);transform:translateY(-4px);opacity:0;pointer-events:none;transition:opacity 0.22s,transform 0.22s;background:${T.bg};border:1px solid ${T.bentoNoneBorder};border-radius:12px;padding:12px 16px;font-size:13px;line-height:1.5;color:${T.textSecondary};width:50%;box-shadow:0 12px 32px rgba(0,0,0,0.14);z-index:20;text-align:left;font-weight:400;}
     .hero-level-item:hover .hero-level-tooltip{opacity:1;transform:translateY(0);pointer-events:auto;}
-    @media(max-width:850px){.short-cards{grid-template-columns:1fr!important;}.hero-columns{flex-direction:column;}.hero-col-right{align-items:center;width:100%;}.tag-cloud--word{min-height:clamp(275px,76vw,380px);max-width:min(100%,420px);padding:0 4px;}}
-    @media(max-width:500px){.tag-cloud--word{min-height:clamp(255px,80vw,340px);}}
+    @media(max-width:850px){.short-cards{grid-template-columns:1fr!important;}.hero-columns{flex-direction:column;}.hero-col-right{display:none!important;}}
     .hero-trust-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:clamp(12px,2vw,20px);width:100%;max-width:1100px;margin:28px auto 0;}
     .hero-trust-left{grid-column:1;grid-row:1;justify-self:start;display:flex;flex-direction:column;gap:12px;align-items:center;min-width:0;}
     .hero-trust-row .cta-btn{grid-column:2;grid-row:1;justify-self:center;}
