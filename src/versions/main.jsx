@@ -356,7 +356,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
               <div className="hero-heading-wrap">
                 <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5.5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 16, color: T.textPrimary }}>
-                  <span style={{ color: T.info }}>Serwis</span> ochrony umowy najmu
+                    <span style={{ color: T.info }}>Serwis</span> ochrony najmu mieszkań
                 </h1>
                 <p style={{ color: T.textSecondary, fontSize: "clamp(15px,2vw,20px)", lineHeight: 1.55, maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
                   Podpisz ekspercką umowę najmu z RentStandard i zyskaj dostęp do 5 poziomów ochrony najmu na korzystnych warunkach
