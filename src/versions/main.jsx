@@ -355,6 +355,10 @@ export default function ShortVariant({ variantId = "short_variant" }) {
             <section style={{ position: "relative", zIndex: 1, padding: "clamp(15px,2.78vw,40px) clamp(16px,4vw,48px) clamp(40px,5vw,64px)", overflow: "hidden" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
               <div className="hero-heading-wrap">
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: T.tagInfoBg, border: `1px solid ${T.tagInfoBorder}`, borderRadius: 99, padding: "8px 20px", marginBottom: 18, fontSize: 13, fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase", color: T.tagInfoColor }}>
+                  <Home size={16} strokeWidth={2.2} />
+                  Platforma dla ubezpieczenia wynajmującego
+                </div>
                 <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5.5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 16, color: T.textPrimary }}>
                     <span style={{ color: T.info }}>Serwis</span> ochrony najmu mieszkań
                 </h1>
