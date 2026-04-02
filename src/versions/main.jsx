@@ -4,7 +4,8 @@ import {
   Shield, ShieldCheck, CheckCircle, ArrowRight, Lock,
   Phone, Mail, User, Home, X,
   Scale, ChevronRight, Sun, Moon, Check,
-  FileText, Handshake, Award, Users
+  FileText, FilePenLine, Handshake, Award, Users,
+  Key, MessagesSquare, Gavel
 } from "lucide-react";
 import { getThemesForVariant, ThemeCtx, useT } from "../theme.js";
 import { LANDING_VARIANTS } from "../landingVariants.js";
@@ -231,10 +232,11 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     .problem-pill{display:inline-flex;align-items:center;gap:8px;border-radius:20px;padding:10px 16px;font-size:13px;font-weight:500;line-height:1.3;cursor:default;user-select:none;max-width:200px;transition:transform 0.5s cubic-bezier(.4,0,.2,1),box-shadow 0.35s ease,border-color 0.3s ease,z-index 0s;}
     .hero-levels{display:flex;flex-direction:column;gap:0;position:relative;padding-left:0;}
     .hero-levels::before{content:'';position:absolute;left:33px;top:28px;bottom:28px;width:2px;background:${T.ctaBorder};z-index:0;}
-    .hero-level-item{position:relative;display:flex;align-items:center;gap:14px;padding:8px 14px;border-radius:14px;cursor:default;transition:background 0.25s,transform 0.25s,box-shadow 0.25s;z-index:1;min-height:calc(22px * 1.3 * 2 + 16px);}
+    .hero-level-item{position:relative;display:flex;align-items:center;gap:14px;padding:8px 14px;border-radius:14px;cursor:default;transition:background 0.25s,transform 0.25s,box-shadow 0.25s;z-index:1;min-height:calc(22px * 1.3 * 2 + 16px);width:90%;max-width:90%;align-self:flex-start;}
     .hero-level-item:hover{background:${T.bentoCtaBg};transform:translateX(4px);box-shadow:0 8px 24px rgba(0,0,0,0.08);z-index:2;}
-    .hero-level-num{position:relative;z-index:1;width:40px;height:40px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;flex-shrink:0;color:${T.cta};background:color-mix(in srgb,${T.cta} 14%,${T.bg});border:1.5px solid ${T.ctaBorder};transition:all 0.25s;}
-    .hero-level-item:hover .hero-level-num{background:${T.cta};color:#fff;border-color:${T.cta};}
+    .hero-level-icon{position:relative;z-index:1;width:40px;height:40px;border-radius:99px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:${T.textPrimary};background:color-mix(in srgb,${T.cta} 14%,${T.bg});border:1.5px solid ${T.ctaBorder};transition:all 0.25s;}
+    .hero-level-icon svg{flex-shrink:0;}
+    .hero-level-item:hover .hero-level-icon{background:${T.cta};color:#fff;border-color:${T.cta};}
     .hero-level-label{font-size:22px;font-weight:700;color:${T.textPrimary};line-height:1.3;}
     .hero-level-tooltip{position:absolute;right:0;top:calc(100% + 4px);transform:translateY(-4px);opacity:0;pointer-events:none;transition:opacity 0.22s,transform 0.22s;background:${T.bg};border:1px solid ${T.bentoNoneBorder};border-radius:12px;padding:12px 16px;font-size:13px;line-height:1.5;color:${T.textSecondary};width:50%;box-shadow:0 12px 32px rgba(0,0,0,0.14);z-index:20;text-align:left;font-weight:400;}
     .hero-level-item:hover .hero-level-tooltip{opacity:1;transform:translateY(0);pointer-events:auto;}
@@ -470,22 +472,33 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                   {/* Left — 5 levels */}
                   <div className="hero-col-left">
                     <div style={{ marginBottom: 20, paddingLeft: 68 }}>
-                      <div className="tag-info" style={{ display: "inline-flex", fontSize: 18, padding: "8px 18px", gap: 10 }}>
+                      <div
+                        className="tag-info"
+                        style={{
+                          display: "inline-flex",
+                          fontSize: 18,
+                          padding: "8px 18px",
+                          gap: 10,
+                          boxShadow: `0 10px 32px ${isDark ? "rgba(0,0,0,0.35)" : "rgba(21,54,136,0.14)"}, 0 2px 10px ${isDark ? "rgba(0,0,0,0.2)" : "rgba(15,23,42,0.06)"}`,
+                        }}
+                      >
                         <Shield size={20} /> 5 poziomów ochrony wynajmującego
                       </div>
                     </div>
                     <div className="hero-levels">
                     {[
-                        { title: "Ekspercka i wykonalna umowa najmu oraz podpis elektroniczny", desc: "Zweryfikowana w praktyce sądowej, opracowana przez prawników z 11-letnim doświadczeniem w najmie. Podpis elektroniczny." },
-                        { title: "Ubezpieczenie", desc: "Specjalne polisy ubezpieczeniowe dla najmu na korzystnych warunkach — ochrona przed szkodami i brakiem płatności." },
-                        { title: "Najem okazjonalny", desc: "Szybkie przygotowanie dokumentów do zawarcia najmu okazjonalnego online — uproszczona eksmisja nierzetelnego najemcy." },
-                        { title: "Mediacja", desc: "Profesjonalni mediatorzy pomogą polubownie rozwiązać spór bez sądu, w możliwie najkrótszym czasie." },
-                        { title: "Wsparcie prawne", desc: "Doświadczeni prawnicy przeprowadzą niezbędne procedury sądowe, chroniąc Twoje interesy." },
-                    ].map((item, i) => (
+                        { Icon: FilePenLine, title: "Ekspercka i wykonalna umowa najmu oraz podpis elektroniczny", desc: "Zweryfikowana w praktyce sądowej, opracowana przez prawników z 11-letnim doświadczeniem w najmie. Podpis elektroniczny." },
+                        { Icon: Shield, title: "Ubezpieczenie", desc: "Specjalne polisy ubezpieczeniowe dla najmu na korzystnych warunkach — ochrona przed szkodami i brakiem płatności." },
+                        { Icon: Key, title: "Najem okazjonalny", desc: "Szybkie przygotowanie dokumentów do zawarcia najmu okazjonalnego online — uproszczona eksmisja nierzetelnego najemcy." },
+                        { Icon: MessagesSquare, title: "Mediacja", desc: "Profesjonalni mediatorzy pomogą polubownie rozwiązać spór bez sądu, w możliwie najkrótszym czasie." },
+                        { Icon: Gavel, title: "Wsparcie prawne", desc: "Doświadczeni prawnicy przeprowadzą niezbędne procedury sądowe, chroniąc Twoje interesy." },
+                      ].map(({ Icon, title, desc }, i) => (
                       <div key={i} className="hero-level-item">
-                        <div className="hero-level-num">{i + 1}</div>
-                        <div className="hero-level-label">{item.title}</div>
-                        <div className="hero-level-tooltip">{item.desc}</div>
+                          <div className="hero-level-icon" aria-hidden>
+                            <Icon size={20} strokeWidth={2.1} />
+                          </div>
+                          <div className="hero-level-label">{title}</div>
+                          <div className="hero-level-tooltip">{desc}</div>
                       </div>
                     ))}
                   </div>
