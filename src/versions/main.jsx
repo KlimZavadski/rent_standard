@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Shield, ShieldCheck, CheckCircle, ArrowRight, Lock,
-  Phone, Mail, User, Home, X,
+  Phone, Mail, User, Home,
   Scale, ChevronRight, Sun, Moon, Check,
   FileText, FilePenLine, Handshake, Award, Users,
   Key, MessagesSquare, Gavel
@@ -51,78 +51,160 @@ function BentoCard({ children, style = {}, accent = "none" }) {
   );
 }
 
+const CENTER_PROBLEM_TEXT = "Szkody są, ale trudno je udowodnić?";
+
+const ALL_PROBLEM_LINES = [
+  "Po najemcy musisz robić remont za własne pieniądze?",
+  "Najemca nie płaci, a Ty nic nie możesz zrobić?",
+  "Umowa jest, ale eksmisja w praktyce niemożliwa?",
+  "Konflikt = sąd, koszty i miesiące czekania?",
+  CENTER_PROBLEM_TEXT,
+  "Kaucja nie pokrywa realnych strat?",
+  "Wynajem mieszkania zamienia się w drugą pracę?",
+  "Umowa z internetu nie chroni Cię przed stratami?",
+];
+
+/** Short echo labels — outer density, word-cloud style (jak na referencji). */
+const FRINGE_LABELS = [
+  "Remont na koszt najemcy?",
+  "Brak zapłaty od najemcy?",
+  "Eksmisja niemożliwa?",
+  "Trudno udowodnić szkody?",
+  "Wynajem jak druga praca?",
+  "Konflikt, sąd, koszty?",
+  "Kaucja nie pokryje strat?",
+  "Umowa z internetu?",
+];
+
+const CLOUD_ACCENTS = ["warn", "info", "cta"];
+
+function ellipticalCloudPos(angleDeg, rxPct, ryPct, jitterDeg = 0) {
+  const a = ((angleDeg + jitterDeg) * Math.PI) / 180;
+  return {
+    left: 50 + rxPct * Math.cos(a),
+    top: 50 + ryPct * Math.sin(a),
+  };
+}
+
+function buildProblemCloudEntries() {
+  const others = ALL_PROBLEM_LINES.filter((t) => t !== CENTER_PROBLEM_TEXT);
+  for (let i = others.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [others[i], others[j]] = [others[j], others[i]];
+  }
+  const spin = Math.random() * 360;
+  const entries = [];
+
+  const nFringe = 16;
+  for (let i = 0; i < nFringe; i++) {
+    const base = (360 / nFringe) * i + spin * 0.65;
+    const jitter = (Math.random() - 0.5) * 18;
+    const { left, top } = ellipticalCloudPos(base + jitter, 47, 43, 0);
+    entries.push({
+      id: `fringe-${i}`,
+      text: FRINGE_LABELS[i % FRINGE_LABELS.length],
+      left,
+      top,
+      tier: "fringe",
+      accent: CLOUD_ACCENTS[i % 3],
+      drift: i % 3,
+    });
+  }
+
+  others.forEach((text, i) => {
+    const angle = -90 + (360 / 7) * i + spin + (Math.random() - 0.5) * 8;
+    const { left, top } = ellipticalCloudPos(angle, 30, 27, 0);
+    entries.push({
+      id: `ring-${i}`,
+      text,
+      left,
+      top,
+      tier: "ring",
+      accent: CLOUD_ACCENTS[(i + 1) % 3],
+      drift: i % 3,
+    });
+  });
+
+  entries.push({
+    id: "center",
+    text: CENTER_PROBLEM_TEXT,
+    left: 50,
+    top: 50,
+    tier: "center",
+    accent: "info",
+    drift: 1,
+  });
+
+  return entries;
+}
+
+function cloudAccentStyle(T, accent, isActive) {
+  const map = {
+    warn: {
+      bg: `color-mix(in srgb, ${T.warn} 22%, ${T.bg})`,
+      border: isActive ? T.warn : T.warnBorder,
+      color: T.warn,
+      glow: T.warnBorder,
+    },
+    info: {
+      bg: `color-mix(in srgb, ${T.info} 22%, ${T.bg})`,
+      border: isActive ? T.info : T.infoBorder,
+      color: T.info,
+      glow: T.infoBorder,
+    },
+    cta: {
+      bg: `color-mix(in srgb, ${T.cta} 22%, ${T.bg})`,
+      border: isActive ? T.cta : T.ctaBorder,
+      color: T.cta,
+      glow: T.ctaBorder,
+    },
+  };
+  return map[accent] || map.warn;
+}
+
 function ProblemCloud() {
   const T = useT();
   const [hovered, setHovered] = useState(null);
-  const CENTER_PROBLEM = "Szkody są, ale trudno je udowodnić?";
-  const ALL_PROBLEMS = [
-    "Po najemcy musisz robić remont za własne pieniądze?",
-    "Najemca nie płaci, a Ty nic nie możesz zrobić?",
-    "Umowa jest, ale eksmisja w praktyce niemożliwa?",
-    "Konflikt = sąd, koszty i miesiące czekania?",
-    CENTER_PROBLEM,
-    "Kaucja nie pokrywa realnych strat?",
-    "Wynajem mieszkania zamienia się w drugą pracę?",
-    "Umowa z internetu nie chroni Cię przed stratami?",
-  ];
-  const OUTER_POSITIONS = [
-    { left: "80%", top: "20%" },
-    { left: "88%", top: "50%" },
-    { left: "76%", top: "78%" },
-    { left: "46%", top: "92%" },
-    { left: "20%", top: "76%" },
-    { left: "10%", top: "46%" },
-    { left: "24%", top: "18%" },
-  ];
-  const CENTER_POS = { left: "50%", top: "50%" };
-  const [cloudEntries] = useState(() => {
-    const others = ALL_PROBLEMS.filter((t) => t !== CENTER_PROBLEM);
-    for (let i = others.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [others[i], others[j]] = [others[j], others[i]];
-    }
-    const posOffset = Math.floor(Math.random() * OUTER_POSITIONS.length);
-    const entries = others.map((text, i) => ({
-      text,
-      pos: OUTER_POSITIONS[(i + posOffset) % OUTER_POSITIONS.length],
-    }));
-    entries.push({ text: CENTER_PROBLEM, pos: CENTER_POS });
-    return entries;
-  });
-  const pillBg = `color-mix(in srgb, ${T.warn} 14%, ${T.bg})`;
+  const [cloudEntries] = useState(buildProblemCloudEntries);
+
   const getPush = (idx, hovIdx) => {
-    const p = cloudEntries[idx].pos;
-    const h = cloudEntries[hovIdx].pos;
-    const dx = parseFloat(p.left) - parseFloat(h.left);
-    const dy = parseFloat(p.top) - parseFloat(h.top);
+    const p = cloudEntries[idx];
+    const h = cloudEntries[hovIdx];
+    const dx = p.left - h.left;
+    const dy = p.top - h.top;
     const d = Math.sqrt(dx * dx + dy * dy) || 1;
     const mag = Math.min(22, 400 / d);
     return { x: Math.round((dx / d) * mag), y: Math.round((dy / d) * mag) };
   };
+
   return (
-    <div className="tag-cloud">
-      {cloudEntries.map(({ text, pos }, i) => {
-        const isCenter = text === CENTER_PROBLEM;
+    <div className="tag-cloud tag-cloud--word">
+      {cloudEntries.map((entry, i) => {
+        const { id, text, left, top, tier, accent, drift } = entry;
         const isActive = hovered === i;
         const isOther = hovered !== null && !isActive;
         const push = isOther ? getPush(i, hovered) : null;
+        const a = cloudAccentStyle(T, accent, isActive);
+        const zBase = tier === "center" ? 12 : tier === "ring" ? 6 : 2;
+        const scale = isActive ? 1.08 : push ? 0.94 : 1;
+        const driftClass = tier === "fringe" ? `tag-drift-sm-${drift}` : `tag-drift-${drift}`;
+
         return (
-          <div key={text} className="tag-cloud-pos" style={{ left: pos.left, top: pos.top }}>
-            <div className={`tag-drift-${i % 3}`} style={{ animationPlayState: hovered !== null ? "paused" : "running" }}>
+          <div key={id} className="tag-cloud-pos" style={{ left: `${left}%`, top: `${top}%` }}>
+            <div className={driftClass} style={{ animationPlayState: hovered !== null ? "paused" : "running" }}>
               <div
                 onMouseEnter={() => setHovered(i)}
                 onMouseLeave={() => setHovered(null)}
-                className="problem-pill"
+                className={`problem-pill problem-pill--${tier}`}
                 style={{
-                  background: pillBg,
-                  border: `1.5px solid ${isActive ? T.warn : T.warnBorder}`,
-                  color: T.warn,
-                  transform: isActive ? "scale(1.08)" : push ? `translate(${push.x}px,${push.y}px) scale(0.96)` : "scale(1)",
-                  zIndex: isActive ? 10 : isCenter ? 5 : 1,
-                  boxShadow: isActive ? `0 8px 28px ${T.warnBorder}` : "0 2px 8px rgba(0,0,0,0.04)",
+                  background: a.bg,
+                  border: `1.5px solid ${a.border}`,
+                  color: a.color,
+                  transform: push ? `translate(${push.x}px,${push.y}px) scale(${scale})` : `scale(${scale})`,
+                  zIndex: isActive ? 20 : zBase + (i % 3),
+                  boxShadow: isActive ? `0 10px 32px ${a.glow}` : "0 1px 4px rgba(0,0,0,0.06)",
                 }}
               >
-                <X size={14} strokeWidth={2.5} style={{ flexShrink: 0 }} />
                 {text}
               </div>
             </div>
@@ -211,6 +293,8 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     input:focus{border-color:${T.info};background:${T.inputFocusBg};}
     input::placeholder{color:${T.inputPlaceholder};}
     .tag-info{display:inline-flex;align-items:center;gap:6px;background:${T.tagInfoBg};border:1px solid ${T.tagInfoBorder};border-radius:99px;padding:4px 12px;color:${T.tagInfoColor};font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
+    .hero-protection-tag{font-size:18px;padding:8px 18px;gap:10px;letter-spacing:.03em;}
+    @media(max-width:600px){.hero-protection-tag{font-size:12.5px;padding:6px 12px;gap:6px;letter-spacing:.02em;}.hero-protection-tag svg{width:16px!important;height:16px!important;flex-shrink:0;}}
     .short-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
     .hero-heading-wrap{text-align:center;margin-bottom:40px;}
     @media(max-width:850px){.hero-heading-wrap{margin-bottom:20px;}}
@@ -222,14 +306,25 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     .hero-problems{display:flex;flex-direction:column;gap:12px;}
     .hero-problem-card{display:flex;align-items:center;gap:10px;background:${T.warnBg};border:1px solid ${T.warnBorder};border-radius:14px;padding:14px 20px;color:${T.warn};font-size:15px;font-weight:400;line-height:1.35;}
     .tag-cloud{position:relative;width:100%;min-height:340px;}
-    .tag-cloud-pos{position:absolute;transform:translate(-50%,-50%);}
+    .tag-cloud--word{min-height:clamp(300px,52vw,400px);max-width:min(100%,440px);margin-left:auto;margin-right:auto;overflow:visible;}
+    .tag-cloud-pos{position:absolute;transform:translate(-50%,-50%);max-width:96%;}
     .tag-drift-0{animation:drift0 6s ease-in-out infinite;}
     .tag-drift-1{animation:drift1 7.2s ease-in-out infinite;}
     .tag-drift-2{animation:drift2 5.5s ease-in-out infinite;}
+    .tag-drift-sm-0{animation:drift-sm0 6.8s ease-in-out infinite;}
+    .tag-drift-sm-1{animation:drift-sm1 7.5s ease-in-out infinite;}
+    .tag-drift-sm-2{animation:drift-sm2 5.9s ease-in-out infinite;}
     @keyframes drift0{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(5.75px,-6.9px) rotate(0.805deg);}66%{transform:translate(-3.45px,4.6px) rotate(-0.46deg);}}
     @keyframes drift1{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(-5.75px,4.6px) rotate(-0.575deg);}66%{transform:translate(4.6px,-4.6px) rotate(0.345deg);}}
     @keyframes drift2{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(3.45px,5.75px) rotate(0.46deg);}66%{transform:translate(-4.6px,-3.45px) rotate(-0.69deg);}}
-    .problem-pill{display:inline-flex;align-items:center;gap:8px;border-radius:20px;padding:10px 16px;font-size:13px;font-weight:500;line-height:1.3;cursor:default;user-select:none;max-width:200px;transition:transform 0.5s cubic-bezier(.4,0,.2,1),box-shadow 0.35s ease,border-color 0.3s ease,z-index 0s;}
+    @keyframes drift-sm0{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(4.7px,-5.65px) rotate(0.55deg);}66%{transform:translate(-2.8px,3.75px) rotate(-0.32deg);}}
+    @keyframes drift-sm1{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(-4.7px,3.75px) rotate(-0.4deg);}66%{transform:translate(3.75px,-3.75px) rotate(0.24deg);}}
+    @keyframes drift-sm2{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(2.8px,4.7px) rotate(0.32deg);}66%{transform:translate(-3.75px,-2.8px) rotate(-0.48deg);}}
+    .tag-cloud--word .problem-pill{font-family:"Inter Tight",Georgia,"Times New Roman",serif;letter-spacing:-0.02em;text-align:left;hyphens:auto;-webkit-hyphens:auto;}
+    .problem-pill{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:999px;line-height:1.25;cursor:default;user-select:none;min-width:150px;text-align:center;transition:transform 0.5s cubic-bezier(.4,0,.2,1),box-shadow 0.35s ease,border-color 0.3s ease,z-index 0s;}
+    .problem-pill--center{gap:8px;padding:clamp(10px,2.2vw,14px) clamp(12px,2.8vw,18px);font-size:clamp(11.5px,2.85vw,15px);font-weight:800;max-width:min(230px,90vw);text-wrap:balance;}
+    .problem-pill--ring{padding:8px 13px;font-size:clamp(10px,2.5vw,12.5px);font-weight:700;max-width:min(195px,82vw);text-wrap:balance;}
+    .problem-pill--fringe{padding:5px 9px;font-size:clamp(8px,2.15vw,10.5px);font-weight:700;max-width:min(200px,90vw);line-height:1.2;text-wrap:balance;}
     .hero-levels{display:flex;flex-direction:column;gap:0;position:relative;padding-left:0;}
     .hero-levels::before{content:'';position:absolute;left:33px;top:28px;bottom:28px;width:2px;background:${T.ctaBorder};z-index:0;}
     .hero-level-item{position:relative;display:flex;align-items:center;gap:14px;padding:8px 14px;border-radius:14px;cursor:default;transition:background 0.25s,transform 0.25s,box-shadow 0.25s;z-index:1;min-height:calc(22px * 1.3 * 2 + 16px);width:90%;max-width:90%;align-self:flex-start;}
@@ -240,8 +335,12 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     .hero-level-label{font-size:22px;font-weight:700;color:${T.textPrimary};line-height:1.3;}
     .hero-level-tooltip{position:absolute;right:0;top:calc(100% + 4px);transform:translateY(-4px);opacity:0;pointer-events:none;transition:opacity 0.22s,transform 0.22s;background:${T.bg};border:1px solid ${T.bentoNoneBorder};border-radius:12px;padding:12px 16px;font-size:13px;line-height:1.5;color:${T.textSecondary};width:50%;box-shadow:0 12px 32px rgba(0,0,0,0.14);z-index:20;text-align:left;font-weight:400;}
     .hero-level-item:hover .hero-level-tooltip{opacity:1;transform:translateY(0);pointer-events:auto;}
-    @media(max-width:850px){.short-cards{grid-template-columns:1fr!important;}.hero-columns{flex-direction:column;}.tag-cloud{position:static;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;min-height:auto;}.tag-cloud-pos{position:static;transform:none;}.problem-pill{max-width:none;}}
-    @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}.hero-trust-wrap{flex-direction:column;}}
+    @media(max-width:850px){.short-cards{grid-template-columns:1fr!important;}.hero-columns{flex-direction:column;}.hero-col-right{align-items:center;width:100%;}.tag-cloud--word{min-height:clamp(275px,76vw,380px);max-width:min(100%,420px);padding:0 4px;}}
+    @media(max-width:500px){.tag-cloud--word{min-height:clamp(255px,80vw,340px);}}
+    .hero-trust-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:clamp(12px,2vw,20px);width:100%;max-width:1100px;margin:28px auto 0;}
+    .hero-trust-left{grid-column:1;grid-row:1;justify-self:start;display:flex;flex-direction:column;gap:12px;align-items:center;min-width:0;}
+    .hero-trust-row .cta-btn{grid-column:2;grid-row:1;justify-self:center;}
+    @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}.hero-trust-row{display:flex;flex-direction:column;align-items:center;margin-top:24px;gap:20px;}.hero-trust-left{grid-column:auto;justify-self:center;width:100%;}.hero-trust-row .cta-btn{grid-column:auto;width:auto;}}
     .form-shield-img{flex-shrink:0;}
     .form-header-row{gap:40px;}
     .form-fields{display:flex;flex-direction:column;gap:16px;}
@@ -471,14 +570,11 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                 <div className="hero-columns">
                   {/* Left — 5 levels */}
                   <div className="hero-col-left">
-                    <div style={{ marginBottom: 20, paddingLeft: 68 }}>
+                    <div style={{ marginBottom: 20, paddingLeft: 18 }}>
                       <div
-                        className="tag-info"
+                        className="tag-info hero-protection-tag"
                         style={{
                           display: "inline-flex",
-                          fontSize: 18,
-                          padding: "8px 18px",
-                          gap: 10,
                           boxShadow: `0 10px 32px ${isDark ? "rgba(0,0,0,0.35)" : "rgba(21,54,136,0.14)"}, 0 2px 10px ${isDark ? "rgba(0,0,0,0.2)" : "rgba(15,23,42,0.06)"}`,
                         }}
                       >
@@ -510,13 +606,8 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                 </div>
               </div>
 
-              <div style={{ textAlign: "center" }}>
-                <button onClick={() => scrollToForm("hero")} className="cta-btn pulse-btn" style={{ padding: "18px 32px", fontSize: 18 }}>
-                  Dołącz do pilotażu <ArrowRight size={18} />
-                </button>
-
-                {/* Trust badges */}
-                <div style={{ marginTop: 28, display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }} className="hero-trust-wrap">
+              <div className="hero-trust-row">
+                <div className="hero-trust-left">
                   <div style={{ display: "flex", alignItems: "center", gap: 10, background: T.ctaDim, border: `1px solid ${T.ctaBorder}`, borderRadius: 99, padding: "8px 20px" }}>
                     <Users size={18} color={T.cta} />
                     <span style={{ fontSize: 20, fontWeight: 800, color: T.cta, fontFamily: "Inter Tight,sans-serif" }}>2 400+</span>
@@ -527,6 +618,9 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Scale size={12} /> RODO 100%</span>
                   </div>
                 </div>
+                <button type="button" onClick={() => scrollToForm("hero")} className="cta-btn pulse-btn" style={{ padding: "18px 32px", fontSize: 18 }}>
+                  Dołącz do pilotażu <ArrowRight size={18} />
+                </button>
               </div>
             </div>
           </section>
