@@ -53,54 +53,77 @@ function BentoCard({ children, style = {}, accent = "none" }) {
 function ProblemCloud() {
   const T = useT();
   const [hovered, setHovered] = useState(null);
+  const CENTER_PROBLEM = "Szkody są, ale trudno je udowodnić?";
   const ALL_PROBLEMS = [
     "Po najemcy musisz robić remont za własne pieniądze?",
     "Najemca nie płaci, a Ty nic nie możesz zrobić?",
     "Umowa jest, ale eksmisja w praktyce niemożliwa?",
     "Konflikt = sąd, koszty i miesiące czekania?",
-    "Szkody są, ale trudno je udowodnić?",
+    CENTER_PROBLEM,
     "Kaucja nie pokrywa realnych strat?",
     "Wynajem mieszkania zamienia się w drugą pracę?",
     "Umowa z internetu nie chroni Cię przed stratami?",
   ];
-  const [items] = useState(() => {
-    const a = [...ALL_PROBLEMS];
-    for (let i = a.length - 1; i > 0; i--) {
+  const OUTER_POSITIONS = [
+    { left: "80%", top: "20%" },
+    { left: "88%", top: "50%" },
+    { left: "76%", top: "78%" },
+    { left: "46%", top: "92%" },
+    { left: "20%", top: "76%" },
+    { left: "10%", top: "46%" },
+    { left: "24%", top: "18%" },
+  ];
+  const CENTER_POS = { left: "50%", top: "50%" };
+  const [cloudEntries] = useState(() => {
+    const others = ALL_PROBLEMS.filter((t) => t !== CENTER_PROBLEM);
+    for (let i = others.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
+      [others[i], others[j]] = [others[j], others[i]];
     }
-    return a;
+    const posOffset = Math.floor(Math.random() * OUTER_POSITIONS.length);
+    const entries = others.map((text, i) => ({
+      text,
+      pos: OUTER_POSITIONS[(i + posOffset) % OUTER_POSITIONS.length],
+    }));
+    entries.push({ text: CENTER_PROBLEM, pos: CENTER_POS });
+    return entries;
   });
+  const pillBg = `color-mix(in srgb, ${T.warn} 14%, ${T.bg})`;
   const getPush = (idx, hovIdx) => {
-    const diff = idx - hovIdx;
-    const xSign = diff % 2 === 0 ? -1 : 1;
-    const ySign = diff > 0 ? 1 : -1;
-    const dist = Math.max(8, 18 - Math.abs(diff) * 2);
-    return { x: xSign * dist, y: ySign * (dist * 0.7) };
+    const p = cloudEntries[idx].pos;
+    const h = cloudEntries[hovIdx].pos;
+    const dx = parseFloat(p.left) - parseFloat(h.left);
+    const dy = parseFloat(p.top) - parseFloat(h.top);
+    const d = Math.sqrt(dx * dx + dy * dy) || 1;
+    const mag = Math.min(22, 400 / d);
+    return { x: Math.round((dx / d) * mag), y: Math.round((dy / d) * mag) };
   };
   return (
     <div className="tag-cloud">
-      {items.map((text, i) => {
+      {cloudEntries.map(({ text, pos }, i) => {
+        const isCenter = text === CENTER_PROBLEM;
         const isActive = hovered === i;
         const isOther = hovered !== null && !isActive;
         const push = isOther ? getPush(i, hovered) : null;
         return (
-          <div key={text} className={`tag-drift-${i % 3}`} style={{ animationPlayState: hovered !== null ? "paused" : "running" }}>
-            <div
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
-              className="problem-pill"
-              style={{
-                background: T.warnBg,
-                border: `1.5px solid ${isActive ? T.warn : T.warnBorder}`,
-                color: T.warn,
-                transform: isActive ? "scale(1.08)" : push ? `translate(${push.x}px,${push.y}px) scale(0.96)` : "scale(1)",
-                opacity: isOther ? 0.4 : 1,
-                boxShadow: isActive ? `0 8px 28px ${T.warnBorder}` : "0 2px 8px rgba(0,0,0,0.04)",
-              }}
-            >
-              <X size={14} strokeWidth={2.5} style={{ flexShrink: 0 }} />
-              {text}
+          <div key={text} className="tag-cloud-pos" style={{ left: pos.left, top: pos.top }}>
+            <div className={`tag-drift-${i % 3}`} style={{ animationPlayState: hovered !== null ? "paused" : "running" }}>
+              <div
+                onMouseEnter={() => setHovered(i)}
+                onMouseLeave={() => setHovered(null)}
+                className="problem-pill"
+                style={{
+                  background: pillBg,
+                  border: `1.5px solid ${isActive ? T.warn : T.warnBorder}`,
+                  color: T.warn,
+                  transform: isActive ? "scale(1.08)" : push ? `translate(${push.x}px,${push.y}px) scale(0.96)` : "scale(1)",
+                  zIndex: isActive ? 10 : isCenter ? 5 : 1,
+                  boxShadow: isActive ? `0 8px 28px ${T.warnBorder}` : "0 2px 8px rgba(0,0,0,0.04)",
+                }}
+              >
+                <X size={14} strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                {text}
+              </div>
             </div>
           </div>
         );
@@ -197,14 +220,15 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     .hero-col-right{flex:1 1 40%;min-width:0;display:flex;flex-direction:column;gap:12px;}
     .hero-problems{display:flex;flex-direction:column;gap:12px;}
     .hero-problem-card{display:flex;align-items:center;gap:10px;background:${T.warnBg};border:1px solid ${T.warnBorder};border-radius:14px;padding:14px 20px;color:${T.warn};font-size:15px;font-weight:400;line-height:1.35;}
-    .tag-cloud{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding:10px 0;}
+    .tag-cloud{position:relative;width:100%;min-height:340px;}
+    .tag-cloud-pos{position:absolute;transform:translate(-50%,-50%);}
     .tag-drift-0{animation:drift0 6s ease-in-out infinite;}
     .tag-drift-1{animation:drift1 7.2s ease-in-out infinite;}
     .tag-drift-2{animation:drift2 5.5s ease-in-out infinite;}
-    @keyframes drift0{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(5px,-6px) rotate(0.7deg);}66%{transform:translate(-3px,4px) rotate(-0.4deg);}}
-    @keyframes drift1{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(-5px,4px) rotate(-0.5deg);}66%{transform:translate(4px,-4px) rotate(0.3deg);}}
-    @keyframes drift2{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(3px,5px) rotate(0.4deg);}66%{transform:translate(-4px,-3px) rotate(-0.6deg);}}
-    .problem-pill{display:inline-flex;align-items:center;gap:8px;border-radius:99px;padding:10px 18px;font-size:13.5px;font-weight:500;line-height:1.3;cursor:default;user-select:none;transition:transform 0.5s cubic-bezier(.4,0,.2,1),opacity 0.4s ease,box-shadow 0.35s ease,border-color 0.3s ease;}
+    @keyframes drift0{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(5.75px,-6.9px) rotate(0.805deg);}66%{transform:translate(-3.45px,4.6px) rotate(-0.46deg);}}
+    @keyframes drift1{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(-5.75px,4.6px) rotate(-0.575deg);}66%{transform:translate(4.6px,-4.6px) rotate(0.345deg);}}
+    @keyframes drift2{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(3.45px,5.75px) rotate(0.46deg);}66%{transform:translate(-4.6px,-3.45px) rotate(-0.69deg);}}
+    .problem-pill{display:inline-flex;align-items:center;gap:8px;border-radius:20px;padding:10px 16px;font-size:13px;font-weight:500;line-height:1.3;cursor:default;user-select:none;max-width:200px;transition:transform 0.5s cubic-bezier(.4,0,.2,1),box-shadow 0.35s ease,border-color 0.3s ease,z-index 0s;}
     .hero-levels{display:flex;flex-direction:column;gap:0;position:relative;padding-left:0;}
     .hero-levels::before{content:'';position:absolute;left:33px;top:28px;bottom:28px;width:2px;background:${T.ctaBorder};z-index:0;}
     .hero-level-item{position:relative;display:flex;align-items:center;gap:14px;padding:8px 14px;border-radius:14px;cursor:default;transition:background 0.25s,transform 0.25s,box-shadow 0.25s;z-index:1;min-height:calc(22px * 1.3 * 2 + 16px);}
@@ -214,7 +238,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     .hero-level-label{font-size:22px;font-weight:700;color:${T.textPrimary};line-height:1.3;}
     .hero-level-tooltip{position:absolute;right:0;top:calc(100% + 4px);transform:translateY(-4px);opacity:0;pointer-events:none;transition:opacity 0.22s,transform 0.22s;background:${T.bg};border:1px solid ${T.bentoNoneBorder};border-radius:12px;padding:12px 16px;font-size:13px;line-height:1.5;color:${T.textSecondary};width:50%;box-shadow:0 12px 32px rgba(0,0,0,0.14);z-index:20;text-align:left;font-weight:400;}
     .hero-level-item:hover .hero-level-tooltip{opacity:1;transform:translateY(0);pointer-events:auto;}
-    @media(max-width:850px){.short-cards{grid-template-columns:1fr!important;}.hero-columns{flex-direction:column;}}
+    @media(max-width:850px){.short-cards{grid-template-columns:1fr!important;}.hero-columns{flex-direction:column;}.tag-cloud{position:static;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;min-height:auto;}.tag-cloud-pos{position:static;transform:none;}.problem-pill{max-width:none;}}
     @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}.hero-trust-wrap{flex-direction:column;}}
     .form-shield-img{flex-shrink:0;}
     .form-header-row{gap:40px;}
