@@ -562,7 +562,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                     <span style={{ color: T.info }}>Serwis</span> ochrony najmu mieszkań
                 </h1>
                   <p style={{ color: T.textSecondary, fontSize: "clamp(15px,2vw,20px)", lineHeight: 1.55, maxWidth: 700, marginLeft: "auto", marginRight: "auto" }}>
-                    Zyskaj dostęp do ekspercką umowę najmu z RentStandard i dołącz sie do 5 poziomów ochrony najmu na korzystnych warunkach
+                    Zyskaj dostęp do eksperckiej umowy najmu z RentStandard i dołącz się z 5 poziomami ochrony najmu na korzystnych warunkach
                 </p>
               </div>
 
