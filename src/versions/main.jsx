@@ -78,6 +78,17 @@ const FRINGE_LABELS = [
 
 const CLOUD_ACCENTS = ["warn", "info", "cta"];
 
+/** Kolejność pod mobilną wstążkę (bez losowości jak w chmurze). */
+const PROBLEM_STRIP_LINES = [
+  CENTER_PROBLEM_TEXT,
+  ...ALL_PROBLEM_LINES.filter((t) => t !== CENTER_PROBLEM_TEXT),
+];
+
+function splitProblemStripRows(lines) {
+  const mid = Math.ceil(lines.length / 2);
+  return [lines.slice(0, mid), lines.slice(mid)];
+}
+
 function ellipticalCloudPos(angleDeg, rxPct, ryPct, jitterDeg = 0) {
   const a = ((angleDeg + jitterDeg) * Math.PI) / 180;
   return {
@@ -215,6 +226,50 @@ function ProblemCloud() {
   );
 }
 
+/** Tylko mobile: dwa rzędy chipów w jednym overflow-x (scroll zsynchronizowany). */
+function ProblemPainStrip() {
+  const T = useT();
+  const [rowTop, rowBottom] = splitProblemStripRows(PROBLEM_STRIP_LINES);
+
+  const renderChip = (text, i) => {
+    const accent = CLOUD_ACCENTS[i % CLOUD_ACCENTS.length];
+    const a = cloudAccentStyle(T, accent, false);
+    return (
+      <div
+        key={`${i}-${text}`}
+        role="listitem"
+        className="hero-problem-strip-chip"
+        style={{
+          background: a.bg,
+          border: `1.5px solid ${a.border}`,
+          color: a.color,
+          boxShadow: "0 1px 6px rgba(0,0,0,0.06)",
+        }}
+      >
+        {text}
+      </div>
+    );
+  };
+
+  return (
+    <div className="hero-problem-strip">
+      <p className="hero-problem-strip-kicker">Czy to brzmi znajomo?</p>
+      <div className="hero-problem-strip-outer">
+        <div className="hero-problem-strip-scroll" role="list">
+          <div className="hero-problem-strip-rows-sync">
+            <div className="hero-problem-strip-row">
+              {rowTop.map((text, j) => renderChip(text, j))}
+            </div>
+            <div className="hero-problem-strip-row">
+              {rowBottom.map((text, j) => renderChip(text, rowTop.length + j))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function FadeIn({ children, delay = 0 }) {
   const [ref, inView] = useInView();
   return (
@@ -321,7 +376,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     @keyframes drift-sm1{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(-4.7px,3.75px) rotate(-0.4deg);}66%{transform:translate(3.75px,-3.75px) rotate(0.24deg);}}
     @keyframes drift-sm2{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(2.8px,4.7px) rotate(0.32deg);}66%{transform:translate(-3.75px,-2.8px) rotate(-0.48deg);}}
     .tag-cloud--word .problem-pill{font-family:"Inter Tight",Georgia,"Times New Roman",serif;letter-spacing:-0.02em;text-align:left;hyphens:auto;-webkit-hyphens:auto;}
-    .problem-pill{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:999px;line-height:1.25;cursor:default;user-select:none;min-width:150px;text-align:center;transition:transform 0.5s cubic-bezier(.4,0,.2,1),box-shadow 0.35s ease,border-color 0.3s ease,z-index 0s;}
+    .problem-pill{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:20px;line-height:1.25;cursor:default;user-select:none;min-width:150px;text-align:center;transition:transform 0.5s cubic-bezier(.4,0,.2,1),box-shadow 0.35s ease,border-color 0.3s ease,z-index 0s;}
     .problem-pill--center{gap:8px;padding:clamp(10px,2.2vw,14px) clamp(12px,2.8vw,18px);font-size:clamp(11.5px,2.85vw,15px);font-weight:800;max-width:min(230px,90vw);text-wrap:balance;}
     .problem-pill--ring{padding:8px 13px;font-size:clamp(10px,2.5vw,12.5px);font-weight:700;max-width:min(195px,82vw);text-wrap:balance;}
     .problem-pill--fringe{padding:5px 9px;font-size:clamp(8px,2.15vw,10.5px);font-weight:700;max-width:min(200px,90vw);line-height:1.2;text-wrap:balance;}
@@ -335,7 +390,24 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     .hero-level-label{font-size:22px;font-weight:700;color:${T.textPrimary};line-height:1.3;}
     .hero-level-tooltip{position:absolute;right:0;top:calc(100% + 4px);transform:translateY(-4px);opacity:0;pointer-events:none;transition:opacity 0.22s,transform 0.22s;background:${T.bg};border:1px solid ${T.bentoNoneBorder};border-radius:12px;padding:12px 16px;font-size:13px;line-height:1.5;color:${T.textSecondary};width:50%;box-shadow:0 12px 32px rgba(0,0,0,0.14);z-index:20;text-align:left;font-weight:400;}
     .hero-level-item:hover .hero-level-tooltip{opacity:1;transform:translateY(0);pointer-events:auto;}
-    @media(max-width:850px){.short-cards{grid-template-columns:1fr!important;}.hero-columns{flex-direction:column;}.hero-col-right{display:none!important;}}
+    .hero-problem-strip{display:none;}
+    .hero-problem-strip-kicker{margin:0 0 10px;font-family:"Inter Tight",Georgia,"Times New Roman",serif;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:${T.textMuted};padding-left:2px;}
+    .hero-problem-strip-outer{position:relative;}
+    .hero-problem-strip-outer::before,.hero-problem-strip-outer::after{content:"";position:absolute;top:0;bottom:0;width:28px;z-index:2;pointer-events:none;}
+    .hero-problem-strip-outer::before{left:0;background:linear-gradient(to right,${T.bg},transparent);}
+    .hero-problem-strip-outer::after{right:0;background:linear-gradient(to left,${T.bg},transparent);}
+    .hero-problem-strip-scroll{overflow-x:auto;overflow-y:hidden;padding:8px 0 12px;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;scroll-padding-inline:var(--hero-pad-x,16px);scrollbar-width:none;-ms-overflow-style:none;touch-action:pan-x;}
+    .hero-problem-strip-scroll::-webkit-scrollbar{display:none;}
+    .hero-problem-strip-rows-sync{display:flex;flex-direction:column;gap:8px;width:max-content;max-width:none;padding-inline:var(--hero-pad-x,16px);box-sizing:content-box;}
+    .hero-problem-strip-row{display:flex;flex-wrap:nowrap;align-items:stretch;gap:10px;}
+    .hero-problem-strip-chip{flex:0 0 auto;max-width:min(280px,78vw);scroll-snap-align:start;padding:10px 14px;border-radius:20px;font-family:"Inter Tight",Georgia,"Times New Roman",serif;font-size:12.5px;font-weight:700;line-height:1.3;letter-spacing:-0.02em;text-wrap:balance;}
+    @media(max-width:850px){
+      .short-cards{grid-template-columns:1fr!important;}
+      .hero-columns{flex-direction:column;margin-bottom:20px;}
+      .hero-col-right{display:none!important;}
+      .hero-problem-strip{display:block;margin:0 0 16px;}
+      .hero-problem-strip-outer{margin-left:calc(-1 * var(--hero-pad-x, 16px));margin-right:calc(-1 * var(--hero-pad-x, 16px));width:calc(100% + 2 * var(--hero-pad-x, 16px));}
+    }
     .hero-trust-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:clamp(12px,2vw,20px);width:100%;max-width:1100px;margin:28px auto 0;}
     .hero-trust-left{grid-column:1;grid-row:1;justify-self:start;display:flex;flex-direction:column;gap:12px;align-items:center;min-width:0;}
     .hero-trust-row .cta-btn{grid-column:2;grid-row:1;justify-self:center;}
@@ -551,7 +623,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
 
         <main style={{ overflowX: "hidden" }}>
           {/* HERO */}
-            <section style={{ position: "relative", zIndex: 1, padding: "clamp(15px,2.78vw,40px) clamp(16px,4vw,48px) clamp(40px,5vw,64px)" }}>
+            <section style={{ position: "relative", zIndex: 1, padding: "clamp(15px,2.78vw,40px) clamp(16px,4vw,48px) clamp(40px,5vw,64px)", "--hero-pad-x": "clamp(16px, 4vw, 48px)" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
               <div className="hero-heading-wrap">
                   {/* <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: T.tagInfoBg, border: `1px solid ${T.tagInfoBorder}`, borderRadius: 99, padding: "8px 20px", marginBottom: 18, fontSize: 13, fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase", color: T.tagInfoColor }}>
@@ -602,8 +674,10 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                   {/* Right — problem cloud */}
                   <div className="hero-col-right">
                     <ProblemCloud />
-                </div>
+                  </div>
               </div>
+
+              <ProblemPainStrip />
 
               <div className="hero-trust-row">
                 <div className="hero-trust-left">
