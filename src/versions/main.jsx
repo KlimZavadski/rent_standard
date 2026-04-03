@@ -149,25 +149,32 @@ function buildProblemCloudEntries() {
   return entries;
 }
 
+/** Stonowane, „premium” — niski nasycenie, obramowania bliżej neutrali niż czysty warn/info/cta. */
 function cloudAccentStyle(T, accent, isActive) {
+  const bgTint = (c, pct) => `color-mix(in srgb, ${c} ${pct}%, ${T.bg})`;
+  const edge = (c, strong) =>
+    strong
+      ? `color-mix(in srgb, ${c} 38%, ${T.bentoNoneBorder})`
+      : `color-mix(in srgb, ${c} 14%, ${T.surfBorder})`;
+  const glowSoft = (c) => `color-mix(in srgb, ${c} 12%, transparent)`;
   const map = {
     warn: {
-      bg: `color-mix(in srgb, ${T.warn} 22%, ${T.bg})`,
-      border: isActive ? T.warn : T.warnBorder,
-      color: T.warn,
-      glow: T.warnBorder,
+      bg: bgTint(T.warn, 8),
+      border: isActive ? edge(T.warn, true) : edge(T.warn, false),
+      color: `color-mix(in srgb, ${T.warn} 52%, ${T.textSecondary})`,
+      glow: glowSoft(T.warn),
     },
     info: {
-      bg: `color-mix(in srgb, ${T.info} 22%, ${T.bg})`,
-      border: isActive ? T.info : T.infoBorder,
-      color: T.info,
-      glow: T.infoBorder,
+      bg: bgTint(T.info, 9),
+      border: isActive ? edge(T.info, true) : edge(T.info, false),
+      color: `color-mix(in srgb, ${T.info} 48%, ${T.textSecondary})`,
+      glow: glowSoft(T.info),
     },
     cta: {
-      bg: `color-mix(in srgb, ${T.cta} 22%, ${T.bg})`,
-      border: isActive ? T.cta : T.ctaBorder,
-      color: T.cta,
-      glow: T.ctaBorder,
+      bg: bgTint(T.cta, 10),
+      border: isActive ? edge(T.cta, true) : edge(T.cta, false),
+      color: `color-mix(in srgb, ${T.cta} 42%, ${T.textPrimary})`,
+      glow: glowSoft(T.cta),
     },
   };
   return map[accent] || map.warn;
