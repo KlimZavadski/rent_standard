@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Shield, ShieldCheck, CheckCircle, ArrowRight, Lock,
-  Phone, Mail, User, Home,
+  Shield, CheckCircle, ArrowRight, Lock,
+  Phone, Mail, User,
   Scale, ChevronRight, Sun, Moon, Check,
-  FileText, FilePenLine, Handshake, Award, Users,
-  Key, MessagesSquare, Gavel
+  FilePenLine, Gavel, AlertTriangle,
+  Camera, CreditCard,
+  ClipboardList, X as XIcon,
 } from "lucide-react";
 import { getThemesForVariant, ThemeCtx, useT } from "../theme.js";
 import { LANDING_VARIANTS } from "../landingVariants.js";
@@ -51,236 +52,40 @@ function BentoCard({ children, style = {}, accent = "none" }) {
   );
 }
 
-const CENTER_PROBLEM_TEXT = "Szkody są, ale trudno je udowodnić?";
-
-const ALL_PROBLEM_LINES = [
-  "Po najemcy musisz robić remont za własne pieniądze?",
-  "Najemca nie płaci, a Ty nic nie możesz zrobić?",
-  "Umowa jest, ale eksmisja w praktyce niemożliwa?",
-  "Konflikt = sąd, koszty i miesiące czekania?",
-  CENTER_PROBLEM_TEXT,
-  "Kaucja nie pokrywa realnych strat?",
-  "Wynajem mieszkania zamienia się w drugą pracę?",
-  "Umowa z internetu nie chroni Cię przed stratami?",
-];
-
-/** Short echo labels — outer density, word-cloud style (jak na referencji). */
-const FRINGE_LABELS = [
-  "Remont na koszt najemcy?",
-  "Brak zapłaty od najemcy?",
-  "Eksmisja niemożliwa?",
-  "Trudno udowodnić szkody?",
-  "Wynajem jak druga praca?",
-  "Konflikt, sąd, koszty?",
-  "Kaucja nie pokryje strat?",
-  "Umowa z internetu?",
-];
-
-const CLOUD_ACCENTS = ["warn", "info", "cta"];
-
-/** Kolejność pod mobilną wstążkę (bez losowości jak w chmurze). */
-const PROBLEM_STRIP_LINES = [
-  CENTER_PROBLEM_TEXT,
-  ...ALL_PROBLEM_LINES.filter((t) => t !== CENTER_PROBLEM_TEXT),
-];
-
-function splitProblemStripRows(lines) {
-  const mid = Math.ceil(lines.length / 2);
-  return [lines.slice(0, mid), lines.slice(mid)];
-}
-
-function ellipticalCloudPos(angleDeg, rxPct, ryPct, jitterDeg = 0) {
-  const a = ((angleDeg + jitterDeg) * Math.PI) / 180;
-  return {
-    left: 50 + rxPct * Math.cos(a),
-    top: 50 + ryPct * Math.sin(a),
-  };
-}
-
-function buildProblemCloudEntries() {
-  const others = ALL_PROBLEM_LINES.filter((t) => t !== CENTER_PROBLEM_TEXT);
-  for (let i = others.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [others[i], others[j]] = [others[j], others[i]];
-  }
-  const spin = Math.random() * 360;
-  const entries = [];
-
-  const nFringe = 16;
-  for (let i = 0; i < nFringe; i++) {
-    const base = (360 / nFringe) * i + spin * 0.65;
-    const jitter = (Math.random() - 0.5) * 18;
-    const { left, top } = ellipticalCloudPos(base + jitter, 47, 43, 0);
-    entries.push({
-      id: `fringe-${i}`,
-      text: FRINGE_LABELS[i % FRINGE_LABELS.length],
-      left,
-      top,
-      tier: "fringe",
-      accent: CLOUD_ACCENTS[i % 3],
-      drift: i % 3,
-    });
-  }
-
-  others.forEach((text, i) => {
-    const angle = -90 + (360 / 7) * i + spin + (Math.random() - 0.5) * 8;
-    const { left, top } = ellipticalCloudPos(angle, 30, 27, 0);
-    entries.push({
-      id: `ring-${i}`,
-      text,
-      left,
-      top,
-      tier: "ring",
-      accent: CLOUD_ACCENTS[(i + 1) % 3],
-      drift: i % 3,
-    });
-  });
-
-  entries.push({
-    id: "center",
-    text: CENTER_PROBLEM_TEXT,
-    left: 50,
-    top: 50,
-    tier: "center",
-    accent: "info",
-    drift: 1,
-  });
-
-  return entries;
-}
-
-/** Stonowane, „premium” — niski nasycenie, obramowania bliżej neutrali niż czysty warn/info/cta. */
-function cloudAccentStyle(T, accent, isActive) {
-  const bgTint = (c, pct) => `color-mix(in srgb, ${c} ${pct}%, ${T.bg})`;
-  const edge = (c, strong) =>
-    strong
-      ? `color-mix(in srgb, ${c} 38%, ${T.bentoNoneBorder})`
-      : `color-mix(in srgb, ${c} 14%, ${T.surfBorder})`;
-  const glowSoft = (c) => `color-mix(in srgb, ${c} 12%, transparent)`;
-  const map = {
-    warn: {
-      bg: bgTint(T.warn, 8),
-      border: isActive ? edge(T.warn, true) : edge(T.warn, false),
-      color: `color-mix(in srgb, ${T.warn} 52%, ${T.textSecondary})`,
-      glow: glowSoft(T.warn),
-    },
-    info: {
-      bg: bgTint(T.info, 9),
-      border: isActive ? edge(T.info, true) : edge(T.info, false),
-      color: `color-mix(in srgb, ${T.info} 48%, ${T.textSecondary})`,
-      glow: glowSoft(T.info),
-    },
-    cta: {
-      bg: bgTint(T.cta, 10),
-      border: isActive ? edge(T.cta, true) : edge(T.cta, false),
-      color: `color-mix(in srgb, ${T.cta} 42%, ${T.textPrimary})`,
-      glow: glowSoft(T.cta),
-    },
-  };
-  return map[accent] || map.warn;
-}
-
-function ProblemCloud() {
-  const T = useT();
-  const [hovered, setHovered] = useState(null);
-  const [cloudEntries] = useState(buildProblemCloudEntries);
-
-  const getPush = (idx, hovIdx) => {
-    const p = cloudEntries[idx];
-    const h = cloudEntries[hovIdx];
-    const dx = p.left - h.left;
-    const dy = p.top - h.top;
-    const d = Math.sqrt(dx * dx + dy * dy) || 1;
-    const mag = Math.min(52, 920 / d);
-    return { x: Math.round((dx / d) * mag), y: Math.round((dy / d) * mag) };
-  };
-
-  return (
-    <div className="tag-cloud tag-cloud--word">
-      {cloudEntries.map((entry, i) => {
-        const { id, text, left, top, tier, accent, drift } = entry;
-        const isActive = hovered === i;
-        const isOther = hovered !== null && !isActive;
-        const push = isOther ? getPush(i, hovered) : null;
-        const a = cloudAccentStyle(T, accent, isActive);
-        const zBase = tier === "center" ? 12 : tier === "ring" ? 6 : 2;
-        const scale = isActive ? 1.08 : push ? 0.88 : 1;
-        const driftClass = tier === "fringe" ? `tag-drift-sm-${drift}` : `tag-drift-${drift}`;
-
-        return (
-          <div key={id} className="tag-cloud-pos" style={{ left: `${left}%`, top: `${top}%` }}>
-            <div className={driftClass} style={{ animationPlayState: hovered !== null ? "paused" : "running" }}>
-              <div
-                onMouseEnter={() => setHovered(i)}
-                onMouseLeave={() => setHovered(null)}
-                className={`problem-pill problem-pill--${tier}`}
-                style={{
-                  background: a.bg,
-                  border: `1.5px solid ${a.border}`,
-                  color: a.color,
-                  transform: push ? `translate(${push.x}px,${push.y}px) scale(${scale})` : `scale(${scale})`,
-                  zIndex: isActive ? 20 : zBase + (i % 3),
-                  boxShadow: isActive ? `0 10px 32px ${a.glow}` : "0 1px 4px rgba(0,0,0,0.06)",
-                }}
-              >
-                {text}
-              </div>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-/** Tylko mobile: dwa rzędy chipów w jednym overflow-x (scroll zsynchronizowany). */
-function ProblemPainStrip() {
-  const T = useT();
-  const [rowTop, rowBottom] = splitProblemStripRows(PROBLEM_STRIP_LINES);
-
-  const renderChip = (text, i) => {
-    const accent = CLOUD_ACCENTS[i % CLOUD_ACCENTS.length];
-    const a = cloudAccentStyle(T, accent, false);
-    return (
-      <div
-        key={`${i}-${text}`}
-        role="listitem"
-        className="hero-problem-strip-chip"
-        style={{
-          background: a.bg,
-          border: `1.5px solid ${a.border}`,
-          color: a.color,
-          boxShadow: "0 1px 6px rgba(0,0,0,0.06)",
-        }}
-      >
-        {text}
-      </div>
-    );
-  };
-
-  return (
-    <div className="hero-problem-strip">
-      <p className="hero-problem-strip-kicker">Czy to brzmi znajomo?</p>
-      <div className="hero-problem-strip-outer">
-        <div className="hero-problem-strip-scroll" role="list">
-          <div className="hero-problem-strip-rows-sync">
-            <div className="hero-problem-strip-row">
-              {rowTop.map((text, j) => renderChip(text, j))}
-            </div>
-            <div className="hero-problem-strip-row">
-              {rowBottom.map((text, j) => renderChip(text, rowTop.length + j))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function FadeIn({ children, delay = 0 }) {
   const [ref, inView] = useInView();
   return (
     <div ref={ref} style={{ opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(28px)", transition: `opacity 0.7s ease ${delay}s,transform 0.7s ease ${delay}s` }}>{children}</div>
+  );
+}
+
+function LifecycleTimeline() {
+  const stages = [
+    { Icon: FilePenLine, label: "Zawarcie umowy", sub: "Konstruktor · weryfikacja · e-podpis" },
+    { Icon: Camera, label: "Początek najmu", sub: "Protokół · warunki · harmonogram" },
+    { Icon: CreditCard, label: "W trakcie najmu", sub: "Płatności · powiadomienia · spory" },
+    { Icon: ClipboardList, label: "Zakończenie", sub: "Protokół · rozliczenie · eskalacja" },
+  ];
+
+  return (
+    <div className="lifecycle-timeline">
+      <div className="lifecycle-track" />
+      {stages.map(({ Icon, label, sub }, i) => (
+        <div key={i} className="lifecycle-stage" style={{ animationDelay: `${0.3 + i * 0.15}s` }}>
+          <div className="lifecycle-dot">
+            <Icon size={20} strokeWidth={2} />
+          </div>
+          <div className="lifecycle-text">
+            <span className="lifecycle-label">{label}</span>
+            <span className="lifecycle-sub">{sub}</span>
+          </div>
+        </div>
+      ))}
+      <div className="lifecycle-badge">
+        <Shield size={14} />
+        <span>Platforma = źródło prawdy</span>
+      </div>
+    </div>
   );
 }
 
@@ -315,25 +120,14 @@ export default function ShortVariant({ variantId = "short_variant" }) {
       if (!(raw instanceof Element)) return;
       const node = raw.closest(selector);
       if (!node || !root.contains(node)) return;
-
       if (node.matches("a[href]")) {
         const href = node.getAttribute("href") || "";
         const elementText = (node.textContent || "").trim().replace(/\s+/g, " ").slice(0, 120);
-        trackGaUiClick({
-          variant_id: variantId,
-          click_type: "link",
-          element_text: elementText,
-          link_url: href,
-        });
+        trackGaUiClick({ variant_id: variantId, click_type: "link", element_text: elementText, link_url: href });
         return;
       }
-
       const elementText = (node.textContent || "").trim().replace(/\s+/g, " ").slice(0, 120);
-      trackGaUiClick({
-        variant_id: variantId,
-        click_type: "button",
-        element_text: elementText,
-      });
+      trackGaUiClick({ variant_id: variantId, click_type: "button", element_text: elementText });
     };
     root.addEventListener("click", onClickCapture, true);
     return () => root.removeEventListener("click", onClickCapture, true);
@@ -342,12 +136,12 @@ export default function ShortVariant({ variantId = "short_variant" }) {
   const css = `
     *{box-sizing:border-box;margin:0;}
     html,body{min-height:100%;background:${T.bg};color:${T.textPrimary};}
-    ::selection{background:rgba(28,187,131,0.25);}
+    ::selection{background:rgba(14,124,102,0.25);}
     ::-webkit-scrollbar{width:4px;}
     ::-webkit-scrollbar-track{background:${T.scrollbarTrack};}
     ::-webkit-scrollbar-thumb{background:${T.scrollbarThumb};border-radius:4px;}
     .pulse-btn{animation:pulse-glow 2.8s ease-in-out infinite;}
-    @keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 ${T.ctaGlow},0 8px 28px ${T.ctaGlow};}50%{box-shadow:0 0 0 12px rgba(28,187,131,0),0 8px 36px ${T.ctaGlow};}}
+    @keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 ${T.ctaGlow},0 8px 28px ${T.ctaGlow};}50%{box-shadow:0 0 0 12px rgba(14,124,102,0),0 8px 36px ${T.ctaGlow};}}
     .cta-btn{background:linear-gradient(135deg,${T.cta},${T.ctaHover});color:#fff;border:none;cursor:pointer;font-family:Manrope,sans-serif;font-weight:800;border-radius:12px;transition:all 0.25s;display:inline-flex;align-items:center;gap:8px;letter-spacing:-0.01em;}
     .cta-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px ${T.ctaGlow};}
     .cta-btn:active{transform:translateY(0);}
@@ -355,70 +149,38 @@ export default function ShortVariant({ variantId = "short_variant" }) {
     input:focus{border-color:${T.info};background:${T.inputFocusBg};}
     input::placeholder{color:${T.inputPlaceholder};}
     .tag-info{display:inline-flex;align-items:center;gap:6px;background:${T.tagInfoBg};border:1px solid ${T.tagInfoBorder};border-radius:99px;padding:4px 12px;color:${T.tagInfoColor};font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
-    .hero-protection-tag{font-size:18px;padding:8px 18px;gap:10px;letter-spacing:.03em;}
-    @media(max-width:600px){.hero-protection-tag{font-size:12.5px;padding:6px 12px;gap:6px;letter-spacing:.02em;}.hero-protection-tag svg{width:16px!important;height:16px!important;flex-shrink:0;}}
-    .short-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
-    .hero-heading-wrap{text-align:center;margin-bottom:40px;}
-    @media(max-width:850px){.hero-heading-wrap{margin-bottom:20px;}}
+    .short-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
     .value-section-heading{text-align:center;margin-bottom:48px;}
-    @media(max-width:850px){.value-section-heading{margin-bottom:28px;}}
-    .hero-columns{display:flex;gap:clamp(24px,3vw,40px);max-width:1100px;margin:0 auto 40px;align-items:flex-start;}
-    .hero-col-left{flex:1 1 55%;min-width:0;}
-    .hero-col-right{flex:1 1 40%;min-width:0;display:flex;flex-direction:column;gap:12px;}
-    .hero-problems{display:flex;flex-direction:column;gap:12px;}
-    .hero-problem-card{display:flex;align-items:center;gap:10px;background:${T.warnBg};border:1px solid ${T.warnBorder};border-radius:14px;padding:14px 20px;color:${T.warn};font-size:15px;font-weight:400;line-height:1.35;}
-    .tag-cloud{position:relative;width:100%;min-height:340px;}
-    .tag-cloud--word{min-height:clamp(300px,52vw,400px);max-width:min(100%,440px);margin-left:auto;margin-right:auto;overflow:visible;}
-    .tag-cloud-pos{position:absolute;transform:translate(-50%,-50%);max-width:96%;}
-    .tag-drift-0{animation:drift0 6s ease-in-out infinite;}
-    .tag-drift-1{animation:drift1 7.2s ease-in-out infinite;}
-    .tag-drift-2{animation:drift2 5.5s ease-in-out infinite;}
-    .tag-drift-sm-0{animation:drift-sm0 6.8s ease-in-out infinite;}
-    .tag-drift-sm-1{animation:drift-sm1 7.5s ease-in-out infinite;}
-    .tag-drift-sm-2{animation:drift-sm2 5.9s ease-in-out infinite;}
-    @keyframes drift0{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(5.75px,-6.9px) rotate(0.805deg);}66%{transform:translate(-3.45px,4.6px) rotate(-0.46deg);}}
-    @keyframes drift1{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(-5.75px,4.6px) rotate(-0.575deg);}66%{transform:translate(4.6px,-4.6px) rotate(0.345deg);}}
-    @keyframes drift2{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(3.45px,5.75px) rotate(0.46deg);}66%{transform:translate(-4.6px,-3.45px) rotate(-0.69deg);}}
-    @keyframes drift-sm0{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(4.7px,-5.65px) rotate(0.55deg);}66%{transform:translate(-2.8px,3.75px) rotate(-0.32deg);}}
-    @keyframes drift-sm1{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(-4.7px,3.75px) rotate(-0.4deg);}66%{transform:translate(3.75px,-3.75px) rotate(0.24deg);}}
-    @keyframes drift-sm2{0%,100%{transform:translate(0,0) rotate(0deg);}33%{transform:translate(2.8px,4.7px) rotate(0.32deg);}66%{transform:translate(-3.75px,-2.8px) rotate(-0.48deg);}}
-    .tag-cloud--word .problem-pill{font-family:"Inter Tight",Georgia,"Times New Roman",serif;letter-spacing:-0.02em;text-align:left;hyphens:auto;-webkit-hyphens:auto;}
-    .problem-pill{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:20px;line-height:1.25;cursor:default;user-select:none;min-width:150px;text-align:center;transition:transform 0.5s cubic-bezier(.4,0,.2,1),box-shadow 0.35s ease,border-color 0.3s ease,z-index 0s;}
-    .problem-pill--center{gap:8px;padding:clamp(10px,2.2vw,14px) clamp(12px,2.8vw,18px);font-size:clamp(11.5px,2.85vw,15px);font-weight:800;max-width:min(230px,90vw);text-wrap:balance;}
-    .problem-pill--ring{padding:8px 13px;font-size:clamp(10px,2.5vw,12.5px);font-weight:700;max-width:min(195px,82vw);text-wrap:balance;}
-    .problem-pill--fringe{padding:5px 9px;font-size:clamp(8px,2.15vw,10.5px);font-weight:700;max-width:min(200px,90vw);line-height:1.2;text-wrap:balance;}
-    .hero-levels{display:flex;flex-direction:column;gap:0;position:relative;padding-left:0;}
-    .hero-levels::before{content:'';position:absolute;left:33px;top:28px;bottom:28px;width:2px;background:${T.ctaBorder};z-index:0;}
-    .hero-level-item{position:relative;display:flex;align-items:center;gap:14px;padding:8px 14px;border-radius:14px;cursor:default;transition:background 0.25s,transform 0.25s,box-shadow 0.25s;z-index:1;min-height:calc(22px * 1.3 * 2 + 16px);width:90%;max-width:90%;align-self:flex-start;}
-    .hero-level-item:hover{background:${T.bentoCtaBg};transform:translateX(4px);box-shadow:0 8px 24px rgba(0,0,0,0.08);z-index:2;}
-    .hero-level-icon{position:relative;z-index:1;width:40px;height:40px;border-radius:99px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:${T.textPrimary};background:color-mix(in srgb,${T.cta} 14%,${T.bg});border:1.5px solid ${T.ctaBorder};transition:all 0.25s;}
-    .hero-level-icon svg{flex-shrink:0;}
-    .hero-level-item:hover .hero-level-icon{background:${T.cta};color:#fff;border-color:${T.cta};}
-    .hero-level-label{font-size:22px;font-weight:700;color:${T.textPrimary};line-height:1.3;}
-    .hero-level-tooltip{position:absolute;right:0;top:calc(100% + 4px);transform:translateY(-4px);opacity:0;pointer-events:none;transition:opacity 0.22s,transform 0.22s;background:${T.bg};border:1px solid ${T.bentoNoneBorder};border-radius:12px;padding:12px 16px;font-size:13px;line-height:1.5;color:${T.textSecondary};width:50%;box-shadow:0 12px 32px rgba(0,0,0,0.14);z-index:20;text-align:left;font-weight:400;}
-    .hero-level-item:hover .hero-level-tooltip{opacity:1;transform:translateY(0);pointer-events:auto;}
-    .hero-problem-strip{display:none;}
-    .hero-problem-strip-kicker{margin:0 0 10px;font-family:"Inter Tight",Georgia,"Times New Roman",serif;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:${T.textMuted};padding-left:2px;}
-    .hero-problem-strip-outer{position:relative;}
-    .hero-problem-strip-outer::before,.hero-problem-strip-outer::after{content:"";position:absolute;top:0;bottom:0;width:28px;z-index:2;pointer-events:none;}
-    .hero-problem-strip-outer::before{left:0;background:linear-gradient(to right,${T.bg},transparent);}
-    .hero-problem-strip-outer::after{right:0;background:linear-gradient(to left,${T.bg},transparent);}
-    .hero-problem-strip-scroll{overflow-x:auto;overflow-y:hidden;padding:8px 0 12px;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;scroll-padding-inline:var(--hero-pad-x,16px);scrollbar-width:none;-ms-overflow-style:none;touch-action:pan-x;}
-    .hero-problem-strip-scroll::-webkit-scrollbar{display:none;}
-    .hero-problem-strip-rows-sync{display:flex;flex-direction:column;gap:8px;width:max-content;max-width:none;padding-inline:var(--hero-pad-x,16px);box-sizing:content-box;}
-    .hero-problem-strip-row{display:flex;flex-wrap:nowrap;align-items:stretch;gap:10px;}
-    .hero-problem-strip-chip{flex:0 0 auto;max-width:min(280px,78vw);scroll-snap-align:start;padding:10px 14px;border-radius:20px;font-family:"Inter Tight",Georgia,"Times New Roman",serif;font-size:12.5px;font-weight:700;line-height:1.3;letter-spacing:-0.02em;text-wrap:balance;}
-    @media(max-width:850px){
-      .short-cards{grid-template-columns:1fr!important;}
-      .hero-columns{flex-direction:column;margin-bottom:20px;}
-      .hero-col-right{display:none!important;}
-      .hero-problem-strip{display:block;margin:0 0 16px;}
-      .hero-problem-strip-outer{margin-left:calc(-1 * var(--hero-pad-x, 16px));margin-right:calc(-1 * var(--hero-pad-x, 16px));width:calc(100% + 2 * var(--hero-pad-x, 16px));}
-    }
-    .hero-trust-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:clamp(12px,2vw,20px);width:100%;max-width:1100px;margin:28px auto 0;}
-    .hero-trust-left{grid-column:1;grid-row:1;justify-self:start;display:flex;flex-direction:column;gap:12px;align-items:center;min-width:0;}
-    .hero-trust-row .cta-btn{grid-column:2;grid-row:1;justify-self:center;}
-    @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}.hero-trust-row{display:flex;flex-direction:column;align-items:center;margin-top:24px;gap:20px;}.hero-trust-left{grid-column:auto;justify-self:center;width:100%;}.hero-trust-row .cta-btn{grid-column:auto;width:auto;}}
+    @media(max-width:850px){.value-section-heading{margin-bottom:28px;}.short-cards{grid-template-columns:1fr!important;}}
+
+    .hero-split{display:flex;gap:clamp(32px,4vw,64px);max-width:1200px;margin:0 auto;align-items:center;}
+    .hero-split-left{flex:1 1 58%;min-width:0;}
+    .hero-split-right{flex:1 1 38%;min-width:0;}
+    @media(max-width:850px){.hero-split{flex-direction:column;gap:32px;}.hero-split-right{width:100%;}}
+
+    .pain-bullet{display:flex;align-items:center;gap:12px;padding:10px 0;font-size:clamp(14px,1.6vw,16px);line-height:1.45;color:${T.warn};font-weight:600;}
+    .pain-bullet svg{flex-shrink:0;opacity:0.7;}
+
+    .lifecycle-timeline{position:relative;display:flex;flex-direction:column;gap:0;padding:28px 0 28px 28px;}
+    .lifecycle-track{position:absolute;left:47px;top:40px;bottom:60px;width:2px;background:linear-gradient(180deg,${T.ctaBorder},${T.info});z-index:0;border-radius:2px;}
+    .lifecycle-stage{position:relative;display:flex;align-items:center;gap:16px;padding:14px 0;z-index:1;opacity:0;animation:stage-in 0.5s ease forwards;}
+    @keyframes stage-in{to{opacity:1;transform:translateX(0);}from{opacity:0;transform:translateX(-12px);}}
+    .lifecycle-dot{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:${T.bentoCtaBg};border:1.5px solid ${T.ctaBorder};color:${T.cta};transition:all 0.3s;}
+    .lifecycle-stage:hover .lifecycle-dot{background:${T.cta};color:#fff;border-color:${T.cta};transform:scale(1.08);}
+    .lifecycle-text{display:flex;flex-direction:column;gap:2px;}
+    .lifecycle-label{font-family:"Inter Tight",sans-serif;font-size:clamp(16px,1.8vw,20px);font-weight:700;color:${T.textPrimary};line-height:1.3;}
+    .lifecycle-sub{font-size:clamp(12px,1.3vw,14px);color:${T.textSecondary};line-height:1.4;}
+    .lifecycle-badge{margin-top:8px;margin-left:4px;display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:99px;font-size:12px;font-weight:700;letter-spacing:.03em;color:${T.cta};background:${T.ctaDim};border:1px solid ${T.ctaBorder};}
+
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.5vw,32px);max-width:900px;margin:0 auto;}
+    @media(max-width:700px){.compare-grid{grid-template-columns:1fr;}}
+    .compare-col{border-radius:20px;padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:16px;}
+    .compare-bad{background:${T.warnBg};border:1px solid ${T.warnBorder};}
+    .compare-good{background:${T.bentoCtaBg};border:1.5px solid ${T.ctaBorder};}
+    .compare-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.55;}
+
+    @media(max-width:500px){.nav-cta-text{display:none;}.toggle-label{display:none;}}
+
     .form-shield-img{flex-shrink:0;}
     .form-header-row{gap:40px;}
     .form-fields{display:flex;flex-direction:column;gap:16px;}
@@ -496,11 +258,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
         const hint = json?.error || raw?.slice?.(0, 140) || "Submit failed";
         throw new Error(hint);
       }
-      identifySmartlookLead({
-        email: payload.email,
-        name: payload.name,
-        phone: payload.phone,
-      });
+      identifySmartlookLead({ email: payload.email, name: payload.name, phone: payload.phone });
       setSubmitted(true);
     } catch (e) {
       const msg = (e && typeof e === "object" && "message" in e) ? e.message : String(e || "");
@@ -512,63 +270,51 @@ export default function ShortVariant({ variantId = "short_variant" }) {
 
   const VALUE_CARDS = [
     {
-      icon: <FileText size={26} />, badge: "01", accent: "cta", iC: T.cta,
-      title: "Umowa najmu",
-      desc: "Nasza umowa najmu to nie zwykły szablon, lecz realne narzędzie ochrony, bez niejasnych i ogólnych zapisów. Została opracowana na podstawie rzeczywistych sporów i zabezpiecza kluczowe ryzyka, zanim jeszcze się pojawią. Jeśli warunki umowy zostaną naruszone, istnieją konkretne mechanizmy ich egzekwowania, w tym mediacja i procedury sądowe.\nJasne sankcje. Przejrzysty tryb powiadomień. Dokumentowanie naruszeń.",
-      features: ["Klauzule chroniące kaucję i własność", "Podpis elektroniczny eIDAS", "Weryfikacja tożsamości najemcy", "Archiwum dokumentów 10 lat"],
+      icon: <FilePenLine size={26} />, badge: "01", accent: "cta", iC: T.cta,
+      title: "Zawarcie umowy",
+      desc: "Inteligentny konstruktor generuje umowę dopasowaną do Twojego przypadku. Weryfikacja tożsamości stron, podpis elektroniczny eIDAS i archiwum z wersjonowaniem — umowa żyje na platformie, a nie w szufladzie.",
+      features: ["Konstruktor umowy pod Twój przypadek", "Weryfikacja tożsamości najemcy", "Podpis elektroniczny eIDAS", "Archiwum dokumentów z version control"],
     },
     {
-      icon: <ShieldCheck size={26} />, badge: "02", accent: "info", iC: T.info,
-      title: "Ubezpieczenie",
-      desc: "Specjalna polisa ubezpieczeniowa chroni Twoje mienie i ogranicza straty finansowe związane z najmem. Ochrona obejmuje:\n - uszkodzenie mienia\n - straty wynikające z zaległości w płatnościach",
-      features: ["Ochrona mienia właściciela", "Pokrycie strat z tytułu zaległości", "Polisa dopasowana do umowy"],
+      icon: <Camera size={26} />, badge: "02", accent: "info", iC: T.info,
+      title: "Początek najmu",
+      desc: "Protokół zdawczo-odbiorczy z foto/wideo dokumentacją podpisany przez obie strony. Rejestracja warunków najmu i harmonogramu płatności. System staje się źródłem prawdy od pierwszego dnia.",
+      features: ["Move-in protokół z fotodokumentacją", "Rejestracja warunków i kwot", "Harmonogram płatności", "Kanał komunikacji z mocą prawną"],
     },
     {
-      icon: <Home size={26} />, badge: "03", accent: "cta", iC: T.cta,
-      title: "Najem okazjonalny online",
-      desc: "Adres do najmu okazjonalnego z gwarancją.\nZadbaj o większe bezpieczeństwo wynajmu okazjonalnego i chroń się przed sytuacją, w której lokator odmawia opuszczenia mieszkania.",
-      features: ["Tryb okazjonalny (art. 19a)", "Oświadczenie najemcy online", "Komplet dokumentów w jednym miejscu"],
+      icon: <CreditCard size={26} />, badge: "03", accent: "cta", iC: T.cta,
+      title: "W trakcie najmu",
+      desc: "Automatyczny tracking płatności, powiadomienia o zaległościach, naliczanie kar umownych. Jeśli pojawia się spór — system prowadzi przez mediację i eskalację prawną krok po kroku.",
+      features: ["Tracking płatności i automatyczne przypomnienia", "Naliczanie kar umownych", "System rozwiązywania sporów", "Mediacja z mocą wyroku sądowego"],
     },
     {
-      icon: <Handshake size={26} />, badge: "04", accent: "info", iC: T.info,
-      title: "Mediacja sporów",
-      desc: "Profesjonalny mediator pomaga rozwiązać konflikt z najemcą bez sądu — szybko, poufnie i ze skutkiem prawnym. Ugoda jest wiążąca dla obu stron.",
-      features: ["Certyfikowany mediator", "Rozwiązanie sporu w 14 dni", "Ugoda z mocą wyroku sądowego"],
-    },
-    {
-      icon: <Scale size={26} />, badge: "05", accent: "cta", iC: T.cta,
-      title: "Wsparcie prawne",
-      desc: "Wsparcie prawne. Nasi doświadczeni prawnicy w możliwie najkrótszym czasie przeprowadzą procedury sądowe dotyczące dochodzenia odszkodowania, windykacji należności oraz eksmisji z lokalu, na specjalnych i korzystnych warunkach.",
-      features: ["Partner prawny na wypadek eksmisji", "Prowadzenie sprawy sądowej", "Doradztwo na każdym etapie najmu"],
+      icon: <ClipboardList size={26} />, badge: "04", accent: "info", iC: T.info,
+      title: "Zakończenie najmu",
+      desc: "Protokół zdawczo-odbiorczy porównany automatycznie z move-in. Rozliczenie kaucji, dokumentacja szkód, a w razie potrzeby — eskalacja do prawnika z kompletnym materiałem dowodowym.",
+      features: ["Move-out z porównaniem stanu", "Automatyczny rozrachunek kaucji", "Dokumentacja szkód gotowa do sądu", "Eskalacja prawna z pełnym logiem"],
     },
   ];
 
   const FAQ_ITEMS = [
     {
-      q: "Jakie poziomy ochrony najmu obejmuje usługa RentStandard?",
-      a: `Oferujemy 5 poziomów ochrony:
-
-· Ubezpieczenie – specjalne polisy dla najmu na korzystnych warunkach.
-· Najem okazjonalny – szybkie przygotowanie dokumentów, które pozwalają przyspieszyć eksmisję nierzetelnych najemców.
-· Mediacja – profesjonalni mediatorzy pomagają rozwiązać konflikt bez udziału sądu.
-· Wsparcie prawne – prowadzimy niezbędne procedury sądowe w możliwie najkrótszym czasie.
-· Kompleksowa obsługa na wszystkich etapach najmu (piąty poziom dostępny po aktywacji usługi).`,
+      q: "Czym Rent Standard różni się od zwykłego szablonu umowy?",
+      a: "Szablon z internetu to martwy dokument — nie pilnuje terminów, nie zbiera dowodów, nie prowadzi procedur. Rent Standard to platforma, która zamienia umowę w działający system: automatyczne powiadomienia, tracking płatności, protokoły z fotodokumentacją i mediacja — wszystko z mocą prawną. Umowa bez platformy to papier. Umowa z platformą to mechanizm egzekwowania.",
     },
     {
-      q: "Czym jest najem okazjonalny i dlaczego warto go stosować?",
-      a: "Najem okazjonalny to szczególna forma najmu zgodna z polskim prawem. Jej główną zaletą jest możliwość eksmisji nierzetelnego najemcy w uproszczonym trybie, bez długotrwałego procesu sądowego. RentStandard pomaga szybko przygotować wszystkie wymagane dokumenty oraz zapewnia adresy niezbędne do zawarcia takiej umowy.",
+      q: "Czy dane z platformy mają moc prawną?",
+      a: "Tak. Platforma działa w standardzie eIDAS (kwalifikowany podpis elektroniczny) i jest w pełni zgodna z RODO. Logi zdarzeń, powiadomienia i protokoły generowane przez system stanowią materiał dowodowy dopuszczalny w postępowaniu sądowym. Umowa zawarta przez platformę wprost odnosi się do danych systemu jako źródła prawdy.",
     },
     {
-      q: "Czy oferujecie pomoc prawną, jeśli konflikt z najemcą trafił już do sądu?",
-      a: "Tak. Zapewniamy pełne wsparcie prawne w postępowaniu sądowym. Nasi specjaliści prowadzą wszystkie niezbędne procedury, aby skutecznie zabezpieczyć prawa właściciela w możliwie najkrótszym czasie.",
+      q: "Co się dzieje, gdy najemca nie płaci?",
+      a: "System automatycznie wykrywa zaległość i uruchamia procedurę: najpierw powiadomienie z prawnym skutkiem, potem naliczenie kary umownej, następnie propozycja mediacji. Jeśli mediacja nie przynosi rezultatu — platforma przygotowuje kompletny pakiet dowodów i przekazuje sprawę do prawnika. Na każdym etapie masz pełny wgląd w status i dokumentację.",
     },
     {
-      q: "Czy mogę skorzystać z mediacji przed skierowaniem sprawy do sądu?",
-      a: "Tak. Mediacja stanowi osobny poziom ochrony. W przypadku konfliktu nasi profesjonalni mediatorzy pomagają wypracować rozwiązanie bez udziału sądu, szybko i efektywnie, co pozwala oszczędzić czas, nerwy i koszty.",
+      q: "Ile to kosztuje?",
+      a: "Model cenowy oparty jest na etapach: niski koszt wejścia przy tworzeniu umowy, a następnie abonament obejmujący tracking płatności, powiadomienia i archiwum. Mediacja i wsparcie prawne rozliczane są per przypadek. Dokładny cennik opublikujemy przy starcie — pierwsi użytkownicy pilotażu uzyskają preferencyjne warunki.",
     },
     {
-      q: "Czy moje dane są bezpieczne i jak wygląda testowy etap działania usługi?",
-      a: "Tak. Gwarantujemy wysoki poziom bezpieczeństwa danych, pełną zgodność z wymaganiami eIDAS (elektroniczne potwierdzenie podpisów i dokumentów) oraz RODO.\n\nObecnie usługa działa w trybie testowym – stopniowo wdrażamy pierwszych użytkowników, kładąc szczególny nacisk na ochronę danych osobowych oraz transparentność ich przetwarzania.",
+      q: "Na jakim etapie jest serwis?",
+      a: "Budujemy platformę i stopniowo wdrażamy pierwszych użytkowników. Pilotaż pozwala nam dopracować produkt w oparciu o realne przypadki. Jeśli dołączysz teraz — będziesz współtworzyć narzędzie i zyskasz warunki niedostępne po oficjalnym starcie. Twórca platformy to prawnik z 11-letnim doświadczeniem w sporach o najem.",
     },
   ];
 
@@ -598,18 +344,13 @@ export default function ShortVariant({ variantId = "short_variant" }) {
               {LANDING_VARIANTS.length > 1 && (
                 <div style={{ display: "flex", alignItems: "center", gap: 0, marginLeft: 0 }}>
                   {LANDING_VARIANTS.map(({ path, label, variantId: id }) => {
-                    const isActive =
-                      location.pathname === path
-                      || (path !== "/" && location.pathname.startsWith(`${path}/`));
+                    const isActive = location.pathname === path || (path !== "/" && location.pathname.startsWith(`${path}/`));
                     return (
                       <Link key={id} to={path} style={{
                         padding: "4px 4px", borderRadius: 8, fontSize: 14,
-                        fontWeight: isActive ? 700 : 600,
-                        color: isActive ? T.cta : T.textSecondary,
-                        textDecoration: "none",
-                        background: isActive ? T.ctaDim : "transparent",
-                        border: `1px solid ${isActive ? T.ctaBorder : "transparent"}`,
-                        transition: "color 0.2s, background 0.2s",
+                        fontWeight: isActive ? 700 : 600, color: isActive ? T.cta : T.textSecondary,
+                        textDecoration: "none", background: isActive ? T.ctaDim : "transparent",
+                        border: `1px solid ${isActive ? T.ctaBorder : "transparent"}`, transition: "color 0.2s, background 0.2s",
                       }}>{label}</Link>
                     );
                   })}
@@ -621,7 +362,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                 {isDark ? <><Sun size={15} color="#f59e0b" /><span className="toggle-label" style={{ color: "#f59e0b" }}>Jasny</span></> : <><Moon size={15} color={T.info} /><span className="toggle-label" style={{ color: T.info }}>Ciemny</span></>}
               </button>
               <button onClick={() => scrollToForm("nav")} className="cta-btn" style={{ padding: "10px 20px", fontSize: 15 }}>
-                <span className="nav-cta-text">Dołącz do pilotażu</span>
+                <span className="nav-cta-text">Przetestuj platformę</span>
                 <ChevronRight size={16} />
               </button>
             </div>
@@ -629,94 +370,83 @@ export default function ShortVariant({ variantId = "short_variant" }) {
         </nav>
 
         <main style={{ overflowX: "hidden" }}>
-          {/* HERO */}
-            <section style={{ position: "relative", zIndex: 1, padding: "clamp(15px,2.78vw,40px) clamp(16px,4vw,48px) clamp(40px,5vw,64px)", "--hero-pad-x": "clamp(16px, 4vw, 48px)" }}>
+          {/* ──── HERO ──── */}
+          <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px) clamp(48px,6vw,80px)" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-              <div className="hero-heading-wrap">
-                  {/* <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: T.tagInfoBg, border: `1px solid ${T.tagInfoBorder}`, borderRadius: 99, padding: "8px 20px", marginBottom: 18, fontSize: 13, fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase", color: T.tagInfoColor }}>
-                  <Home size={16} strokeWidth={2.2} />
-                  Platforma dla ubezpieczenia wynajmującego
-                </div> */}
-                <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(36px,5.5vw,64px)", lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 16, color: T.textPrimary }}>
-                    <span style={{ color: T.info }}>Serwis</span> ochrony najmu mieszkań
+              {/* Centered headline */}
+              <div style={{ textAlign: "center", marginBottom: "clamp(36px,5vw,56px)" }}>
+                <div className="tag-info" style={{ marginBottom: 20, display: "inline-flex" }}>
+                  <Shield size={14} /> Platforma dla wynajmujących
+                </div>
+                <h1 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(34px,5.8vw,68px)", lineHeight: 1.02, letterSpacing: "-0.045em", marginBottom: 20, color: T.textPrimary, maxWidth: 900, marginLeft: "auto", marginRight: "auto" }}>
+                  Umowa najmu to tylko papier.{" "}
+                  <span style={{ color: T.cta }}>My robimy z niej system.</span>
                 </h1>
-                  <p style={{ color: T.textSecondary, fontSize: "clamp(15px,2vw,20px)", lineHeight: 1.55, maxWidth: 700, marginLeft: "auto", marginRight: "auto" }}>
-                    Zyskaj dostęp do eksperckiej umowy najmu z RentStandard i dołącz się z 5 poziomami ochrony najmu na korzystnych warunkach
+                <p style={{ color: T.textSecondary, fontSize: "clamp(15px,1.8vw,20px)", lineHeight: 1.6, maxWidth: 680, marginLeft: "auto", marginRight: "auto" }}>
+                  Rent Standard to platforma, która zamienia Twój kontrakt w&nbsp;działający mechanizm ochrony — od podpisania umowy do rozwiązania sporu.
                 </p>
               </div>
 
-                <div className="hero-columns">
-                  {/* Left — 5 levels */}
-                  <div className="hero-col-left">
-                    <div style={{ marginBottom: 20, paddingLeft: 18 }}>
-                      <div
-                        className="tag-info hero-protection-tag"
-                        style={{
-                          display: "inline-flex",
-                          boxShadow: `0 10px 32px ${isDark ? "rgba(0,0,0,0.35)" : "rgba(21,54,136,0.14)"}, 0 2px 10px ${isDark ? "rgba(0,0,0,0.2)" : "rgba(15,23,42,0.06)"}`,
-                        }}
-                      >
-                        <Shield size={20} /> 5 poziomów ochrony wynajmującego
-                      </div>
+              {/* Split: pain bullets + lifecycle */}
+              <div className="hero-split">
+                <div className="hero-split-left">
+                  <p style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(13px,1.4vw,15px)", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: T.warn, marginBottom: 16, opacity: 0.85 }}>
+                    Znasz to?
+                  </p>
+                  {[
+                    "Najemca nie płaci — a Ty dalej spłacasz kredyt i rachunki",
+                    "Umowa z internetu nic nie chroni — w sądzie jest bezwartościowa",
+                    "Eksmisja trwa miesiącami, a szkody rosną każdego dnia",
+                    "Kaucja nie pokrywa nawet połowy strat",
+                  ].map((text, i) => (
+                    <div key={i} className="pain-bullet">
+                      <AlertTriangle size={16} />
+                      <span>{text}</span>
                     </div>
-                    <div className="hero-levels">
-                    {[
-                        { Icon: FilePenLine, title: "Ekspercka i wykonalna umowa najmu oraz podpis elektroniczny", desc: "Zweryfikowana w praktyce sądowej, opracowana przez prawników z 11-letnim doświadczeniem w najmie. Podpis elektroniczny." },
-                        { Icon: Shield, title: "Ubezpieczenie", desc: "Specjalne polisy ubezpieczeniowe dla najmu na korzystnych warunkach — ochrona przed szkodami i brakiem płatności." },
-                        { Icon: Key, title: "Najem okazjonalny", desc: "Szybkie przygotowanie dokumentów do zawarcia najmu okazjonalnego online — uproszczona eksmisja nierzetelnego najemcy." },
-                        { Icon: MessagesSquare, title: "Mediacja", desc: "Profesjonalni mediatorzy pomogą polubownie rozwiązać spór bez sądu, w możliwie najkrótszym czasie." },
-                        { Icon: Gavel, title: "Wsparcie prawne", desc: "Doświadczeni prawnicy przeprowadzą niezbędne procedury sądowe, chroniąc Twoje interesy." },
-                      ].map(({ Icon, title, desc }, i) => (
-                      <div key={i} className="hero-level-item">
-                          <div className="hero-level-icon" aria-hidden>
-                            <Icon size={20} strokeWidth={2.1} />
-                          </div>
-                          <div className="hero-level-label">{title}</div>
-                          <div className="hero-level-tooltip">{desc}</div>
-                      </div>
-                    ))}
+                  ))}
+                  <div style={{ marginTop: 24 }}>
+                    <button onClick={() => scrollToForm("hero")} className="cta-btn pulse-btn" style={{ padding: "16px 28px", fontSize: 17 }}>
+                      Zabezpiecz swój najem <ArrowRight size={18} />
+                    </button>
                   </div>
                 </div>
-
-                  {/* Right — problem cloud */}
-                  <div className="hero-col-right">
-                    <ProblemCloud />
-                  </div>
+                <div className="hero-split-right">
+                  <LifecycleTimeline />
+                </div>
               </div>
 
-              <ProblemPainStrip />
-
-              <div className="hero-trust-row">
-                <div className="hero-trust-left">
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, background: T.ctaDim, border: `1px solid ${T.ctaBorder}`, borderRadius: 99, padding: "8px 20px" }}>
-                    <Users size={18} color={T.cta} />
-                    <span style={{ fontSize: 20, fontWeight: 800, color: T.cta, fontFamily: "Inter Tight,sans-serif" }}>2 400+</span>
-                    <span style={{ fontSize: 14, color: T.textSecondary }}>chronionych właścicieli</span>
-                  </div>
-                  <div style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center", color: T.badgesColor, fontSize: 12 }}>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Award size={12} /> Zgodność z eIDAS</span>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Scale size={12} /> RODO 100%</span>
-                  </div>
+              {/* Trust row */}
+              <div style={{ display: "flex", justifyContent: "center", gap: "clamp(16px,3vw,32px)", flexWrap: "wrap", marginTop: "clamp(28px,4vw,48px)", alignItems: "center" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: T.textSecondary }}>
+                  <Scale size={14} color={T.info} /> Zgodność z eIDAS
                 </div>
-                <button type="button" onClick={() => scrollToForm("hero")} className="cta-btn pulse-btn" style={{ padding: "18px 32px", fontSize: 18 }}>
-                  Dołącz do pilotażu <ArrowRight size={18} />
-                </button>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: T.textSecondary }}>
+                  <Shield size={14} color={T.info} /> RODO 100%
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: T.textSecondary }}>
+                  <Gavel size={14} color={T.info} /> 11 lat doświadczenia w sporach najmu
+                </div>
               </div>
             </div>
           </section>
 
-          {/* VALUE CARDS */}
-          <section style={{ position: "relative", zIndex: 1, padding: "clamp(32px,4.8vw,64px) clamp(16px,4vw,48px)", paddingTop: "clamp(26px,3.8vw,52px)" }}>
+          {/* ──── 4 LIFECYCLE STAGES ──── */}
+          <section style={{ position: "relative", zIndex: 1, padding: "clamp(32px,4.8vw,64px) clamp(16px,4vw,48px)" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
               <FadeIn>
                 <div className="value-section-heading">
                   <div className="tag-info" style={{ marginBottom: 14, display: "inline-flex" }}>Jak to działa</div>
-                  <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,44px)", lineHeight: 1.1, letterSpacing: "-0.03em", color: T.textPrimary }}>Pięć poziomów Twojej ochrony</h2>
+                  <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,44px)", lineHeight: 1.1, letterSpacing: "-0.03em", color: T.textPrimary }}>
+                    Cztery etapy najmu. Jeden system.
+                  </h2>
+                  <p style={{ color: T.textSecondary, fontSize: 16, lineHeight: 1.6, maxWidth: 600, margin: "14px auto 0" }}>
+                    Platforma prowadzi Cię przez cały cykl życia najmu — a każde działanie staje się dowodem w systemie.
+                  </p>
                 </div>
               </FadeIn>
               <div className="short-cards">
                 {VALUE_CARDS.map((card, i) => (
-                  <FadeIn key={i} delay={i * 0.12}>
+                  <FadeIn key={i} delay={i * 0.1}>
                     <BentoCard accent={card.accent} style={{ height: "100%", display: "flex", flexDirection: "column" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
                         <div style={{ background: `${card.iC}18`, border: `1px solid ${card.iC}40`, borderRadius: 14, padding: 12, display: "flex" }}>
@@ -724,13 +454,13 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                         </div>
                         <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 40, color: `${card.iC}20`, fontWeight: 700, lineHeight: 1 }}>{card.badge}</span>
                       </div>
-                      <h3 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 24, marginBottom: 12, color: T.textPrimary, lineHeight: 1.25 }}>{card.title}</h3>
-                      <p style={{ color: T.pillarDesc, fontSize: 15, lineHeight: 1.7, marginBottom: 20, whiteSpace: "pre-line" }}>{card.desc}</p>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                      <h3 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 22, marginBottom: 10, color: T.textPrimary, lineHeight: 1.25 }}>{card.title}</h3>
+                      <p style={{ color: T.pillarDesc, fontSize: 15, lineHeight: 1.7, marginBottom: 18, flex: 1 }}>{card.desc}</p>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
                         {card.features.map((f, j) => (
                           <div key={j} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                             <CheckCircle size={14} color={card.iC} />
-                            <span style={{ fontSize: 14, color: T.pillarFeat, lineHeight: 1.6 }}>{f}</span>
+                            <span style={{ fontSize: 13, color: T.pillarFeat, lineHeight: 1.5 }}>{f}</span>
                           </div>
                         ))}
                       </div>
@@ -741,7 +471,71 @@ export default function ShortVariant({ variantId = "short_variant" }) {
             </div>
           </section>
 
-          {/* LEAD FORM */}
+          {/* ──── COMPARISON: Platform vs Template ──── */}
+          <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,72px) clamp(16px,4vw,48px)" }}>
+            <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+              <FadeIn>
+                <div className="value-section-heading">
+                  <div className="tag-info" style={{ marginBottom: 14, display: "inline-flex" }}>Dlaczego platforma</div>
+                  <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(26px,3.8vw,40px)", lineHeight: 1.1, letterSpacing: "-0.03em", color: T.textPrimary }}>
+                    Umowa z internetu vs. umowa na platformie
+                  </h2>
+                </div>
+              </FadeIn>
+              <FadeIn delay={0.1}>
+                <div className="compare-grid">
+                  <div className="compare-col compare-bad">
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+                      <div style={{ width: 36, height: 36, borderRadius: 10, background: `${T.warn}18`, border: `1px solid ${T.warn}40`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <XIcon size={18} color={T.warn} />
+                      </div>
+                      <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 18, fontWeight: 700, color: T.warn }}>Szablon z internetu</span>
+                    </div>
+                    {[
+                      "Martwy dokument — nikt nie pilnuje terminów",
+                      "Brak dowodów na uszko\u00ADdzenia — słowo przeciw słowu",
+                      "Powiadomienia przez WhatsApp — bez mocy prawnej",
+                      "Spór = drogi adwokat i miesiące w sądzie",
+                      "Eksmisja? Zapomnij — umowa nic nie przyspieszA",
+                    ].map((text, i) => (
+                      <div key={i} className="compare-item">
+                        <XIcon size={15} color={T.warn} style={{ flexShrink: 0, marginTop: 3 }} />
+                        <span style={{ color: T.warn, opacity: 0.85 }}>{text}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="compare-col compare-good">
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+                      <div style={{ width: 36, height: 36, borderRadius: 10, background: `${T.cta}18`, border: `1px solid ${T.cta}40`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <CheckCircle size={18} color={T.cta} />
+                      </div>
+                      <span style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 18, fontWeight: 700, color: T.cta }}>Rent Standard</span>
+                    </div>
+                    {[
+                      "Platforma śledzi cały cykl życia kontraktu",
+                      "Fotoprotokoły move-in / move-out = dowód w sądzie",
+                      "Powiadomienia z systemu mają moc prawną (eIDAS)",
+                      "Mediacja na platformie → ugoda z mocą wyroku",
+                      "Logi, terminy, kary — system prowadzi procedurę za Ciebie",
+                    ].map((text, i) => (
+                      <div key={i} className="compare-item">
+                        <CheckCircle size={15} color={T.cta} style={{ flexShrink: 0, marginTop: 3 }} />
+                        <span style={{ color: T.textPrimary }}>{text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </FadeIn>
+              <FadeIn delay={0.2}>
+                <p style={{ textAlign: "center", marginTop: 32, fontSize: 15, fontWeight: 600, color: T.textSecondary, lineHeight: 1.5 }}>
+                  <span style={{ color: T.cta }}>Dane z systemu = dowód w sądzie.</span>{" "}
+                  Platforma to nie dodatek do umowy — to jej warstwa wykonawcza.
+                </p>
+              </FadeIn>
+            </div>
+          </section>
+
+          {/* ──── LEAD FORM ──── */}
           <section ref={formRef} style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
             <div style={{ width: 120, height: 3, margin: "0 auto 48px", background: `linear-gradient(90deg,${T.cta},${T.info})`, borderRadius: 99 }} />
             <div className="form-row" style={{ maxWidth: 900, margin: "0 auto", display: "flex", alignItems: "flex-start", justifyContent: "center", gap: 0 }}>
@@ -760,16 +554,16 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                             />
                           </div>
                           <div style={{ flex: 1, minWidth: 0 }}>
-                            <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(28px,4vw,36px)", letterSpacing: "-0.03em", marginBottom: 8, color: T.textPrimary }}>
-                              Zabezpiecz swój najem
+                            <h2 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: "clamp(26px,4vw,34px)", letterSpacing: "-0.03em", marginBottom: 8, color: T.textPrimary }}>
+                              Przetestuj platformę jako jeden z pierwszych
                             </h2>
                             <p className="form-sub-desktop" style={{ color: T.textSecondary, fontSize: 15, lineHeight: 1.6 }}>
-                              Uruchomienie serwisu planowane jest na <strong style={{ color: T.cta }}>2026</strong> rok.{" "}
-                              <strong style={{ color: T.cta }}>Pierwsi użytkownicy</strong> zyskają specjalne warunki i realny wpływ na jego rozwój
+                              Budujemy system, który zmieni sposób wynajmu w Polsce.{" "}
+                              <strong style={{ color: T.cta }}>Pierwsi użytkownicy</strong> współtworzą produkt i zyskają warunki niedostępne po starcie.
                             </p>
                             <p className="form-sub-mobile" style={{ color: T.textSecondary, fontSize: 15, lineHeight: 1.6 }}>
-                              <strong style={{ color: T.info }}>Dołącz</strong> do pilotażu serwisu{" "}
-                              <strong style={{ color: T.cta }}>ochrony najmu</strong>
+                              <strong style={{ color: T.cta }}>Dołącz</strong> do pilotażu i{" "}
+                              <strong style={{ color: T.info }}>współtwórz platformę</strong>
                             </p>
                           </div>
                         </div>
@@ -793,9 +587,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                             <div style={{ position: "relative" }}>
                               <Mail size={16} color={emailError ? T.warn : T.inputPlaceholder} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)" }} />
                               <input
-                                type="email"
-                                placeholder="twoj@email.pl"
-                                required
+                                type="email" placeholder="twoj@email.pl" required
                                 value={formData.email}
                                 onChange={e => { setFormData({ ...formData, email: e.target.value }); if (emailError) setEmailError(null); }}
                                 onBlur={validateEmail}
@@ -803,9 +595,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                               />
                             </div>
                             <div style={{ minHeight: 14, marginTop: 4 }}>
-                              <p style={{ margin: 0, fontSize: 12, color: T.warn, opacity: emailError ? 1 : 0 }}>
-                                {emailError || " "}
-                              </p>
+                              <p style={{ margin: 0, fontSize: 12, color: T.warn, opacity: emailError ? 1 : 0 }}>{emailError || " "}</p>
                             </div>
                           </div>
                           <div>
@@ -814,15 +604,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                             </label>
                             <div style={{ position: "relative" }}>
                               <Phone size={16} color={T.inputPlaceholder} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)" }} />
-                              <input
-                                type="tel"
-                                inputMode="numeric"
-                                pattern="[0-9 ]*"
-                                placeholder="516 123 456"
-                                value={formData.phone}
-                                onChange={e => setFormData({ ...formData, phone: formatPhone(e.target.value) })}
-                                style={{ paddingLeft: 40 }}
-                              />
+                              <input type="tel" inputMode="numeric" pattern="[0-9 ]*" placeholder="516 123 456" value={formData.phone} onChange={e => setFormData({ ...formData, phone: formatPhone(e.target.value) })} style={{ paddingLeft: 40 }} />
                             </div>
                             <div style={{ minHeight: 14, marginTop: 4 }}>
                               <p style={{ margin: 0, fontSize: 12, color: "transparent" }}> </p>
@@ -842,7 +624,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                               {rodoChecked && <Check size={14} color="#fff" strokeWidth={3} />}
                             </div>
                             <span style={{ color: T.consentText, fontSize: 13, lineHeight: 1.5 }}>
-                                Wyrażam zgodę na przetwarzanie moich danych osobowych przez Klim Zavadski, prowadzący działalność gospodarczą pod firmą KZ, w celu kontaktu handlowego zgodnie z{" "}
+                              Wyrażam zgodę na przetwarzanie moich danych osobowych przez Klim Zavadski, prowadzący działalność gospodarczą pod firmą KZ, w celu kontaktu handlowego zgodnie z{" "}
                               <a href={`${import.meta.env.BASE_URL}polityka_prywatnosci.pdf`} target="_blank" rel="noopener noreferrer" style={{ color: T.info, fontWeight: 600 }}>Polityką prywatności</a>. Mogę cofnąć zgodę w każdej chwili.
                             </span>
                           </label>
@@ -856,16 +638,14 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                               cursor: isSubmitting || !rodoChecked || !formData.email || !formData.name || !!emailError ? "not-allowed" : "pointer"
                             }}
                           >
-                            {isSubmitting ? "Wysyłanie..." : <>Dołącz do pilotażu <ArrowRight size={18} /></>}
+                            {isSubmitting ? "Wysyłanie..." : <>Zabezpiecz swój najem <ArrowRight size={18} /></>}
                           </button>
                           <div style={{ minHeight: 18, marginTop: 8 }}>
-                            <p style={{ margin: 0, fontSize: 12, color: T.warn, opacity: submitError ? 1 : 0 }}>
-                              {submitError || " "}
-                            </p>
+                            <p style={{ margin: 0, fontSize: 12, color: T.warn, opacity: submitError ? 1 : 0 }}>{submitError || " "}</p>
                           </div>
                           <p style={{ textAlign: "center", fontSize: 12, color: T.formPrivacy, lineHeight: 1.5 }}>
                             <Lock size={11} style={{ verticalAlign: "middle", marginRight: 4 }} />
-                              Administratorem Twoich danych jest Klim Zavadski (KZ), NIP 6751776885, REGON 524256395. <br /> Szczegóły w{" "}
+                            Administratorem Twoich danych jest Klim Zavadski (KZ), NIP 6751776885, REGON 524256395. <br /> Szczegóły w{" "}
                             <a href={`${import.meta.env.BASE_URL}polityka_prywatnosci.pdf`} target="_blank" rel="noopener noreferrer" style={{ color: T.info, fontWeight: 600 }}>Polityce prywatności</a> i{" "}
                             <a href={`${import.meta.env.BASE_URL}regulamin_serwisu.pdf`} target="_blank" rel="noopener noreferrer" style={{ color: T.info, fontWeight: 600 }}>Regulaminie</a>.
                           </p>
@@ -877,9 +657,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                           <CheckCircle size={36} color="#fff" />
                         </div>
                         <h3 style={{ fontFamily: "Inter Tight,sans-serif", fontSize: 28, marginBottom: 12, color: T.textPrimary }}>Gotowe! Twoje dane zostały wysłane.</h3>
-                        <p style={{ color: T.textSecondary, fontSize: 16 }}>
-                          Skontaktujemy się z Tobą w najbliższym czasie.
-                        </p>
+                        <p style={{ color: T.textSecondary, fontSize: 16 }}>Skontaktujemy się z Tobą w najbliższym czasie.</p>
                       </div>
                     )}
                   </div>
@@ -888,7 +666,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
             </div>
           </section>
 
-          {/* MINI FAQ */}
+          {/* ──── FAQ ──── */}
           <section style={{ position: "relative", zIndex: 1, padding: "clamp(40px,6vw,80px) clamp(16px,4vw,48px)" }}>
             <div style={{ width: 120, height: 3, margin: "0 auto 48px", background: `linear-gradient(90deg,${T.cta},${T.info})`, borderRadius: 99 }} />
             <div style={{ maxWidth: 800, margin: "0 auto" }}>
@@ -904,24 +682,14 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                   return (
                     <FadeIn key={i} delay={i * 0.08}>
                       <div style={{
-                        background: T.bentoNoneBg,
-                        border: `1px solid ${isOpen ? T.cta : T.bentoNoneBorder}`,
+                        background: T.bentoNoneBg, border: `1px solid ${isOpen ? T.cta : T.bentoNoneBorder}`,
                         borderRadius: 20, overflow: "hidden", backdropFilter: "blur(12px)",
                         boxShadow: isOpen ? `0 8px 32px ${T.bentoGlow}` : "0 2px 12px rgba(0,0,0,0.04)",
                         transition: "all 0.35s cubic-bezier(.4,0,.2,1)",
                       }}>
                         <button
-                          onClick={() => {
-                            if (!isOpen) {
-                              trackSmartlookEvent("faq_open", { variant_id: variantId, faq_index: i });
-                            }
-                            setOpenFaq(isOpen ? null : i);
-                          }}
-                          style={{
-                            width: "100%", padding: "22px 28px", background: "none",
-                            border: "none", cursor: "pointer", display: "flex",
-                            alignItems: "center", gap: 18, textAlign: "left",
-                          }}
+                          onClick={() => { if (!isOpen) trackSmartlookEvent("faq_open", { variant_id: variantId, faq_index: i }); setOpenFaq(isOpen ? null : i); }}
+                          style={{ width: "100%", padding: "22px 28px", background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 18, textAlign: "left" }}
                         >
                           <span style={{
                             flexShrink: 0, width: 36, height: 36, borderRadius: 10,
@@ -936,16 +704,9 @@ export default function ShortVariant({ variantId = "short_variant" }) {
                           <span style={{ flex: 1, fontSize: "clamp(15px,2vw,17px)", fontWeight: 600, color: T.textPrimary, lineHeight: 1.4, fontFamily: "Inter Tight,sans-serif" }}>
                             {item.q}
                           </span>
-                          <ChevronRight
-                            size={18}
-                            color={isOpen ? T.cta : T.textMuted}
-                            style={{ flexShrink: 0, transform: isOpen ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.3s ease, color 0.3s ease" }}
-                          />
+                          <ChevronRight size={18} color={isOpen ? T.cta : T.textMuted} style={{ flexShrink: 0, transform: isOpen ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.3s ease, color 0.3s ease" }} />
                         </button>
-                        <div style={{
-                          maxHeight: isOpen ? 2000 : 0, opacity: isOpen ? 1 : 0,
-                          overflow: "hidden", transition: "max-height 0.4s cubic-bezier(.4,0,.2,1), opacity 0.3s ease",
-                        }}>
+                        <div style={{ maxHeight: isOpen ? 2000 : 0, opacity: isOpen ? 1 : 0, overflow: "hidden", transition: "max-height 0.4s cubic-bezier(.4,0,.2,1), opacity 0.3s ease" }}>
                           <div style={{ padding: "0 28px 24px 82px" }}>
                             <div style={{ width: 40, height: 2, background: `linear-gradient(90deg,${T.cta},transparent)`, borderRadius: 99, marginBottom: 14 }} />
                             <p style={{ margin: 0, color: T.textSecondary, fontSize: 15, lineHeight: 1.75, whiteSpace: "pre-line" }}>{item.a}</p>
@@ -959,7 +720,7 @@ export default function ShortVariant({ variantId = "short_variant" }) {
             </div>
           </section>
 
-          {/* FOOTER */}
+          {/* ──── FOOTER ──── */}
           <footer style={{ position: "relative", zIndex: 1, borderTop: `1px solid ${T.footerBorder}`, padding: "32px clamp(16px,4vw,48px)" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
